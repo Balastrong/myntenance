@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { createClient } from "./supabase/server";
+import { createClient } from "./supabase/client";
 
 export const getOctokit = async () => {
   const {

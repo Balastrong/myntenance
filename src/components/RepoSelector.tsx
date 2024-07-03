@@ -1,29 +1,16 @@
-import { getOctokit } from "@/lib/github";
+"use client";
+import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
+import { useState } from "react";
 
-export async function RepoSelector() {
-  const octokit = await getOctokit();
-
-  const {
-    data: { items, total_count },
-  } = await octokit.rest.search.repos({
-    q: "tanstack",
-    per_page: 10,
-  });
-
+export function RepoSelector() {
+  const [query, setQuery] = useState("react-query");
+  const { data } = useGitHubRepositories(query);
   return (
     <div>
       <h2>RepoSelector</h2>
-      {items.length} - {total_count}
-      <pre>
-        {JSON.stringify(
-          items.map((f) => ({
-            name: f.full_name,
-            visi: f.visibility,
-          })),
-          null,
-          2
-        )}
-      </pre>
+      <input value={query} onChange={(e) => setQuery(e.target.value)} />
+      {data?.items.length} - {data?.total_count}
+      <pre>{JSON.stringify(data?.items, null, 2)}</pre>
     </div>
   );
 }
