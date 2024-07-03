@@ -1,7 +1,8 @@
 import { login, logout } from "@/app/auth/actions";
 import { createClient } from "@/lib/supabase/server";
-import { Button } from "./ui/button";
 import Image from "next/image";
+import { SignInButton } from "./SignInButton";
+import { Button } from "./ui/button";
 
 export default async function HeaderUser() {
   const {
@@ -27,7 +28,7 @@ export default async function HeaderUser() {
         </>
       ) : (
         <form action={login}>
-          <Button formAction={login}>Sign In</Button>
+          <SignInButton />
         </form>
       )}
     </div>

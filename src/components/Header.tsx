@@ -1,4 +1,4 @@
-import HeaderUser from "./header-user";
+import HeaderUser from "./HeaderUser";
 
 export default async function Header() {
   return (
