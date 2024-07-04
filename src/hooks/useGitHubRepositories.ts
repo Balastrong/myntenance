@@ -15,7 +15,7 @@ export const useGitHubRepositories = (query: string) => {
         data: { items, total_count },
       } = await octokit.rest.search.repos({
         q: query,
-        per_page: 5,
+        per_page: 8,
       });
 
       return {
