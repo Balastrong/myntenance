@@ -1,4 +1,4 @@
-import { handleDelete } from "./RepoList";
+import { handleDelete } from "./actions";
 import { Button } from "../ui/button";
 
 export default function DeleteRepoForm({ repoId }: { repoId: string }) {

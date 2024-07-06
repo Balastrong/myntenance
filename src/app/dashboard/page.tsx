@@ -1,12 +1,12 @@
-import RepoList from "@/components/RepoList/RepoList";
+import RepoCards from "@/components/RepoList/RepoCards";
 import { RepoSelector } from "@/components/RepoSelector";
 
 export default async function Dashboard() {
   return (
-    <main>
-      <h2 className="text-xl font-medium mb-2">Dashboard</h2>
+    <main className="flex flex-col gap-4">
+      <h2 className="text-xl font-medium">Dashboard</h2>
       <RepoSelector />
-      <RepoList />
+      <RepoCards />
     </main>
   );
 }

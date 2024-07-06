@@ -13,6 +13,7 @@ export type Database = {
         Row: {
           createdAt: string
           id: string
+          isFavourite: boolean
           name: string
           openIssues: number
           ownerLogin: string
@@ -24,6 +25,7 @@ export type Database = {
         Insert: {
           createdAt?: string
           id?: string
+          isFavourite?: boolean
           name: string
           openIssues: number
           ownerLogin: string
@@ -35,6 +37,7 @@ export type Database = {
         Update: {
           createdAt?: string
           id?: string
+          isFavourite?: boolean
           name?: string
           openIssues?: number
           ownerLogin?: string
