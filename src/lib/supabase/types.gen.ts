@@ -56,6 +56,41 @@ export type Database = {
           },
         ]
       }
+      tasks: {
+        Row: {
+          createdAt: string
+          id: number
+          isCompleted: boolean
+          projectId: string
+          title: string
+          updatedAt: string
+        }
+        Insert: {
+          createdAt?: string
+          id?: number
+          isCompleted?: boolean
+          projectId: string
+          title: string
+          updatedAt?: string
+        }
+        Update: {
+          createdAt?: string
+          id?: number
+          isCompleted?: boolean
+          projectId?: string
+          title?: string
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_projectId_fkey"
+            columns: ["projectId"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

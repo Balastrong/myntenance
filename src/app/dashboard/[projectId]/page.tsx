@@ -1,4 +1,5 @@
 import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm";
+import Tasks from "@/components/TasksList/Tasks";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
@@ -19,7 +20,13 @@ export default async function Page({
     return <div>Repository not found</div>;
   }
 
-  const { data: repository } = await new Octokit().rest.repos.get({
+  const {
+    data: { session },
+  } = await createClient().auth.getSession();
+
+  const { data: repository } = await new Octokit({
+    auth: session?.provider_token,
+  }).rest.repos.get({
     owner: project.ownerLogin,
     repo: project.name,
   });
@@ -32,7 +39,7 @@ export default async function Page({
         </Link>
         <h1 className="text-xl font-semibold">{repository.full_name}</h1>
       </div>
-      TODOs
+      <Tasks projectId={projectId} />
       <DeleteRepoForm repoId={projectId} />
     </div>
   );
