@@ -13,8 +13,8 @@ export default function TasksList({ projectId }: Props) {
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
-    queryKey: tasksKeys.lists(),
-    queryFn: getOwnTasks,
+    queryKey: tasksKeys.list(projectId),
+    queryFn: () => getOwnTasks({ projectId }),
   });
 
   const { mutate } = useMutation({
@@ -28,7 +28,7 @@ export default function TasksList({ projectId }: Props) {
 
   return (
     <div>
-      <ul>
+      <ul className="flex flex-col gap-2 mb-2">
         {data?.map((task) => (
           <Task key={task.id} task={task} />
         ))}

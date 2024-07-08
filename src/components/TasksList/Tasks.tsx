@@ -10,8 +10,8 @@ export default async function Tasks({ projectId }: { projectId: string }) {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: tasksKeys.lists(),
-    queryFn: getOwnTasks,
+    queryKey: tasksKeys.list(projectId),
+    queryFn: () => getOwnTasks({ projectId }),
   });
 
   return (

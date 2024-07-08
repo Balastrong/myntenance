@@ -1,12 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
-import DeleteRepoForm from "./DeleteRepoForm";
+import { QueryData } from "@supabase/supabase-js";
 import { RepoCard } from "./RepoCard";
 import { RepoCardGrid } from "./RepoCardGrid";
 
+const getProjects = createClient().from("projects").select("*, tasks (*)");
+export type RepoWithTasks = QueryData<typeof getProjects>;
+
 export default async function RepoCards() {
-  const supabase = createClient();
-  const { data, error } = await supabase.from("projects").select("*");
+  const { data, error } = await getProjects;
 
   if (error) {
     return <div>Error: {error.message}</div>;

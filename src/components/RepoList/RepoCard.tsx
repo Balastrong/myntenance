@@ -5,13 +5,13 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Tables } from "@/lib/supabase/types.gen";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { FavouriteRepoForm } from "./FavouriteRepoForm";
+import { RepoWithTasks } from "./RepoCards";
 
 type Props = {
-  repo: Tables<"projects">;
+  repo: RepoWithTasks[number];
 };
 
 export const RepoCard = ({ repo }: Props) => {
@@ -29,7 +29,10 @@ export const RepoCard = ({ repo }: Props) => {
           Visibility: <span className="capitalize">{repo.visibility}</span>
         </CardDescription>
       </CardHeader>
-      <CardContent>[Myntenance Data]</CardContent>
+      <CardContent>
+        Open Tasks:{" "}
+        {repo.tasks.filter(({ isCompleted }) => !isCompleted).length}
+      </CardContent>
       <CardFooter className="flex justify-end">
         <Link href={`/dashboard/${repo.id}`}>
           <Button>View -&gt;</Button>

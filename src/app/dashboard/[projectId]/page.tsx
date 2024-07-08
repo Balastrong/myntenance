@@ -32,13 +32,14 @@ export default async function Page({
   });
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="flex items-center">
         <Link href={"../dashboard"}>
           <Button variant={"ghost"}>&lt;-</Button>
         </Link>
         <h1 className="text-xl font-semibold">{repository.full_name}</h1>
       </div>
+      <h3 className="text-lg">Tasks</h3>
       <Tasks projectId={projectId} />
       <DeleteRepoForm repoId={projectId} />
     </div>
