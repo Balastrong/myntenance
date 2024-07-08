@@ -6,7 +6,8 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Tables } from "@/lib/supabase/types.gen";
-import DeleteRepoForm from "./DeleteRepoForm";
+import Link from "next/link";
+import { Button } from "../ui/button";
 import { FavouriteRepoForm } from "./FavouriteRepoForm";
 
 type Props = {
@@ -30,7 +31,9 @@ export const RepoCard = ({ repo }: Props) => {
       </CardHeader>
       <CardContent>[Myntenance Data]</CardContent>
       <CardFooter className="flex justify-end">
-        <DeleteRepoForm repoId={repo.id} />
+        <Link href={`/dashboard/${repo.id}`}>
+          <Button>View -&gt;</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
