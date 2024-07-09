@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import TaskInput from "./TaskInput";
+import { revalidatePath } from "next/cache";
 
 type Props = {
   task: Tables<"tasks">;
@@ -13,18 +14,67 @@ export function Task({ task }: Props) {
   const queryClient = useQueryClient();
   const { mutate: setCompletedMutation } = useMutation({
     mutationFn: setCompleted,
-    onSuccess: () => {
+    onMutate: async (newTask) => {
+      await queryClient.cancelQueries({
+        queryKey: tasksKeys.list(task.projectId),
+      });
+
+      const previousTasks = queryClient.getQueryData(
+        tasksKeys.list(task.projectId)
+      ) as Tables<"tasks">[];
+
+      queryClient.setQueryData(
+        tasksKeys.list(task.projectId),
+        (previousTasks ?? []).map((t) => {
+          if (t.id === newTask.id) {
+            return { ...t, isCompleted: newTask.isCompleted };
+          }
+          return t;
+        })
+      );
+
+      return { previousTasks, newTask };
+    },
+    onError: (err, newTask, context) => {
+      queryClient.setQueryData(
+        tasksKeys.list(task.projectId),
+        context?.previousTasks
+      );
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: tasksKeys.lists(),
+        queryKey: tasksKeys.list(task.projectId),
       });
     },
   });
 
   const { mutate: deleteTaskMutation } = useMutation({
     mutationFn: deleteTask,
-    onSuccess: () => {
+    onMutate: async (deletedTaskId) => {
+      await queryClient.cancelQueries({
+        queryKey: tasksKeys.list(task.projectId),
+      });
+
+      const previousTasks = queryClient.getQueryData(
+        tasksKeys.list(task.projectId)
+      ) as Tables<"tasks">[];
+
+      queryClient.setQueryData(
+        tasksKeys.list(task.projectId),
+        (previousTasks ?? []).filter((t) => t.id !== deletedTaskId)
+      );
+
+      return { previousTasks };
+    },
+    onError: (err, newTask, context) => {
+      queryClient.setQueryData(
+        tasksKeys.list(task.projectId),
+        context?.previousTasks
+      );
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: tasksKeys.lists(),
+        queryKey: tasksKeys.list(task.projectId),
       });
     },
   });

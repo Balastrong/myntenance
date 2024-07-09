@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Input } from "../ui/input";
 import { Task } from "./Task";
 import { Button } from "../ui/button";
+import { Tables } from "@/lib/supabase/types.gen";
 
 type Props = {
   projectId: string;
@@ -20,10 +21,26 @@ export default function TasksList({ projectId }: Props) {
 
   const { mutate } = useMutation({
     mutationFn: createTask,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: tasksKeys.lists(),
-      });
+    onMutate: async (newTask) => {
+      await queryClient.cancelQueries({ queryKey: tasksKeys.list(projectId) });
+
+      const previousTasks = queryClient.getQueryData(tasksKeys.list(projectId));
+
+      queryClient.setQueryData(
+        tasksKeys.list(projectId),
+        (old: Tables<"tasks">[]) => [newTask, ...old]
+      );
+
+      return { previousTasks };
+    },
+    onError: (err, newTask, context) => {
+      queryClient.setQueryData(
+        tasksKeys.list(projectId),
+        context?.previousTasks
+      );
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: tasksKeys.list(projectId) });
     },
   });
 
