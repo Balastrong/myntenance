@@ -3,11 +3,12 @@ import { QueryData } from "@supabase/supabase-js";
 import { RepoCard } from "./RepoCard";
 import { RepoCardGrid } from "./RepoCardGrid";
 
-const getProjects = createClient().from("projects").select("*, tasks (*)");
-export type RepoWithTasks = QueryData<typeof getProjects>;
+const getProjects = () =>
+  createClient().from("projects").select("*, tasks (*)");
+export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>;
 
 export default async function RepoCards() {
-  const { data, error } = await getProjects;
+  const { data, error } = await getProjects();
 
   if (error) {
     return <div>Error: {error.message}</div>;
