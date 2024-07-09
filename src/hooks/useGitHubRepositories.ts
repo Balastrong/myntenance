@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useDebouncedValue } from "./useDebouncedValue";
 
 export const useGitHubRepositories = (query: string) => {
-  const debouncedQuery = useDebouncedValue(query);
+  const { debouncedValue: debouncedQuery } = useDebouncedValue(query);
 
   return useQuery({
     queryKey: ["repo-search", debouncedQuery],

@@ -36,6 +36,10 @@ export async function setCompleted({
   return createClient().from("tasks").update({ isCompleted }).eq("id", id);
 }
 
+export async function updateTask({ id, title }: { id: number; title: string }) {
+  return createClient().from("tasks").update({ title }).eq("id", id);
+}
+
 export async function deleteTask(id: number) {
   return createClient().from("tasks").delete().eq("id", id);
 }

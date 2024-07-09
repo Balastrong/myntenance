@@ -3,7 +3,7 @@ import { deleteTask, setCompleted, tasksKeys } from "@/services/tasks/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import TaskInput from "./TaskInput";
 
 type Props = {
   task: Tables<"tasks">;
@@ -38,7 +38,7 @@ export function Task({ task }: Props) {
           setCompletedMutation({ id: task.id, isCompleted: !task.isCompleted })
         }
       />
-      <Input defaultValue={task.title} />
+      <TaskInput task={task} />
       <Button
         variant={"destructive"}
         size={"icon"}
