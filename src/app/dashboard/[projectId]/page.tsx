@@ -1,6 +1,7 @@
 import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm";
 import Tasks from "@/components/TasksList/Tasks";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Octokit } from "octokit";
@@ -41,7 +42,20 @@ export default async function Page({
       </div>
       <h3 className="text-lg">Tasks</h3>
       <Tasks projectId={projectId} />
-      <DeleteRepoForm repoId={projectId} />
+      <Card className="max-w-[800px]">
+        <CardHeader>
+          <CardTitle>Danger Zone</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex justify-between">
+            <div>
+              <h5 className="font-semibold">Delete Project</h5>
+              Deleting the project will permanently remove all associated data!
+            </div>
+            <DeleteRepoForm repoId={projectId} />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
