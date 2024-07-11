@@ -1,7 +1,21 @@
 "use server";
 
-import { deleteTask, setCompleted, updateTask } from "@/services/tasks/api";
+import { Database, Tables } from "@/lib/supabase/types.gen";
+import {
+  createTask,
+  deleteTask,
+  setCompleted,
+  updateTask,
+} from "@/services/tasks/api";
 import { revalidateTag } from "next/cache";
+
+export async function createTaskAction(
+  task: Database["public"]["Tables"]["tasks"]["Insert"]
+) {
+  await createTask(task);
+
+  revalidateTag("tasks");
+}
 
 export async function setCompletedAction({
   taskId,

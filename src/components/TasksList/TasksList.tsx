@@ -1,46 +1,51 @@
-"use server";
-
-import { createTask, getOwnTasks } from "@/services/tasks/api";
-import { revalidateTag } from "next/cache";
+"use client";
+import { Tables } from "@/lib/supabase/types.gen";
+import { useOptimistic, useRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { createTaskAction } from "./actions";
 import { Task } from "./Task";
 
 type Props = {
   projectId: string;
+  tasks: Tables<"tasks">[];
 };
 
-export default async function TasksList({ projectId }: Props) {
-  const { data } = await getOwnTasks({ projectId });
+export default function TasksList({ projectId, tasks }: Props) {
+  const formRef = useRef<HTMLFormElement>(null);
 
-  // TODO Optimistic
-  async function createTaskAction(formData: FormData) {
-    "use server";
-    const title = formData.get("title") as string;
-
-    await createTask({ title, projectId });
-
-    revalidateTag("tasks");
-  }
+  const [optimisticTasks, addOptimisticTasks] = useOptimistic<
+    Tables<"tasks">[],
+    Tables<"tasks">
+    // TODO: Improve types and add boolean to indicate pending state
+  >(tasks ?? [], (state, newTask) => [newTask, ...state]);
 
   return (
     <div className="max-w-[600px]">
       <ul className="flex flex-col gap-2 mb-4">
-        {data?.map((task) => (
+        {optimisticTasks?.map((task) => (
           <Task key={task.id} task={task} />
         ))}
       </ul>
       <form
-        action={createTaskAction}
-        // onSubmit={async (e) => {
-        //   e.preventDefault();
+        ref={formRef}
+        action={async (formData: FormData) => {
+          const title = formData.get("title") as string;
 
-        //   const formData = new FormData(e.currentTarget);
-        //   const title = formData.get("title") as string;
+          const newPartialTask: Tables<"tasks"> = {
+            projectId,
+            title,
+            createdAt: new Date().toISOString(),
+            id: optimisticTasks.length + 999,
+            isCompleted: false,
+            updatedAt: new Date().toISOString(),
+          };
 
-        //   //mutate({ title, projectId });
-        //   e.currentTarget.reset();
-        // }}
+          formRef.current?.reset();
+
+          addOptimisticTasks(newPartialTask);
+          await createTaskAction(newPartialTask);
+        }}
         className="flex gap-2"
       >
         <Input name="title" placeholder="Add a task" />

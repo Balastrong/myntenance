@@ -7,7 +7,7 @@ type Props = {
   task: Tables<"tasks">;
 };
 
-export async function Task({ task }: Props) {
+export function Task({ task }: Props) {
   return (
     <div className="flex gap-2">
       <TaskCompletedCheckbox taskId={task.id} isCompleted={task.isCompleted} />
