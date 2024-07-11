@@ -1,48 +1,27 @@
-"use client";
+"use server";
 
-import { createTask, getOwnTasks, tasksKeys } from "@/services/tasks/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createTask, getOwnTasks } from "@/services/tasks/api";
+import { revalidateTag } from "next/cache";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Task } from "./Task";
-import { Button } from "../ui/button";
-import { Tables } from "@/lib/supabase/types.gen";
 
 type Props = {
   projectId: string;
 };
 
-export default function TasksList({ projectId }: Props) {
-  const queryClient = useQueryClient();
+export default async function TasksList({ projectId }: Props) {
+  const { data } = await getOwnTasks({ projectId });
 
-  const { data } = useQuery({
-    queryKey: tasksKeys.list(projectId),
-    queryFn: () => getOwnTasks({ projectId }),
-  });
+  // TODO Optimistic
+  async function createTaskAction(formData: FormData) {
+    "use server";
+    const title = formData.get("title") as string;
 
-  const { mutate } = useMutation({
-    mutationFn: createTask,
-    onMutate: async (newTask) => {
-      await queryClient.cancelQueries({ queryKey: tasksKeys.list(projectId) });
+    await createTask({ title, projectId });
 
-      const previousTasks = queryClient.getQueryData(tasksKeys.list(projectId));
-
-      queryClient.setQueryData(
-        tasksKeys.list(projectId),
-        (old: Tables<"tasks">[]) => [newTask, ...old]
-      );
-
-      return { previousTasks };
-    },
-    onError: (err, newTask, context) => {
-      queryClient.setQueryData(
-        tasksKeys.list(projectId),
-        context?.previousTasks
-      );
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: tasksKeys.list(projectId) });
-    },
-  });
+    revalidateTag("tasks");
+  }
 
   return (
     <div className="max-w-[600px]">
@@ -52,15 +31,16 @@ export default function TasksList({ projectId }: Props) {
         ))}
       </ul>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
+        action={createTaskAction}
+        // onSubmit={async (e) => {
+        //   e.preventDefault();
 
-          const formData = new FormData(e.currentTarget);
-          const title = formData.get("title") as string;
+        //   const formData = new FormData(e.currentTarget);
+        //   const title = formData.get("title") as string;
 
-          mutate({ title, projectId });
-          e.currentTarget.reset();
-        }}
+        //   //mutate({ title, projectId });
+        //   e.currentTarget.reset();
+        // }}
         className="flex gap-2"
       >
         <Input name="title" placeholder="Add a task" />

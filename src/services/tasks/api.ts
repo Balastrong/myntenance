@@ -1,24 +1,25 @@
 import { createClient } from "@/lib/supabase/client";
 import { Tables } from "@/lib/supabase/types.gen";
+import { unstable_cache } from "next/cache";
 
-export async function getOwnTasks(filters?: { projectId?: string }) {
-  let query = createClient()
-    .from("tasks")
-    .select("*")
-    .order("id", { ascending: false });
+export const getOwnTasks = unstable_cache(
+  async (filters?: { projectId?: string }) => {
+    let query = createClient()
+      .from("tasks")
+      .select("*")
+      .order("id", { ascending: false });
 
-  if (filters?.projectId) {
-    query = query.eq("projectId", filters.projectId);
+    if (filters?.projectId) {
+      query = query.eq("projectId", filters.projectId);
+    }
+
+    return await query;
+  },
+  undefined,
+  {
+    tags: ["tasks"],
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-}
+);
 
 export async function createTask(
   task: Pick<Tables<"tasks">, "title" | "projectId">
