@@ -9,10 +9,15 @@ type Props = {
 
 export function Task({ task }: Props) {
   return (
-    <div className="flex gap-2">
-      <TaskCompletedCheckbox taskId={task.id} isCompleted={task.isCompleted} />
-      <TaskInput task={task} />
-      <TaskDeleteButton taskId={task.id} />
-    </div>
+    <form>
+      <div className="flex gap-2">
+        <TaskCompletedCheckbox
+          taskId={task.id}
+          isCompleted={task.isCompleted}
+        />
+        <TaskInput task={task} />
+        <TaskDeleteButton taskId={task.id} />
+      </div>
+    </form>
   );
 }
