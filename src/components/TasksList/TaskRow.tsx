@@ -1,13 +1,13 @@
-import { Tables } from "@/lib/supabase/types.gen";
 import { TaskCompletedCheckbox } from "./TaskCompletedCheckbox";
 import { TaskDeleteButton } from "./TaskDeleteButton";
 import TaskInput from "./TaskInput";
+import { OptimisticTask } from "./TasksList";
 
 type Props = {
-  task: Tables<"tasks">;
+  task: OptimisticTask;
 };
 
-export function Task({ task }: Props) {
+export function TaskRow({ task }: Props) {
   return (
     <form>
       <div className="flex gap-2">
@@ -16,7 +16,7 @@ export function Task({ task }: Props) {
           isCompleted={task.isCompleted}
         />
         <TaskInput task={task} />
-        <TaskDeleteButton taskId={task.id} />
+        <TaskDeleteButton taskId={task.id} isPending={task.isPending} />
       </div>
     </form>
   );

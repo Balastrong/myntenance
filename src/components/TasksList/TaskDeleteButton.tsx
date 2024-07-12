@@ -5,11 +5,18 @@ import { Button } from "../ui/button";
 import { deleteTaskAction } from "./actions";
 import { OptimisticTaskContext } from "./TasksList";
 
-export function TaskDeleteButton({ taskId }: { taskId: number }) {
+export function TaskDeleteButton({
+  taskId,
+  isPending,
+}: {
+  taskId: number;
+  isPending?: boolean;
+}) {
   const optimistic = useContext(OptimisticTaskContext);
 
   return (
     <Button
+      disabled={isPending}
       variant={"destructive"}
       size={"icon"}
       formAction={async () => {

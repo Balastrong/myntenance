@@ -1,20 +1,20 @@
 "use client";
-import { Tables } from "@/lib/supabase/types.gen";
+import { Task } from "@/lib/supabase/types";
 import { createContext, useOptimistic, useRef } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { createTaskAction } from "./actions";
-import { Task } from "./Task";
+import { TaskRow } from "./TaskRow";
 
 type Props = {
   projectId: string;
-  tasks: Tables<"tasks">[];
+  tasks: Task[];
 };
 
 type OptimisticTaskActions =
   | {
       type: "add";
-      payload: { task: Tables<"tasks"> };
+      payload: { task: Task };
     }
   | {
       type: "remove";
@@ -23,27 +23,27 @@ type OptimisticTaskActions =
   | {
       type: "update";
       payload: {
-        partialTask: Partial<Tables<"tasks">> &
-          Required<Pick<Tables<"tasks">, "id">>;
+        partialTask: Partial<Task> & Required<Pick<Task, "id">>;
       };
     };
 
+export type OptimisticTask = Task & { isPending?: boolean };
+
 export const OptimisticTaskContext = createContext<{
-  optimisticTasks: Tables<"tasks">[];
+  optimisticTasks: Task[];
   handleOptimisticTasks: (action: OptimisticTaskActions) => void;
 } | null>(null);
 
 export default function TasksList({ projectId, tasks }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
 
-  // TODO: Improve types and add boolean to indicate pending state
   const [optimisticTasks, handleOptimisticTasks] = useOptimistic<
-    Tables<"tasks">[],
+    OptimisticTask[],
     OptimisticTaskActions
   >(tasks ?? [], (state, { type, payload }) => {
     switch (type) {
       case "add":
-        return [payload.task, ...state];
+        return [{ ...payload.task, isPending: true }, ...state];
       case "remove":
         return state.filter((task) => task.id !== payload.taskId);
       case "update":
@@ -65,7 +65,7 @@ export default function TasksList({ projectId, tasks }: Props) {
           }}
         >
           {optimisticTasks?.map((task) => (
-            <Task key={task.id} task={task} />
+            <TaskRow key={task.id} task={task} />
           ))}
         </OptimisticTaskContext.Provider>
       </ul>
@@ -74,7 +74,7 @@ export default function TasksList({ projectId, tasks }: Props) {
         action={async (formData: FormData) => {
           const title = formData.get("title") as string;
 
-          const newTask: Tables<"tasks"> = {
+          const task: Task = {
             projectId,
             title,
             createdAt: new Date().toISOString(),
@@ -87,9 +87,9 @@ export default function TasksList({ projectId, tasks }: Props) {
 
           handleOptimisticTasks({
             type: "add",
-            payload: { task: newTask },
+            payload: { task },
           });
-          await createTaskAction(newTask);
+          await createTaskAction(task);
         }}
         className="flex gap-2"
       >

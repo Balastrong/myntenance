@@ -1,6 +1,6 @@
 "use server";
 
-import { Database, Tables } from "@/lib/supabase/types.gen";
+import { TaskInsert } from "@/lib/supabase/types";
 import {
   createTask,
   deleteTask,
@@ -9,9 +9,7 @@ import {
 } from "@/services/tasks/api";
 import { revalidateTag } from "next/cache";
 
-export async function createTaskAction(
-  task: Database["public"]["Tables"]["tasks"]["Insert"]
-) {
+export async function createTaskAction(task: TaskInsert) {
   await createTask(task);
 
   revalidateTag("tasks");
@@ -28,14 +26,14 @@ export async function setCompletedAction({
   revalidateTag("tasks");
 }
 
-export async function deleteTaskAction(id: number) {
-  await deleteTask(id);
-  revalidateTag("tasks");
-}
-
 export async function updateTaskAction(
   props: Parameters<typeof updateTask>[0]
 ) {
   await updateTask(props);
+  revalidateTag("tasks");
+}
+
+export async function deleteTaskAction(id: number) {
+  await deleteTask(id);
   revalidateTag("tasks");
 }

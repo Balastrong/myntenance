@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
-import { Database, Tables } from "@/lib/supabase/types.gen";
+import { TaskInsert } from "@/lib/supabase/types";
 import { unstable_cache } from "next/cache";
 
 export const getOwnTasks = unstable_cache(
@@ -21,9 +21,7 @@ export const getOwnTasks = unstable_cache(
   }
 );
 
-export async function createTask(
-  task: Database["public"]["Tables"]["tasks"]["Insert"]
-) {
+export async function createTask(task: TaskInsert) {
   const { id, ...rest } = task;
   return createClient().from("tasks").insert(rest);
 }
