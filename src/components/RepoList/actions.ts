@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function handleDelete(formData: FormData) {
   "use server";
@@ -9,6 +10,7 @@ export async function handleDelete(formData: FormData) {
   const id = formData.get("id")!;
   await createClient().from("projects").delete().eq("id", id);
   revalidatePath("/");
+  redirect("/dashboard");
 }
 
 export async function toggleFavourite(formData: FormData) {

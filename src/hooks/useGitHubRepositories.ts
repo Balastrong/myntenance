@@ -1,5 +1,5 @@
 import { getOctokit } from "@/lib/github";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useDebouncedValue } from "./useDebouncedValue";
 
 export const useGitHubRepositories = (query: string) => {
@@ -8,6 +8,7 @@ export const useGitHubRepositories = (query: string) => {
   return useQuery({
     queryKey: ["repo-search", debouncedQuery],
     enabled: debouncedQuery.length > 2,
+    placeholderData: keepPreviousData,
     queryFn: async () => {
       const octokit = await getOctokit();
 

@@ -2,9 +2,16 @@
 
 import { storeRepository } from "@/app/api/github/actions";
 import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useFormState } from "react-dom";
+import { toast } from "sonner";
 import { AutoComplete } from "./Autocomplete";
 import { Button } from "./ui/button";
+
+export const initialState = {
+  message: "",
+  error: false,
+};
 
 export function RepoSelector() {
   const [searchValue, setSearchValue] = useState("");
@@ -14,10 +21,28 @@ export function RepoSelector() {
 
   const storeWithRepo = storeRepository.bind(null, selectedValue);
 
+  const [state, formAction] = useFormState(storeWithRepo, initialState);
+
+  useEffect(() => {
+    if (!state.message) return;
+
+    if (state.error) {
+      toast.error(state.message);
+    } else {
+      toast.success(state.message);
+    }
+  }, [state.error, state.message]);
+
   return (
     <div>
       <h2>Select a repository</h2>
-      <form action={storeWithRepo}>
+      <form
+        action={async (formData: FormData) => {
+          setSearchValue("");
+          setSelectedValue("");
+          formAction();
+        }}
+      >
         <div className="flex gap-2">
           <div className="w-80">
             <AutoComplete

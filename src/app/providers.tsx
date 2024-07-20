@@ -1,5 +1,6 @@
 "use client";
 
+import { Toaster } from "@/components/ui/sonner";
 import {
   isServer,
   QueryClient,
@@ -34,6 +35,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
+      <Toaster />
       <ProgressBar options={{ showSpinner: false }} shallowRouting />
     </QueryClientProvider>
   );
