@@ -1,7 +1,7 @@
 "use client";
 
 import { Task } from "@/lib/supabase/types";
-import { useRef, useState } from "react";
+import { startTransition, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { TaskRow } from "./TaskRow";
@@ -20,7 +20,7 @@ export default function TasksList({ projectId, tasks }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const { optimisticTasks, onAddTask, onCompletedChange, onDelete } =
     useOptimisticTasks(tasks, projectId);
-  const [showCompleted, setShowCompleted] = useState(false);
+  const [showCompleted, setShowCompleted] = useState(true);
 
   const openTasks = optimisticTasks?.filter((t) => !t.isCompleted) ?? [];
   const completedTasksCount = optimisticTasks.length - openTasks.length;
@@ -33,9 +33,11 @@ export default function TasksList({ projectId, tasks }: Props) {
             key={task.id}
             task={task}
             onCompletedChange={() =>
-              onCompletedChange(task.id, !task.isCompleted)
+              startTransition(() =>
+                onCompletedChange(task.id, !task.isCompleted)
+              )
             }
-            onDelete={() => onDelete(task.id)}
+            onDelete={() => startTransition(() => onDelete(task.id))}
           />
         ))}
       </ul>
@@ -43,6 +45,7 @@ export default function TasksList({ projectId, tasks }: Props) {
         <div className="flex items-center space-x-2">
           <Checkbox
             id="hide-completed"
+            checked={showCompleted}
             onCheckedChange={(e) => setShowCompleted(e === true)}
           />
           <Label htmlFor="hide-completed" className="cursor-pointer">
