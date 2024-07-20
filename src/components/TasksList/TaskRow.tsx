@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import TaskInput from "./TaskInput";
 import { OptimisticTask } from "./TasksList";
 import { Checkbox } from "../ui/checkbox";
+import Link from "next/link";
 
 type Props = {
   task: OptimisticTask;
@@ -18,6 +19,9 @@ export function TaskRow({ task, onDelete, onCompletedChange }: Props) {
         onCheckedChange={onCompletedChange}
       />
       <TaskInput task={task} />
+      <Link href={`/dashboard/${task.projectId}/task/${task.id}`}>
+        <Button>Details</Button>
+      </Link>
       <Button
         disabled={task.isPending}
         variant={"destructive"}

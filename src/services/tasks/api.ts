@@ -44,8 +44,17 @@ export async function deleteTask(id: number) {
   return createClient().from("tasks").delete().eq("id", id);
 }
 
-export const tasksKeys = {
-  all: ["tasks"] as const,
-  lists: () => [...tasksKeys.all, "list"] as const,
-  list: (projectId: string) => [...tasksKeys.lists(), { projectId }] as const,
-};
+export const getTask = unstable_cache(
+  async ({ projectId, taskId }: { projectId: string; taskId: string }) => {
+    return createClient()
+      .from("tasks")
+      .select("*")
+      .eq("projectId", projectId)
+      .eq("id", taskId)
+      .single();
+  },
+  undefined,
+  {
+    tags: ["tasks"],
+  }
+);

@@ -35,7 +35,7 @@ export default async function Page({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center">
-        <Link href={"../dashboard"}>
+        <Link href={"./"}>
           <Button variant={"ghost"}>&lt;-</Button>
         </Link>
         <h1 className="text-xl font-semibold">{repository.full_name}</h1>

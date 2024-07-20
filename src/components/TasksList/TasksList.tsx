@@ -22,7 +22,7 @@ export default function TasksList({ projectId, tasks }: Props) {
     useOptimisticTasks(tasks, projectId);
   const [showCompleted, setShowCompleted] = useState(false);
 
-  const openTasks = optimisticTasks?.filter((t) => !t.isCompleted);
+  const openTasks = optimisticTasks?.filter((t) => !t.isCompleted) ?? [];
   const completedTasksCount = optimisticTasks.length - openTasks.length;
 
   return (
