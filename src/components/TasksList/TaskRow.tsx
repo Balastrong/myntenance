@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import TaskInput from "./TaskInput";
 import { OptimisticTask } from "./TasksList";
+import { Checkbox } from "../ui/checkbox";
 
 type Props = {
   task: OptimisticTask;
@@ -11,22 +12,21 @@ type Props = {
 
 export function TaskRow({ task, onDelete, onCompletedChange }: Props) {
   return (
-    <form className="flex gap-2">
-      <input
-        type="checkbox"
+    <div className="flex gap-2 items-center">
+      <Checkbox
         checked={task.isCompleted}
-        className="cursor-pointer"
-        onChange={onCompletedChange}
+        onCheckedChange={onCompletedChange}
       />
       <TaskInput task={task} />
       <Button
         disabled={task.isPending}
         variant={"destructive"}
         size={"icon"}
-        formAction={onDelete}
+        type="button"
+        onClick={onDelete}
       >
         <X />
       </Button>
-    </form>
+    </div>
   );
 }
