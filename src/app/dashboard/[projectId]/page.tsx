@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { getRepositoryDetails } from "@/lib/github";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function Page({
   params: { projectId },
@@ -35,6 +36,15 @@ export default async function Page({
           <Link href={"./"}>
             <Button variant={"ghost"}>&lt;-</Button>
           </Link>
+          <Image
+            width={100}
+            height={100}
+            src={`https://github.com/${repository.owner.login}.png?size=80`}
+            alt={repository.owner.login}
+            className={`size-8 bg-gray-300 mr-2 ${
+              repository.owner.type === "User" ? "rounded-full" : "rounded-md"
+            }`}
+          />
           <h1 className="text-xl font-semibold">{repository.full_name}</h1>
           <Badge variant={"outline"} className="ml-2">
             {repository.private ? "Private" : "Public"}
