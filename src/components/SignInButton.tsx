@@ -5,9 +5,5 @@ import { Button } from "./ui/button";
 
 export const SignInButton = () => {
   const { pending } = useFormStatus();
-  return (
-    <Button formAction={login} disabled={pending}>
-      Sign In
-    </Button>
-  );
+  return <Button disabled={pending}>Sign In</Button>;
 };
