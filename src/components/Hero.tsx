@@ -13,11 +13,11 @@ export default function Hero({ user }: Props) {
     <main className="flex items-center flex-col text-center ">
       <h2 className="text-5xl font-bold mt-16 max-w-[700px] leading-normal">
         Your next{" "}
-        <span className="from-red-200 to-blue-800 bg-gradient-to-r bg-clip-text text-transparent">
+        <span className="from-primary to-green-300 bg-gradient-to-r bg-clip-text text-transparent">
           side project
         </span>{" "}
         won&apos;t <span className="line-through text-red-500">fail</span>{" "}
-        <span className="from-red-200 to-blue-800 bg-gradient-to-r bg-clip-text text-transparent">
+        <span className="from-primary to-green-300 bg-gradient-to-r bg-clip-text text-transparent">
           this time
         </span>{" "}
         💡
