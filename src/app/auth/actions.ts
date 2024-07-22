@@ -27,6 +27,7 @@ export async function login() {
 }
 
 export async function logout() {
+  "use server";
   const supabase = createClient();
 
   const {
