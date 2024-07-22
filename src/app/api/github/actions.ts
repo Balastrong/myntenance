@@ -43,7 +43,7 @@ export async function storeRepository(fullName: string) {
         name: data.name,
         ownerLogin: data.owner.login,
         ownerType: data.owner.type,
-        visibility: data.visibility ?? data.private ? "private" : "public",
+        visibility: data.private ? "private" : "public",
         stars: data.stargazers_count,
         openIssues: data.open_issues_count,
       });
