@@ -51,7 +51,7 @@ export default function HeaderUser({ user }: Props) {
                   alt={"Contribute on GitHub"}
                   width={60}
                   height={60}
-                  className="mr-2 h-4 w-4"
+                  className="mr-2 h-4 w-4 fill-current"
                 />
                 GitHub
               </DropdownMenuItem>

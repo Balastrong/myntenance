@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import HeaderUser from "./HeaderUser";
+import { ModeToggle } from "./ModeToggle";
 
 export default async function Header() {
   const {
@@ -12,7 +13,10 @@ export default async function Header() {
       <Link href="/">
         <h1 className="text-2xl font-semibold">Myntenance</h1>
       </Link>
-      <HeaderUser user={user} />
+      <div className="flex gap-2 items-center">
+        <ModeToggle />
+        <HeaderUser user={user} />
+      </div>
     </header>
   );
 }
