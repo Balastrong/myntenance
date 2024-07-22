@@ -39,5 +39,5 @@ export const getRepositoryDetails = unstable_cache(
   undefined,
   {
     revalidate: 60,
-  }
+  },
 );

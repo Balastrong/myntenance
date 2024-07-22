@@ -27,7 +27,7 @@ export async function setCompletedAction({
 }
 
 export async function updateTaskAction(
-  props: Parameters<typeof updateTask>[0]
+  props: Parameters<typeof updateTask>[0],
 ) {
   await updateTask(props);
   revalidateTag("tasks");

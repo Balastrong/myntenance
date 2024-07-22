@@ -18,7 +18,7 @@ export const getOwnTasks = unstable_cache(
   undefined,
   {
     tags: ["tasks"],
-  }
+  },
 );
 
 export async function createTask(task: TaskInsert) {
@@ -56,5 +56,5 @@ export const getTask = unstable_cache(
   undefined,
   {
     tags: ["tasks"],
-  }
+  },
 );

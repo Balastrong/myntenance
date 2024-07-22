@@ -37,7 +37,7 @@ export const useOptimisticTasks = (tasks: Task[], projectId: string) => {
         return state.map((task) =>
           task.id === payload.partialTask.id
             ? { ...task, ...payload.partialTask }
-            : task
+            : task,
         );
     }
   });

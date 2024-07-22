@@ -38,11 +38,14 @@ export function AutoComplete<T extends string>({
 
   const labels = useMemo(
     () =>
-      items.reduce((acc, item) => {
-        acc[item.value] = item.label;
-        return acc;
-      }, {} as Record<string, string>),
-    [items]
+      items.reduce(
+        (acc, item) => {
+          acc[item.value] = item.label;
+          return acc;
+        },
+        {} as Record<string, string>,
+      ),
+    [items],
   );
 
   const reset = () => {
@@ -122,7 +125,7 @@ export function AutoComplete<T extends string>({
                           "mr-2 h-4 w-4",
                           selectedValue === option.value
                             ? "opacity-100"
-                            : "opacity-0"
+                            : "opacity-0",
                         )}
                       />
                       {option.label}

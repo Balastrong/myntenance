@@ -13,7 +13,7 @@ type Props = {
 
 export function TaskRow({ task, onDelete, onCompletedChange }: Props) {
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <Checkbox
         checked={task.isCompleted}
         onCheckedChange={onCompletedChange}

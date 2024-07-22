@@ -54,7 +54,7 @@ export async function storeRepository(fullName: string) {
     const errorMessage =
       error instanceof Error
         ? error?.message
-        : undefined ?? "An error occurred";
+        : (undefined ?? "An error occurred");
 
     return { message: errorMessage, error: true };
   }

@@ -26,7 +26,7 @@ export default async function Page({
 
   const repository = await getRepositoryDetails(
     project.ownerLogin,
-    project.name
+    project.name,
   );
 
   return (
@@ -41,7 +41,7 @@ export default async function Page({
             height={100}
             src={`https://github.com/${repository.owner.login}.png?size=80`}
             alt={repository.owner.login}
-            className={`size-8 bg-gray-300 mr-2 ${
+            className={`mr-2 size-8 bg-gray-300 ${
               repository.owner.type === "User" ? "rounded-full" : "rounded-md"
             }`}
           />
@@ -56,7 +56,7 @@ export default async function Page({
             value={
               repository.lastCommit.commit.author?.date
                 ? new Date(
-                    repository.lastCommit.commit.author.date
+                    repository.lastCommit.commit.author.date,
                   ).toLocaleDateString()
                 : ""
             }
