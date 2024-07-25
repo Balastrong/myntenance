@@ -26,7 +26,7 @@ export default function TasksList({ projectId, tasks }: Props) {
   const completedTasksCount = optimisticTasks.length - openTasks.length;
 
   return (
-    <div className="flex max-w-[600px] flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <ul className="flex flex-col gap-2">
         {(showCompleted ? optimisticTasks : openTasks)?.map((task) => (
           <TaskRow

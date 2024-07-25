@@ -4,110 +4,113 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
 export type Database = {
   public: {
     Tables: {
       projects: {
         Row: {
-          createdAt: string;
-          id: string;
-          isFavourite: boolean;
-          name: string;
-          openIssues: number;
-          ownerLogin: string;
-          ownerType: string;
-          stars: number;
-          user: string;
-          visibility: string;
-        };
+          createdAt: string
+          id: string
+          isFavourite: boolean
+          name: string
+          notes: string | null
+          openIssues: number
+          ownerLogin: string
+          ownerType: string
+          stars: number
+          user: string
+          visibility: string
+        }
         Insert: {
-          createdAt?: string;
-          id?: string;
-          isFavourite?: boolean;
-          name: string;
-          openIssues: number;
-          ownerLogin: string;
-          ownerType: string;
-          stars: number;
-          user?: string;
-          visibility: string;
-        };
+          createdAt?: string
+          id?: string
+          isFavourite?: boolean
+          name: string
+          notes?: string | null
+          openIssues: number
+          ownerLogin: string
+          ownerType: string
+          stars: number
+          user?: string
+          visibility: string
+        }
         Update: {
-          createdAt?: string;
-          id?: string;
-          isFavourite?: boolean;
-          name?: string;
-          openIssues?: number;
-          ownerLogin?: string;
-          ownerType?: string;
-          stars?: number;
-          user?: string;
-          visibility?: string;
-        };
+          createdAt?: string
+          id?: string
+          isFavourite?: boolean
+          name?: string
+          notes?: string | null
+          openIssues?: number
+          ownerLogin?: string
+          ownerType?: string
+          stars?: number
+          user?: string
+          visibility?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "projects_user_fkey";
-            columns: ["user"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            foreignKeyName: "projects_user_fkey"
+            columns: ["user"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
-        ];
-      };
+        ]
+      }
       tasks: {
         Row: {
-          createdAt: string;
-          id: number;
-          isCompleted: boolean;
-          projectId: string;
-          title: string;
-          updatedAt: string;
-        };
+          createdAt: string
+          id: number
+          isCompleted: boolean
+          projectId: string
+          title: string
+          updatedAt: string
+        }
         Insert: {
-          createdAt?: string;
-          id?: number;
-          isCompleted?: boolean;
-          projectId: string;
-          title: string;
-          updatedAt?: string;
-        };
+          createdAt?: string
+          id?: number
+          isCompleted?: boolean
+          projectId: string
+          title: string
+          updatedAt?: string
+        }
         Update: {
-          createdAt?: string;
-          id?: number;
-          isCompleted?: boolean;
-          projectId?: string;
-          title?: string;
-          updatedAt?: string;
-        };
+          createdAt?: string
+          id?: number
+          isCompleted?: boolean
+          projectId?: string
+          title?: string
+          updatedAt?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "tasks_projectId_fkey";
-            columns: ["projectId"];
-            isOneToOne: false;
-            referencedRelation: "projects";
-            referencedColumns: ["id"];
+            foreignKeyName: "tasks_projectId_fkey"
+            columns: ["projectId"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
           },
-        ];
-      };
-    };
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
-};
+      [_ in never]: never
+    }
+  }
+}
 
-type PublicSchema = Database[Extract<keyof Database, "public">];
+type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -120,7 +123,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
@@ -128,11 +131,11 @@ export type Tables<
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
         PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R;
+        Row: infer R
       }
       ? R
       : never
-    : never;
+    : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -143,17 +146,17 @@ export type TablesInsert<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I;
+        Insert: infer I
       }
       ? I
       : never
-    : never;
+    : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -164,17 +167,17 @@ export type TablesUpdate<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U;
+        Update: infer U
       }
       ? U
       : never
-    : never;
+    : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -187,4 +190,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never;
+    : never

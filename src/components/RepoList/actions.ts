@@ -25,3 +25,10 @@ export async function toggleFavourite(formData: FormData) {
 
   revalidatePath("/");
 }
+
+export async function updateProjectNotes(id: string, notes: string) {
+  "use server";
+
+  await createClient().from("projects").update({ notes }).eq("id", id);
+  revalidatePath(`/dashboard/${id}`);
+}

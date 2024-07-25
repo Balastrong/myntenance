@@ -1,3 +1,4 @@
+import { Notes } from "@/components/Repo/Notes";
 import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm";
 import Tasks from "@/components/TasksList/Tasks";
 import { Badge } from "@/components/ui/badge";
@@ -6,8 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { getRepositoryDetails } from "@/lib/github";
 import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Page({
   params: { projectId },
@@ -75,9 +76,11 @@ export default async function Page({
         />
         <DetailItem label="Language" value={repository.language?.toString()} />
       </div>
+      <h3>Notes</h3>
+      <Notes projectId={projectId} projectNotes={project.notes ?? ""} />
       <h3 className="text-lg">Tasks</h3>
       <Tasks projectId={projectId} />
-      <Card className="max-w-[800px]">
+      <Card>
         <CardHeader>
           <CardTitle>Danger Zone</CardTitle>
         </CardHeader>
