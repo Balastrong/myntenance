@@ -8,15 +8,14 @@ import { useOptimistic } from "react";
 type Props = { repoId: string; isFavorite: boolean };
 
 export function FavouriteRepoForm({ repoId, isFavorite }: Props) {
-  const [optimisticIsFavourite, optimisticToggleFavourite] = useOptimistic<
-    boolean,
-    boolean
-  >(isFavorite, (_, newIsFavourite) => newIsFavourite);
+  console.log("FavouriteRepoForm render");
+  const [optimisticIsFavourite, optimisticToggleFavourite] =
+    useOptimistic(isFavorite);
 
   return (
     <form
       action={async (formData: FormData) => {
-        optimisticToggleFavourite(!optimisticIsFavourite);
+        optimisticToggleFavourite((curr) => !curr);
         toggleFavourite(formData);
       }}
     >

@@ -1,9 +1,9 @@
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import TaskInput from "./TaskInput";
-import { OptimisticTask } from "./TasksList";
 import { Checkbox } from "../ui/checkbox";
 import Link from "next/link";
+import { OptimisticTask } from "./useOptimisticTasks";
 
 type Props = {
   task: OptimisticTask;

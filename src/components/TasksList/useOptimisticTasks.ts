@@ -1,11 +1,12 @@
 import { Task } from "@/lib/supabase/types";
-import { OptimisticTask } from "./TasksList";
 import { useOptimistic } from "react";
 import {
   createTaskAction,
-  setCompletedAction,
   deleteTaskAction,
+  setCompletedAction,
 } from "./actions";
+
+export type OptimisticTask = Task & { isPending?: boolean };
 
 type OptimisticTaskActions =
   | {
@@ -49,7 +50,7 @@ export const useOptimisticTasks = (tasks: Task[], projectId: string) => {
       projectId,
       title,
       createdAt: new Date().toISOString(),
-      id: optimisticTasks.length + 999,
+      id: optimisticTasks.length,
       isCompleted: false,
       updatedAt: new Date().toISOString(),
     };

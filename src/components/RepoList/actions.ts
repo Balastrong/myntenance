@@ -9,7 +9,7 @@ export async function handleDelete(formData: FormData) {
 
   const id = formData.get("id")!;
   await createClient().from("projects").delete().eq("id", id);
-  revalidatePath("/");
+  revalidatePath("/dashboard");
   redirect("/dashboard");
 }
 
@@ -23,7 +23,7 @@ export async function toggleFavourite(formData: FormData) {
     .update({ isFavourite: !isFavourite })
     .eq("id", id);
 
-  revalidatePath("/");
+  revalidatePath("/dashboard");
 }
 
 export async function updateProjectNotes(id: string, notes: string) {

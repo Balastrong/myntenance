@@ -9,8 +9,6 @@ import { useOptimisticTasks } from "./useOptimisticTasks";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 
-export type OptimisticTask = Task & { isPending?: boolean };
-
 type Props = {
   projectId: string;
   tasks: Task[];

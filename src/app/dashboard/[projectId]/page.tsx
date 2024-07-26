@@ -1,5 +1,6 @@
 import { Notes } from "@/components/Repo/Notes";
 import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm";
+import { FavouriteRepoForm } from "@/components/RepoList/FavouriteRepoForm";
 import Tasks from "@/components/TasksList/Tasks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -33,8 +34,8 @@ export default async function Page({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <Link href={"./"}>
+        <div className="flex items-center gap-2">
+          <Link href={"./"} className="-mr-2">
             <Button variant={"ghost"}>&lt;-</Button>
           </Link>
           <Image
@@ -47,7 +48,11 @@ export default async function Page({
             }`}
           />
           <h1 className="text-xl font-semibold">{repository.full_name}</h1>
-          <Badge variant={"outline"} className="ml-2">
+          <FavouriteRepoForm
+            repoId={projectId}
+            isFavorite={project.isFavourite}
+          />
+          <Badge variant={"outline"}>
             {repository.private ? "Private" : "Public"}
           </Badge>
         </div>

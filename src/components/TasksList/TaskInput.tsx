@@ -3,7 +3,7 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { updateTaskAction } from "./actions";
-import { OptimisticTask } from "./TasksList";
+import { OptimisticTask } from "./useOptimisticTasks";
 
 type Props = {
   task: OptimisticTask;
