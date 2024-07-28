@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Dialog, DialogContent } from "./ui/dialog";
 
 type Props = {
   children: React.ReactNode;
@@ -15,7 +15,7 @@ export function RouteModal({ children }: Props) {
 
   return (
     <Dialog open={true} onOpenChange={handleOpenChange}>
-      <DialogContent className="overflow-y-hidden">{children}</DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   );
 }

@@ -1,6 +1,8 @@
+"use server";
+
 import { createClient } from "@/lib/supabase/client";
 import { TaskInsert } from "@/lib/supabase/types";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 
 export const getOwnTasks = unstable_cache(
   async (filters?: { projectId?: string }) => {
@@ -14,6 +16,21 @@ export const getOwnTasks = unstable_cache(
     }
 
     return await query;
+  },
+  undefined,
+  {
+    tags: ["tasks"],
+  },
+);
+
+export const getTask = unstable_cache(
+  async ({ projectId, taskId }: { projectId: string; taskId: string }) => {
+    return createClient()
+      .from("tasks")
+      .select("*")
+      .eq("projectId", projectId)
+      .eq("id", taskId)
+      .single();
   },
   undefined,
   {
@@ -40,21 +57,17 @@ export async function updateTask({ id, title }: { id: number; title: string }) {
   return createClient().from("tasks").update({ title }).eq("id", id);
 }
 
+export async function assignTaskIssue({
+  id,
+  issueNumber,
+}: {
+  id: number;
+  issueNumber: string | null;
+}) {
+  revalidateTag("tasks");
+  return createClient().from("tasks").update({ issueNumber }).eq("id", id);
+}
+
 export async function deleteTask(id: number) {
   return createClient().from("tasks").delete().eq("id", id);
 }
-
-export const getTask = unstable_cache(
-  async ({ projectId, taskId }: { projectId: string; taskId: string }) => {
-    return createClient()
-      .from("tasks")
-      .select("*")
-      .eq("projectId", projectId)
-      .eq("id", taskId)
-      .single();
-  },
-  undefined,
-  {
-    tags: ["tasks"],
-  },
-);

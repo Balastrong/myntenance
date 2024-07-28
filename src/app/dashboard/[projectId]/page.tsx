@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { getRepositoryDetails } from "@/lib/github";
 import { createClient } from "@/lib/supabase/server";
+import { getProject } from "@/services/project/api";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,11 +17,7 @@ export default async function Page({
 }: {
   params: { projectId: string };
 }) {
-  const { data: project } = await createClient()
-    .from("projects")
-    .select("*")
-    .eq("id", projectId)
-    .single();
+  const project = await getProject(projectId, createClient());
 
   if (!project) {
     return <div>Repository not found</div>;
