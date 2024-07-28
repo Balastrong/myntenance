@@ -19,9 +19,11 @@ export function TaskRow({ task, onDelete, onCompletedChange }: Props) {
         onCheckedChange={onCompletedChange}
       />
       <TaskInput task={task} />
-      <Link href={`/dashboard/${task.projectId}/task/${task.id}`}>
-        <Button>Details</Button>
-      </Link>
+      <Button asChild>
+        <Link href={`/dashboard/${task.projectId}/task/${task.id}`}>
+          Details
+        </Link>
+      </Button>
       <Button
         disabled={task.isPending}
         variant={"destructive"}

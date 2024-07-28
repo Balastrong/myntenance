@@ -8,7 +8,6 @@ import { useOptimistic } from "react";
 type Props = { repoId: string; isFavorite: boolean };
 
 export function FavouriteRepoForm({ repoId, isFavorite }: Props) {
-  console.log("FavouriteRepoForm render");
   const [optimisticIsFavourite, optimisticToggleFavourite] =
     useOptimistic(isFavorite);
 

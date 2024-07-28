@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import { TaskInsert } from "@/lib/supabase/types";
-import { unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 
 export const getOwnTasks = unstable_cache(
   async (filters?: { projectId?: string }) => {
@@ -23,6 +23,8 @@ export const getOwnTasks = unstable_cache(
 
 export async function createTask(task: TaskInsert) {
   const { id, ...rest } = task;
+
+  revalidateTag("tasks");
   return createClient().from("tasks").insert(rest);
 }
 
@@ -33,14 +35,17 @@ export async function setCompleted({
   id: number;
   isCompleted: boolean;
 }) {
+  revalidateTag("tasks");
   return createClient().from("tasks").update({ isCompleted }).eq("id", id);
 }
 
 export async function updateTask({ id, title }: { id: number; title: string }) {
+  revalidateTag("tasks");
   return createClient().from("tasks").update({ title }).eq("id", id);
 }
 
 export async function deleteTask(id: number) {
+  revalidateTag("tasks");
   return createClient().from("tasks").delete().eq("id", id);
 }
 

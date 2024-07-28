@@ -8,6 +8,8 @@ Myntenance is a tool that helps you keep track of your side projects along with 
 
 Give it a try at [https://myntenance.vercel.app/](https://myntenance.vercel.app/).
 
+Curious about the story behind the project? Watch the presentation at [https://youtu.be/QLOPQOUqw2U](https://youtu.be/QLOPQOUqw2U).
+
 ## Roadmap
 
 High level roadmap of the project, subejct to change and feedback.
