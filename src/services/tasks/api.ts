@@ -1,3 +1,5 @@
+"use server";
+
 import { createClient } from "@/lib/supabase/client";
 import { TaskInsert } from "@/lib/supabase/types";
 import { revalidateTag, unstable_cache } from "next/cache";
@@ -21,34 +23,6 @@ export const getOwnTasks = unstable_cache(
   },
 );
 
-export async function createTask(task: TaskInsert) {
-  const { id, ...rest } = task;
-
-  revalidateTag("tasks");
-  return createClient().from("tasks").insert(rest);
-}
-
-export async function setCompleted({
-  id,
-  isCompleted,
-}: {
-  id: number;
-  isCompleted: boolean;
-}) {
-  revalidateTag("tasks");
-  return createClient().from("tasks").update({ isCompleted }).eq("id", id);
-}
-
-export async function updateTask({ id, title }: { id: number; title: string }) {
-  revalidateTag("tasks");
-  return createClient().from("tasks").update({ title }).eq("id", id);
-}
-
-export async function deleteTask(id: number) {
-  revalidateTag("tasks");
-  return createClient().from("tasks").delete().eq("id", id);
-}
-
 export const getTask = unstable_cache(
   async ({ projectId, taskId }: { projectId: string; taskId: string }) => {
     return createClient()
@@ -63,3 +37,37 @@ export const getTask = unstable_cache(
     tags: ["tasks"],
   },
 );
+
+export async function createTask(task: TaskInsert) {
+  const { id, ...rest } = task;
+  return createClient().from("tasks").insert(rest);
+}
+
+export async function setCompleted({
+  id,
+  isCompleted,
+}: {
+  id: number;
+  isCompleted: boolean;
+}) {
+  return createClient().from("tasks").update({ isCompleted }).eq("id", id);
+}
+
+export async function updateTask({ id, title }: { id: number; title: string }) {
+  return createClient().from("tasks").update({ title }).eq("id", id);
+}
+
+export async function assignTaskIssue({
+  id,
+  issueNumber,
+}: {
+  id: number;
+  issueNumber: string;
+}) {
+  revalidateTag("tasks");
+  return createClient().from("tasks").update({ issueNumber }).eq("id", id);
+}
+
+export async function deleteTask(id: number) {
+  return createClient().from("tasks").delete().eq("id", id);
+}
