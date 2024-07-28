@@ -20,10 +20,17 @@ export default function TaskInput({ task }: Props) {
   }, [debouncedTitle, task.id, task.title]);
 
   return (
-    <Input
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-      disabled={task.isPending}
-    />
+    <div className="relative flex-1">
+      <Input
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        disabled={task.isPending}
+      />
+      {task.issueNumber && (
+        <span className="absolute right-2 top-1/2 -translate-y-1/2 transform">
+          (#{task.issueNumber})
+        </span>
+      )}
+    </div>
   );
 }
