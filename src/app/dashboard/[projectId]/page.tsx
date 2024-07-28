@@ -6,7 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { getRepositoryDetails } from "@/lib/github";
+import { getRepositoryDetails } from "@/lib/github/api";
+import { getServerOctokit } from "@/lib/github/server";
 import { createClient } from "@/lib/supabase/server";
 import { getProject } from "@/services/project/api";
 import Image from "next/image";
@@ -26,6 +27,7 @@ export default async function Page({
   const repository = await getRepositoryDetails(
     project.ownerLogin,
     project.name,
+    await getServerOctokit(),
   );
 
   return (

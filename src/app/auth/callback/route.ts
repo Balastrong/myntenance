@@ -1,3 +1,7 @@
+import {
+  GITHUB_REFRESH_TOKEN_COOKIE,
+  GITHUB_TOKEN_COOKIE,
+} from "@/lib/supabase/cookies";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -26,6 +30,25 @@ export async function GET(request: Request) {
         },
       },
     );
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (session && session.provider_token) {
+        cookieStore.set(GITHUB_TOKEN_COOKIE, session.provider_token);
+      }
+
+      if (session && session.provider_refresh_token) {
+        cookieStore.set(
+          GITHUB_REFRESH_TOKEN_COOKIE,
+          session.provider_refresh_token,
+        );
+      }
+
+      if (event === "SIGNED_OUT") {
+        cookieStore.delete(GITHUB_TOKEN_COOKIE);
+        cookieStore.delete(GITHUB_REFRESH_TOKEN_COOKIE);
+      }
+    });
+
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       return NextResponse.redirect(`${origin}${next}`);

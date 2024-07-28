@@ -2,8 +2,7 @@
 
 import { RemoveTaskIssue } from "@/components/RemoveTaskIssue";
 import { TaskIssueSelector } from "@/components/TaskIssueSelector";
-import { Button } from "@/components/ui/button";
-import { getOctokit } from "@/lib/github";
+import { getClientOctokit } from "@/lib/github/client";
 import { Task } from "@/lib/supabase/types";
 
 type Props = {
@@ -19,7 +18,7 @@ export default async function TaskDetailComponent({
   if (task.issueNumber) {
     issue = (
       await (
-        await getOctokit()
+        await getClientOctokit()
       ).rest.issues.get({
         owner: repositoryFullName.split("/")[0],
         repo: repositoryFullName.split("/")[1],

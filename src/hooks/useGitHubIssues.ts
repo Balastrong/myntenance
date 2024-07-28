@@ -1,6 +1,6 @@
-import { getOctokit } from "@/lib/github";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useDebouncedValue } from "./useDebouncedValue";
+import { getClientOctokit } from "@/lib/github/client";
 
 export const useGitHubIssues = (query: string, baseQuery?: string) => {
   const { debouncedValue: debouncedQuery } = useDebouncedValue(query);
@@ -10,7 +10,7 @@ export const useGitHubIssues = (query: string, baseQuery?: string) => {
     enabled: debouncedQuery.length > 0,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const octokit = await getOctokit();
+      const octokit = await getClientOctokit();
 
       const {
         data: { items },

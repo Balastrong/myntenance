@@ -1,4 +1,4 @@
-import { getOctokit } from "@/lib/github";
+import { getClientOctokit } from "@/lib/github/client";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useDebouncedValue } from "./useDebouncedValue";
 
@@ -10,7 +10,7 @@ export const useGitHubRepositories = (query: string) => {
     enabled: debouncedQuery.length > 2,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const octokit = await getOctokit();
+      const octokit = await getClientOctokit();
 
       const {
         data: { items, total_count },

@@ -1,5 +1,5 @@
 "use server";
-import { getOctokit } from "@/lib/github";
+import { getServerOctokit } from "@/lib/github/server";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
@@ -30,7 +30,7 @@ export async function storeRepository(fullName: string) {
       throw new Error("Repository already exists");
     }
 
-    const octokit = await getOctokit();
+    const octokit = await getServerOctokit();
 
     const { data } = await octokit.rest.repos.get({
       owner,

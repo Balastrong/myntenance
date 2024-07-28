@@ -4,7 +4,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import {
+  GITHUB_REFRESH_TOKEN_COOKIE,
+  GITHUB_TOKEN_COOKIE,
+} from "@/lib/supabase/cookies";
 
 export async function login() {
   "use server";
@@ -37,6 +41,10 @@ export async function logout() {
   if (user) {
     await supabase.auth.signOut();
   }
+
+  const cookieStore = cookies();
+  cookieStore.delete(GITHUB_TOKEN_COOKIE);
+  cookieStore.delete(GITHUB_REFRESH_TOKEN_COOKIE);
 
   revalidatePath("/", "layout");
   redirect("/");
