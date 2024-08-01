@@ -1,8 +1,13 @@
-import { type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { type NextRequest } from "next/server";
+import { refreshToken } from "./lib/github/middleware";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  const supabaseResponse = await updateSession(request);
+
+  if (supabaseResponse.redirected) return supabaseResponse;
+
+  return await refreshToken(request, supabaseResponse);
 }
 
 export const config = {
