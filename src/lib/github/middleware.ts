@@ -79,7 +79,9 @@ export async function refreshToken(
   }
 
   response.cookies.set(GITHUB_ACCESS_TOKEN_COOKIE, newAccessToken);
-  response.cookies.set(GITHUB_REFRESH_TOKEN_COOKIE, newRefreshToken);
+  response.cookies.set(GITHUB_REFRESH_TOKEN_COOKIE, newRefreshToken, {
+    expires: new Date().setMonth(new Date().getMonth() + 3),
+  });
 
   return response;
 }

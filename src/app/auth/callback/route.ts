@@ -40,6 +40,7 @@ export async function GET(request: Request) {
         cookieStore.set(
           GITHUB_REFRESH_TOKEN_COOKIE,
           session.provider_refresh_token,
+          { expires: new Date().setMonth(new Date().getMonth() + 3) },
         );
       }
 
