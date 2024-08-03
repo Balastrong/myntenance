@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 
 type Props = {
   baseQuery?: string;
-  onSubmit: (issueNumber: string) => void;
+  onSubmit: (issueNumber: number) => void;
 };
 
 export function IssueSelector({ baseQuery, onSubmit }: Props) {
@@ -23,26 +23,24 @@ export function IssueSelector({ baseQuery, onSubmit }: Props) {
     <div>
       <form
         action={() => {
-          onSubmit(selectedValue);
+          onSubmit(Number(selectedValue));
           setSearchValue("");
           setSelectedValue("");
         }}
       >
         <div className="flex gap-2">
-          <div className="w-80">
-            <AutoComplete
-              selectedValue={selectedValue}
-              onSelectedValueChange={setSelectedValue}
-              searchValue={searchValue}
-              onSearchValueChange={setSearchValue}
-              items={items.map((item) => ({
-                value: item.number + "",
-                label: `#${item.number}: ${item.title}`,
-              }))}
-              placeholder="Search repositories..."
-              isLoading={isLoading}
-            />
-          </div>
+          <AutoComplete
+            selectedValue={selectedValue}
+            onSelectedValueChange={setSelectedValue}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            items={items.map((item) => ({
+              value: item.number + "",
+              label: `#${item.number}: ${item.title}`,
+            }))}
+            placeholder="Search repositories..."
+            isLoading={isLoading}
+          />
 
           <Button disabled={!selectedValue}>Select</Button>
         </div>

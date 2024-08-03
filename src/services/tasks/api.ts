@@ -62,10 +62,21 @@ export async function assignTaskIssue({
   issueNumber,
 }: {
   id: number;
-  issueNumber: string | null;
+  issueNumber: number | null;
 }) {
   revalidateTag("tasks");
   return createClient().from("tasks").update({ issueNumber }).eq("id", id);
+}
+
+export async function assignTaskPullRequest({
+  id,
+  prNumber,
+}: {
+  id: number;
+  prNumber: number | null;
+}) {
+  revalidateTag("tasks");
+  return createClient().from("tasks").update({ prNumber }).eq("id", id);
 }
 
 export async function deleteTask(id: number) {

@@ -64,7 +64,8 @@ export type Database = {
           createdAt: string
           id: number
           isCompleted: boolean
-          issueNumber: string | null
+          issueNumber: number | null
+          prNumber: number | null
           projectId: string
           title: string
           updatedAt: string
@@ -73,7 +74,8 @@ export type Database = {
           createdAt?: string
           id?: number
           isCompleted?: boolean
-          issueNumber?: string | null
+          issueNumber?: number | null
+          prNumber?: number | null
           projectId: string
           title: string
           updatedAt?: string
@@ -82,7 +84,8 @@ export type Database = {
           createdAt?: string
           id?: number
           isCompleted?: boolean
-          issueNumber?: string | null
+          issueNumber?: number | null
+          prNumber?: number | null
           projectId?: string
           title?: string
           updatedAt?: string

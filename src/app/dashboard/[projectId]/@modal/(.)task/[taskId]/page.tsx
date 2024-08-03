@@ -25,7 +25,7 @@ export default async function Page({
   return (
     <RouteModal>
       <DialogHeader>
-        <DialogTitle>{task.title}</DialogTitle>
+        <DialogTitle>Task: {task.title}</DialogTitle>
       </DialogHeader>
       <TaskDetailComponent
         task={task}

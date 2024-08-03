@@ -54,6 +54,7 @@ export const useOptimisticTasks = (tasks: Task[], projectId: string) => {
       isCompleted: false,
       updatedAt: new Date().toISOString(),
       issueNumber: null,
+      prNumber: null,
     };
 
     handleOptimisticTasks({

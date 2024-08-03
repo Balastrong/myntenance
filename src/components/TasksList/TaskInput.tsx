@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { updateTaskAction } from "./actions";
 import { OptimisticTask } from "./useOptimisticTasks";
+import { CircleDot, GitPullRequestArrow } from "lucide-react";
 
 type Props = {
   task: OptimisticTask;
@@ -26,10 +27,21 @@ export default function TaskInput({ task }: Props) {
         onChange={(e) => setTitle(e.target.value)}
         disabled={task.isPending}
       />
-      {task.issueNumber && (
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 transform">
-          (#{task.issueNumber})
-        </span>
+      {(task.issueNumber || task.prNumber) && (
+        <div className="absolute right-2 top-1/2 flex -translate-y-1/2 transform items-center gap-2">
+          {task.issueNumber && (
+            <span className="flex items-center gap-1">
+              <CircleDot className="size-4" />
+              {task.issueNumber}
+            </span>
+          )}
+          {task.prNumber && (
+            <span className="flex items-center gap-1">
+              <GitPullRequestArrow className="size-4" />
+              {task.prNumber}
+            </span>
+          )}
+        </div>
       )}
     </div>
   );

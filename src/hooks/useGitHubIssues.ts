@@ -6,7 +6,7 @@ export const useGitHubIssues = (query: string, baseQuery?: string) => {
   const { debouncedValue: debouncedQuery } = useDebouncedValue(query);
 
   return useQuery({
-    queryKey: ["issue-search", debouncedQuery],
+    queryKey: ["issue-search", baseQuery, debouncedQuery],
     enabled: debouncedQuery.length > 0,
     placeholderData: keepPreviousData,
     queryFn: async () => {
@@ -15,7 +15,7 @@ export const useGitHubIssues = (query: string, baseQuery?: string) => {
       const {
         data: { items },
       } = await octokit.rest.search.issuesAndPullRequests({
-        q: `is:issue ${baseQuery} "${query}"`,
+        q: `${baseQuery} "${debouncedQuery}"`,
         per_page: 8,
       });
 

@@ -9,7 +9,7 @@ type Props = {
 };
 
 export function TaskIssueSelector({ taskId, repositoryFullName }: Props) {
-  const issueBaseQuery = `repo:${repositoryFullName}`;
+  const issueBaseQuery = `is:issue repo:${repositoryFullName}`;
 
   return (
     <IssueSelector

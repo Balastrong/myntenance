@@ -73,7 +73,7 @@ export function AutoComplete<T extends string>({
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex w-full items-center">
       <Popover open={open} onOpenChange={setOpen}>
         <Command shouldFilter={false}>
           <PopoverAnchor asChild>
