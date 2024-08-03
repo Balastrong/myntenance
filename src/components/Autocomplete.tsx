@@ -83,7 +83,6 @@ export function AutoComplete<T extends string>({
               onValueChange={onSearchValueChange}
               onKeyDown={(e) => setOpen(e.key !== "Escape")}
               onMouseDown={() => setOpen((open) => !!searchValue || !open)}
-              onFocus={() => setOpen(true)}
               onBlur={onInputBlur}
             >
               <Input placeholder={placeholder} />

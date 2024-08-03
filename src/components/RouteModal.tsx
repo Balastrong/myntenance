@@ -15,7 +15,7 @@ export function RouteModal({ children }: Props) {
 
   return (
     <Dialog open={true} onOpenChange={handleOpenChange}>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent className="w-full">{children}</DialogContent>
     </Dialog>
   );
 }
