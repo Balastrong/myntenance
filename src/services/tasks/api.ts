@@ -79,6 +79,11 @@ export async function assignTaskPullRequest({
   return createClient().from("tasks").update({ prNumber }).eq("id", id);
 }
 
+export async function updateTaskNotes(id: number, notes: string) {
+  revalidateTag("tasks");
+  return await createClient().from("tasks").update({ notes }).eq("id", id);
+}
+
 export async function deleteTask(id: number) {
   return createClient().from("tasks").delete().eq("id", id);
 }

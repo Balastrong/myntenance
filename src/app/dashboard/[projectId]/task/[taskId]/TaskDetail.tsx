@@ -2,6 +2,7 @@
 
 import { RemoveTaskIssue } from "@/components/RemoveTaskIssue";
 import { RemoveTaskPullRequest } from "@/components/RemoveTaskPullRequest";
+import { TaskNotes } from "@/components/Task/TaskNotes";
 import { TaskIssueSelector } from "@/components/TaskIssueSelector";
 import { TaskPullRequestSelector } from "@/components/TaskPullRequestSelector";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -201,6 +202,8 @@ export default async function TaskDetailComponent({
           </CardContent>
         </Card>
       )}
+      <h3>Task Notes</h3>
+      <TaskNotes taskId={task.id} taskNotes={task.notes ?? ""} />
     </div>
   );
 }

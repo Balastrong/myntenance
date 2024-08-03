@@ -65,6 +65,7 @@ export type Database = {
           id: number
           isCompleted: boolean
           issueNumber: number | null
+          notes: string | null
           prNumber: number | null
           projectId: string
           title: string
@@ -75,6 +76,7 @@ export type Database = {
           id?: number
           isCompleted?: boolean
           issueNumber?: number | null
+          notes?: string | null
           prNumber?: number | null
           projectId: string
           title: string
@@ -85,6 +87,7 @@ export type Database = {
           id?: number
           isCompleted?: boolean
           issueNumber?: number | null
+          notes?: string | null
           prNumber?: number | null
           projectId?: string
           title?: string
