@@ -30,9 +30,7 @@ export async function storeRepository(fullName: string) {
       throw new Error("Repository already exists");
     }
 
-    const octokit = await getServerOctokit();
-
-    const { data } = await octokit.rest.repos.get({
+    const { data } = await getServerOctokit().rest.repos.get({
       owner,
       repo,
     });

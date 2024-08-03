@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "cookies-next": "^4.2.1",
     "lucide-react": "^0.399.0",
     "next": "14.2.4",
     "next-nprogress-bar": "^2.3.13",

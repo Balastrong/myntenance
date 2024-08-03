@@ -27,7 +27,7 @@ export default async function Page({
   const repository = await getRepositoryDetails(
     project.ownerLogin,
     project.name,
-    await getServerOctokit(),
+    getServerOctokit(),
   );
 
   return (

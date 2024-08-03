@@ -15,7 +15,7 @@ export const useGitHubIssues = (query: string, baseQuery?: string) => {
       const {
         data: { items },
       } = await octokit.rest.search.issuesAndPullRequests({
-        q: `${baseQuery} "${query}"`,
+        q: `is:issue ${baseQuery} "${query}"`,
         per_page: 8,
       });
 

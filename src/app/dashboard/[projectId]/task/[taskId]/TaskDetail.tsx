@@ -3,6 +3,7 @@
 import { RemoveTaskIssue } from "@/components/RemoveTaskIssue";
 import { TaskIssueSelector } from "@/components/TaskIssueSelector";
 import { getClientOctokit } from "@/lib/github/client";
+import { getServerOctokit } from "@/lib/github/server";
 import { Task } from "@/lib/supabase/types";
 
 type Props = {
@@ -17,9 +18,7 @@ export default async function TaskDetailComponent({
   let issue = null;
   if (task.issueNumber) {
     issue = (
-      await (
-        await getClientOctokit()
-      ).rest.issues.get({
+      await getServerOctokit().rest.issues.get({
         owner: repositoryFullName.split("/")[0],
         repo: repositoryFullName.split("/")[1],
         issue_number: Number(task.issueNumber),
@@ -32,7 +31,7 @@ export default async function TaskDetailComponent({
       {issue ? (
         <div className="flex items-center gap-2">
           Refers to:{" "}
-          <a href={issue.url} target="_blank" rel="noreferrer noopener">
+          <a href={issue.html_url} target="_blank" rel="noreferrer noopener">
             #{issue.number}: {issue.title} ({issue.state})
           </a>
           <RemoveTaskIssue taskId={task.id} />
