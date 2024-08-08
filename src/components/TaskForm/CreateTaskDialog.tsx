@@ -68,7 +68,7 @@ export function CreateTaskDialog({ projectId }: Props) {
               Fill in the details below to create a new task.
             </DialogDescription>
           </DialogHeader>
-          <TaskForm task={{ projectId } as Task} onSubmit={onSubmit}>
+          <TaskForm task={{ projectId, title: "" }} onSubmit={onSubmit}>
             {({ canSubmit, isSubmitting }) => (
               <DialogFooter className="gap-2 pt-4 sm:space-x-0">
                 <DialogClose asChild>
@@ -109,7 +109,7 @@ export function CreateTaskDialog({ projectId }: Props) {
             Fill in the details below to create a new task.
           </DrawerDescription>
         </DrawerHeader>
-        <TaskForm task={{ projectId } as Task} onSubmit={onSubmit}>
+        <TaskForm task={{ projectId, title: "" }} onSubmit={onSubmit}>
           {({ canSubmit, isSubmitting }) => (
             <DrawerFooter className="gap-2 sm:space-x-0">
               <DrawerClose asChild>

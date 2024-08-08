@@ -15,7 +15,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
 type Props = {
-  task: Task;
+  task: TaskInsert;
   onSubmit: (taskInsert: TaskInsert) => void;
   children: ({
     canSubmit,
@@ -30,7 +30,7 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
   const form = useForm({
     defaultValues: {
       title: task.title ?? "",
-      status: task.status as TaskStatus | "",
+      status: (task.status ?? "") as TaskStatus | "",
     },
     onSubmit: ({ value }) =>
       onSubmit({
