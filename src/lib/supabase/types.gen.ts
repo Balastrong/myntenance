@@ -68,6 +68,7 @@ export type Database = {
           notes: string | null
           prNumber: number | null
           projectId: string
+          status: Database["public"]["Enums"]["taskStatus"]
           title: string
           updatedAt: string
         }
@@ -79,6 +80,7 @@ export type Database = {
           notes?: string | null
           prNumber?: number | null
           projectId: string
+          status?: Database["public"]["Enums"]["taskStatus"]
           title: string
           updatedAt?: string
         }
@@ -90,6 +92,7 @@ export type Database = {
           notes?: string | null
           prNumber?: number | null
           projectId?: string
+          status?: Database["public"]["Enums"]["taskStatus"]
           title?: string
           updatedAt?: string
         }
@@ -111,7 +114,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      taskStatus: "todo" | "doing" | "done" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never

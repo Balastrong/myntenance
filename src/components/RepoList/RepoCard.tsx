@@ -51,7 +51,7 @@ export const RepoCard = ({ repo }: Props) => {
       </CardHeader>
       <CardContent>
         Open Tasks:{" "}
-        {repo.tasks.filter(({ isCompleted }) => !isCompleted).length}
+        {repo.tasks.filter(({ status }) => status === "todo").length}
       </CardContent>
       <CardFooter className="flex justify-end">
         <Link href={`/dashboard/${repo.id}`}>

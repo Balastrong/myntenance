@@ -10,13 +10,16 @@ import { getRepositoryDetails } from "@/lib/github/api";
 import { getServerOctokit } from "@/lib/github/server";
 import { createClient } from "@/lib/supabase/server";
 import { getProject } from "@/services/project/api";
+import { SearchParams } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Page({
   params: { projectId },
+  searchParams,
 }: {
   params: { projectId: string };
+  searchParams: SearchParams;
 }) {
   const project = await getProject(projectId, createClient());
 
@@ -83,7 +86,7 @@ export default async function Page({
       <h3>Notes</h3>
       <Notes projectId={projectId} projectNotes={project.notes ?? ""} />
       <h3 className="text-lg">Tasks</h3>
-      <Tasks projectId={projectId} />
+      <Tasks projectId={projectId} searchParams={searchParams} />
       <Card>
         <CardHeader>
           <CardTitle>Danger Zone</CardTitle>

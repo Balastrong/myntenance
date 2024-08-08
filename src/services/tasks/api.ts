@@ -1,27 +1,44 @@
 "use server";
 
+import { GetTasksParams } from "@/components/TasksList/Tasks";
 import { createClient } from "@/lib/supabase/client";
-import { TaskInsert } from "@/lib/supabase/types";
+import { Task, TaskInsert, TaskUpdate } from "@/lib/supabase/types";
+import { Database, Enums } from "@/lib/supabase/types.gen";
 import { revalidateTag, unstable_cache } from "next/cache";
 
-export const getOwnTasks = unstable_cache(
-  async (filters?: { projectId?: string }) => {
-    let query = createClient()
-      .from("tasks")
-      .select("*")
-      .order("id", { ascending: false });
+export const getOwnTasks = async (filters: {
+  projectId: string;
+  taskParams: GetTasksParams;
+}) => {
+  const { page, pageSize, ...taskFilters } = filters.taskParams;
 
-    if (filters?.projectId) {
-      query = query.eq("projectId", filters.projectId);
-    }
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+  let query = createClient()
+    .from("tasks")
+    .select("*", { count: "exact" })
+    .range(from, to);
 
-    return await query;
-  },
-  undefined,
-  {
-    tags: ["tasks"],
-  },
-);
+  query = query.eq("projectId", filters.projectId);
+
+  if (Object.values(taskFilters).length === 0) return query;
+
+  if (taskFilters.sort) {
+    const [field, direction] = taskFilters.sort.split(".");
+    query = query.order(field, { ascending: direction === "asc" });
+  }
+
+  if (taskFilters.status) {
+    const statusArray = taskFilters.status.split(".");
+    query = query.in("status", statusArray);
+  }
+
+  if (taskFilters.title) {
+    query = query.ilike("title", `%${taskFilters.title}%`);
+  }
+
+  return query;
+};
 
 export const getTask = unstable_cache(
   async ({ projectId, taskId }: { projectId: string; taskId: string }) => {
@@ -40,6 +57,7 @@ export const getTask = unstable_cache(
 
 export async function createTask(task: TaskInsert) {
   const { id, ...rest } = task;
+  revalidateTag("tasks");
   return createClient().from("tasks").insert(rest);
 }
 
@@ -53,8 +71,16 @@ export async function setCompleted({
   return createClient().from("tasks").update({ isCompleted }).eq("id", id);
 }
 
-export async function updateTask({ id, title }: { id: number; title: string }) {
-  return createClient().from("tasks").update({ title }).eq("id", id);
+export async function updateTask({
+  id,
+  taskUpdate,
+}: {
+  id: number;
+  taskUpdate: TaskUpdate;
+}) {
+  revalidateTag("tasks");
+
+  return createClient().from("tasks").update(taskUpdate).eq("id", id);
 }
 
 export async function assignTaskIssue({
@@ -86,4 +112,9 @@ export async function updateTaskNotes(id: number, notes: string) {
 
 export async function deleteTask(id: number) {
   return createClient().from("tasks").delete().eq("id", id);
+}
+
+export async function deleteTasks(ids: number[]) {
+  revalidateTag("tasks");
+  return createClient().from("tasks").delete().in("id", ids);
 }
