@@ -38,11 +38,11 @@ interface DataTableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   filterableColumnCount?: number;
 
   /**
-   * Flag to show the table view options.
-   * @default undefined
-   * @type boolean | undefined
+   * The number of actions on the right of the action bar.
+   * @default 1
+   * @type number | undefined
    */
-  showViewOptions?: boolean;
+  actionBarItems?: number;
 
   /**
    * The width of each cell in the table.
@@ -68,20 +68,18 @@ interface DataTableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   shrinkZero?: boolean;
 }
 
-export function DataTableSkeleton(props: DataTableSkeletonProps) {
-  const {
-    columnCount,
-    rowCount = 10,
-    searchableColumnCount = 0,
-    filterableColumnCount = 0,
-    showViewOptions = true,
-    cellWidths = ["auto"],
-    withPagination = true,
-    shrinkZero = false,
-    className,
-    ...skeletonProps
-  } = props;
-
+export function DataTableSkeleton({
+  columnCount,
+  rowCount = 10,
+  searchableColumnCount = 0,
+  filterableColumnCount = 0,
+  actionBarItems = 1,
+  cellWidths = ["auto"],
+  withPagination = true,
+  shrinkZero = false,
+  className,
+  ...skeletonProps
+}: DataTableSkeletonProps) {
   return (
     <div
       className={cn("w-full space-y-2.5 overflow-auto", className)}
@@ -100,9 +98,9 @@ export function DataTableSkeleton(props: DataTableSkeletonProps) {
               ))
             : null}
         </div>
-        {showViewOptions ? (
-          <Skeleton className="ml-auto hidden h-7 w-[4.5rem] lg:flex" />
-        ) : null}
+        {Array.from({ length: actionBarItems }).map((_, i) => (
+          <Skeleton key={i} className="ml-auto flex h-7 w-[6rem]" />
+        ))}
       </div>
       <div className="rounded-md border">
         <Table>
