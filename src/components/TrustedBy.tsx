@@ -51,16 +51,16 @@ export default function TrustedBy({
           <CardLabel>Users</CardLabel>
         </Card>
         <Card>
-          <CardNumber value={forks}>
-            <GitFork className="size-8" />
-          </CardNumber>
-          <CardLabel>Forks</CardLabel>
-        </Card>
-        <Card>
           <CardNumber value={projects}>
             <FolderGit2 className="size-8" />
           </CardNumber>
           <CardLabel>Projects</CardLabel>
+        </Card>
+        <Card>
+          <CardNumber value={forks}>
+            <GitFork className="size-8" />
+          </CardNumber>
+          <CardLabel>Forks</CardLabel>
         </Card>
       </Marquee>
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-white dark:from-background"></div>
