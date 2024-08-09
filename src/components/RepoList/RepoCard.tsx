@@ -5,11 +5,11 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { FavouriteRepoForm } from "./FavouriteRepoForm";
 import { RepoWithTasks } from "./RepoCards";
-import Image from "next/image";
 
 type Props = {
   repo: RepoWithTasks[number];

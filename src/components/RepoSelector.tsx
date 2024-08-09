@@ -2,11 +2,11 @@
 
 import { storeRepository } from "@/app/api/github/actions";
 import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
-import { useEffect, useRef, useState } from "react";
-import { useFormState } from "react-dom";
+import { useEffect, useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { AutoComplete } from "./Autocomplete";
-import { Button } from "./ui/button";
+import { ConfettiButton } from "./magicui/confetti";
 
 export const initialState = {
   message: "",
@@ -59,9 +59,25 @@ export function RepoSelector() {
             />
           </div>
 
-          <Button disabled={!selectedValue}>Select</Button>
+          <SelectButton isValueSelected={!!selectedValue} />
         </div>
       </form>
     </div>
   );
 }
+
+const SelectButton = ({ isValueSelected }: { isValueSelected: boolean }) => {
+  const { pending } = useFormStatus();
+  return (
+    <ConfettiButton
+      disabled={!isValueSelected || pending}
+      options={{
+        get angle() {
+          return 65;
+        },
+      }}
+    >
+      {pending ? "Selecting..." : "Select"}
+    </ConfettiButton>
+  );
+};

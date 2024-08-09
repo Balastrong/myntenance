@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className + " flex flex-col gap-2"}>
+    <html lang="en" suppressHydrationWarning className="h-full w-full">
+      <body className={inter.className + " flex h-full w-full flex-col gap-2"}>
         <Providers>
           <Header />
           <main className="m-auto w-full max-w-[1200px] flex-1 p-4">
