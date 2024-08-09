@@ -7,7 +7,7 @@ import { BorderBeam } from "./magicui/border-beam";
 export const SignInButton = () => {
   const { pending } = useFormStatus();
   return (
-    <Button disabled={pending} className="relative h-10 w-20">
+    <Button disabled={pending} className="relative w-full min-w-24">
       <>
         Sign In
         <BorderBeam size={55} borderWidth={2} duration={4} />

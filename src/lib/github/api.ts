@@ -24,3 +24,13 @@ export const getRepositoryDetails = unstable_cache(
     revalidate: 60,
   },
 );
+
+export const getMyntenanceRepository = unstable_cache(
+  async (octokit: Octokit) => {
+    return getRepositoryDetails("Balastrong", "myntenance", octokit);
+  },
+  undefined,
+  {
+    revalidate: 3600,
+  },
+);

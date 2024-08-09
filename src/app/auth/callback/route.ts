@@ -14,6 +14,7 @@ export async function GET(request: Request) {
 
   if (code) {
     const cookieStore = cookies();
+    // TODO Isn't this the same as the createClient function?
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import HeaderUser from "./HeaderUser";
-import { ModeToggle } from "./ModeToggle";
+import { ThemeToggle } from "./ThemeToggle";
+import { Button } from "./ui/button";
+import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export default async function Header() {
   const {
@@ -14,8 +16,28 @@ export default async function Header() {
         <h1 className="text-2xl font-semibold">Myntenance</h1>
       </Link>
       <div className="flex items-center gap-2">
-        <ModeToggle />
-        <HeaderUser user={user} />
+        <Button variant={"ghost"} size={"icon-sm"} asChild>
+          <a
+            href="https://github.com/Balastrong/myntenance"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <GitHubLogoIcon />
+          </a>
+        </Button>
+        <Button variant={"ghost"} size={"icon-sm"} asChild>
+          <a
+            href="https://discord.gg/8sbrxHVBBT"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <DiscordLogoIcon />
+          </a>
+        </Button>
+        <ThemeToggle />
+        <div className="ml-2">
+          <HeaderUser user={user} />
+        </div>
       </div>
     </header>
   );

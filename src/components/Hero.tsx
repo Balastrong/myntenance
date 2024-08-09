@@ -1,12 +1,11 @@
 import { login } from "@/app/auth/actions";
 import { User } from "@supabase/supabase-js";
 import Link from "next/link";
-import { HeroParticles } from "./HeroParticles";
+import BlurFade from "./magicui/blur-fade";
+import { BorderBeam } from "./magicui/border-beam";
+import SparklesText from "./magicui/sparkles-text";
 import { SignInButton } from "./SignInButton";
 import { Button } from "./ui/button";
-import SparklesText from "./magicui/sparkles-text";
-import { FadeText } from "./magicui/fade-text";
-import { BorderBeam } from "./magicui/border-beam";
 
 type Props = {
   user: User | null;
@@ -14,13 +13,9 @@ type Props = {
 
 export default async function Hero({ user }: Props) {
   return (
-    <main className="relative flex h-full flex-col items-center text-center">
-      <FadeText
-        framerProps={{
-          show: { transition: { duration: 0.8 } },
-        }}
-      >
-        <h2 className="mt-16 max-w-[700px] text-5xl font-bold leading-normal">
+    <div className="mt-10 flex flex-col items-center gap-10">
+      <BlurFade delay={0.1}>
+        <h2 className="max-w-[700px] text-6xl font-bold leading-normal">
           Your next{" "}
           <span className="bg-gradient-to-r from-primary to-green-300 bg-clip-text text-transparent">
             side project
@@ -33,13 +28,9 @@ export default async function Hero({ user }: Props) {
           </SparklesText>
           💡
         </h2>
-      </FadeText>
-      <FadeText
-        framerProps={{
-          show: { transition: { delay: 0.5, duration: 1 } },
-        }}
-      >
-        <p className="my-8 max-w-[800px] leading-normal">
+      </BlurFade>
+      <BlurFade delay={0.25}>
+        <p className="mb-6 max-w-[800px] text-xl leading-normal">
           Keep track of tasks and plans for your side projects, remain motivated
           and accountable.
           <br />
@@ -53,11 +44,11 @@ export default async function Hero({ user }: Props) {
             </Link>
           </Button>
         ) : (
-          <form action={login}>
+          <form action={login} className="mx-auto w-32">
             <SignInButton />
           </form>
         )}
-      </FadeText>
-    </main>
+      </BlurFade>
+    </div>
   );
 }
