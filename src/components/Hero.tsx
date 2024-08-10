@@ -13,9 +13,9 @@ type Props = {
 
 export default async function Hero({ user }: Props) {
   return (
-    <div className="mt-10 flex flex-col items-center gap-10">
+    <div className="mt-10 flex flex-col items-center gap-10 px-4">
       <BlurFade delay={0.1}>
-        <h2 className="max-w-[700px] text-6xl font-bold leading-normal">
+        <h2 className="max-w-[700px] text-4xl font-bold leading-normal md:text-6xl">
           Your next{" "}
           <span className="bg-gradient-to-r from-primary to-green-300 bg-clip-text text-transparent">
             side project
@@ -30,7 +30,7 @@ export default async function Hero({ user }: Props) {
         </h2>
       </BlurFade>
       <BlurFade delay={0.25}>
-        <p className="mb-6 max-w-[800px] text-xl leading-normal">
+        <p className="mb-6 max-w-[800px] text-base leading-normal md:text-xl">
           Keep track of tasks and plans for your side projects, remain motivated
           and accountable.
           <br />

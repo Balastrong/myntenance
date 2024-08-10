@@ -21,8 +21,11 @@ export default function TrustedBy({
 }: Props) {
   return (
     <div className="w-full pb-6">
-      <h2 className="text-2xl font-semibold">Trusted by</h2>
-      <Marquee pauseOnHover className="pb-8 pt-4 [--duration:40s] [--gap:3rem]">
+      <h2 className="text-xl font-semibold md:text-2xl">Trusted by</h2>
+      <Marquee
+        pauseOnHover
+        className="pb-8 pt-4 [--duration:40s] [--gap:1rem] md:[--gap:3rem]"
+      >
         <Card>
           <CardNumber value={stargazers}>
             <Star className="size-8" />
@@ -75,9 +78,9 @@ const Card = ({ children }: { children: React.ReactNode }) => {
   return (
     <MagicCard
       gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
-      className="flex min-w-[300px] cursor-pointer items-center justify-center shadow-xl"
+      className="flex min-w-[180px] cursor-pointer items-center justify-center shadow-xl md:min-w-[300px]"
     >
-      <div className="flex h-full flex-col items-center justify-center gap-2 px-16 py-4 text-xl">
+      <div className="flex h-full flex-col items-center justify-center gap-2 px-8 py-4 text-xl md:px-16">
         {children}
       </div>
     </MagicCard>
@@ -92,7 +95,7 @@ const CardNumber = ({
   value: number;
 }) => {
   return (
-    <div className="mb-auto flex items-center gap-1 text-4xl font-semibold">
+    <div className="mb-auto flex items-center gap-1 text-xl font-semibold md:text-4xl">
       <NumberTicker value={value} />
       {children}
     </div>
@@ -100,5 +103,5 @@ const CardNumber = ({
 };
 
 const CardLabel = ({ children }: { children: React.ReactNode }) => {
-  return <div className="text-xl">{children}</div>;
+  return <div className="text-base md:text-xl">{children}</div>;
 };
