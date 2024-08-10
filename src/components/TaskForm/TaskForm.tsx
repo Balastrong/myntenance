@@ -50,7 +50,7 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
       }}
     >
       {formErrors.map((error) => (
-        <p key={error as string}>{error}</p>
+        <p key={error as string} className="text-xs text-destructive my-0.5">{error}</p>
       ))}
 
       <form.Field
@@ -71,7 +71,7 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               {field.state.meta.errors.map((error) => (
-                <p key={error as string}>{error}</p>
+                <p key={error as string} className="text-xs text-destructive my-0.5">{error}</p>
               ))}
             </div>
           );
@@ -106,7 +106,7 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
                 </SelectContent>
               </Select>
               {field.state.meta.errors.map((error) => (
-                <p key={error as string}>{error}</p>
+                <p key={error as string} className="text-xs text-destructive my-0.5">{error}</p>
               ))}
             </div>
           );
