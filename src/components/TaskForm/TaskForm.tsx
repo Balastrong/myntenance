@@ -13,6 +13,7 @@ import { useForm } from "@tanstack/react-form";
 import { ReactNode } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { getStatusIcon } from "@/lib/utils";
 
 type Props = {
   task: TaskInsert;
@@ -98,11 +99,16 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
                   <SelectValue id="task-status" />
                 </SelectTrigger>
                 <SelectContent>
-                  {TaskStatusValues.map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {status}
-                    </SelectItem>
-                  ))}
+                  {TaskStatusValues.map((status) => {
+                    const Icon = getStatusIcon(status);
+                    return (
+                      <SelectItem key={status} value={status}>
+                        <div className="capitalize flex items-center gap-2">
+                          <Icon />
+                          {status}
+                        </div>
+                      </SelectItem>
+                  )})}
                 </SelectContent>
               </Select>
               {field.state.meta.errors.map((error) => (
