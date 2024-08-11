@@ -1,25 +1,25 @@
-import { getTask } from "@/services/tasks/api";
-import TaskDetailComponent from "./TaskDetail";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { getProject } from "@/services/project/api";
-import { createClient } from "@/lib/supabase/server";
+import { getTask } from "@/services/tasks/api"
+import TaskDetailComponent from "./TaskDetail"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
+import { getProject } from "@/services/project/api"
+import { createClient } from "@/lib/supabase/server"
 
 export default async function Page({
   params: { taskId, projectId },
 }: {
-  params: { taskId: string; projectId: string };
+  params: { taskId: string; projectId: string }
 }) {
-  const { data: task } = await getTask({ projectId, taskId });
+  const { data: task } = await getTask({ projectId, taskId })
 
   if (!task) {
-    return <div>Task not found</div>;
+    return <div>Task not found</div>
   }
 
-  const project = await getProject(projectId, createClient());
+  const project = await getProject(projectId, createClient())
 
   if (!project) {
-    return <div>Project not found</div>;
+    return <div>Project not found</div>
   }
 
   return (
@@ -36,5 +36,5 @@ export default async function Page({
         repositoryFullName={`${project?.ownerLogin}/${project?.name}`}
       />
     </div>
-  );
+  )
 }

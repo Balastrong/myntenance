@@ -1,21 +1,21 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { useRouter } from "next/navigation"
+import { Dialog, DialogContent } from "./ui/dialog"
 
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 export function RouteModal({ children }: Props) {
-  const router = useRouter();
+  const router = useRouter()
 
   const handleOpenChange = () => {
-    router.back();
-  };
+    router.back()
+  }
 
   return (
     <Dialog open={true} onOpenChange={handleOpenChange}>
       <DialogContent className="w-full">{children}</DialogContent>
     </Dialog>
-  );
+  )
 }

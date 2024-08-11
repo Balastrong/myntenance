@@ -1,13 +1,13 @@
-import { updateSession } from "@/lib/supabase/middleware";
-import { type NextRequest } from "next/server";
-import { refreshToken } from "./lib/github/middleware";
+import { updateSession } from "@/lib/supabase/middleware"
+import { type NextRequest } from "next/server"
+import { refreshToken } from "./lib/github/middleware"
 
 export async function middleware(request: NextRequest) {
-  const supabaseResponse = await updateSession(request);
+  const supabaseResponse = await updateSession(request)
 
-  if (supabaseResponse.redirected) return supabaseResponse;
+  if (supabaseResponse.redirected) return supabaseResponse
 
-  return await refreshToken(request, supabaseResponse);
+  return await refreshToken(request, supabaseResponse)
 }
 
 export const config = {
@@ -21,4 +21,4 @@ export const config = {
      */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
-};
+}

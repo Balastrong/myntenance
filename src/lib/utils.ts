@@ -1,16 +1,16 @@
-import { TaskStatus } from "@/types/schemas";
+import { TaskStatus } from "@/types/schemas"
 import {
   CheckCircledIcon,
   CircleIcon,
   CrossCircledIcon,
   QuestionMarkCircledIcon,
   StopwatchIcon,
-} from "@radix-ui/react-icons";
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+} from "@radix-ui/react-icons"
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export function formatDate(
@@ -22,7 +22,7 @@ export function formatDate(
     day: opts.day ?? "numeric",
     year: opts.year ?? "numeric",
     ...opts,
-  }).format(new Date(date));
+  }).format(new Date(date))
 }
 
 export function getStatusIcon(status: TaskStatus) {
@@ -31,7 +31,7 @@ export function getStatusIcon(status: TaskStatus) {
     doing: StopwatchIcon,
     done: CheckCircledIcon,
     rejected: CrossCircledIcon,
-  };
+  }
 
-  return statusIcons[status] || CircleIcon;
+  return statusIcons[status] || CircleIcon
 }

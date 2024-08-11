@@ -1,25 +1,25 @@
-import { RouteModal } from "@/components/RouteModal";
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { getTask } from "@/services/tasks/api";
-import TaskDetailComponent from "../../../task/[taskId]/TaskDetail";
-import { getProject } from "@/services/project/api";
-import { createClient } from "@/lib/supabase/server";
+import { RouteModal } from "@/components/RouteModal"
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { getTask } from "@/services/tasks/api"
+import TaskDetailComponent from "../../../task/[taskId]/TaskDetail"
+import { getProject } from "@/services/project/api"
+import { createClient } from "@/lib/supabase/server"
 
 export default async function Page({
   params: { taskId, projectId },
 }: {
-  params: { taskId: string; projectId: string };
+  params: { taskId: string; projectId: string }
 }) {
-  const { data: task } = await getTask({ projectId, taskId });
+  const { data: task } = await getTask({ projectId, taskId })
 
   if (!task) {
-    return <RouteModal>Task not found</RouteModal>;
+    return <RouteModal>Task not found</RouteModal>
   }
 
-  const project = await getProject(projectId, createClient());
+  const project = await getProject(projectId, createClient())
 
   if (!project) {
-    return <div>Project not found</div>;
+    return <div>Project not found</div>
   }
 
   return (
@@ -32,5 +32,5 @@ export default async function Page({
         repositoryFullName={`${project?.ownerLogin}/${project?.name}`}
       />
     </RouteModal>
-  );
+  )
 }

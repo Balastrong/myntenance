@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Drawer,
   DrawerClose,
@@ -20,21 +20,21 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Task } from "@/lib/supabase/types";
-import { deleteTasks } from "@/services/tasks/api";
-import { TrashIcon } from "@radix-ui/react-icons";
-import { type Row } from "@tanstack/react-table";
-import * as React from "react";
-import { toast } from "sonner";
-import { Icons } from "../icons";
+} from "@/components/ui/drawer"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { Task } from "@/lib/supabase/types"
+import { deleteTasks } from "@/services/tasks/api"
+import { TrashIcon } from "@radix-ui/react-icons"
+import { type Row } from "@tanstack/react-table"
+import * as React from "react"
+import { toast } from "sonner"
+import { Icons } from "../icons"
 
 interface DeleteTasksDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
-  tasks: Row<Task>["original"][];
-  showTrigger?: boolean;
-  onSuccess?: () => void;
+  tasks: Row<Task>["original"][]
+  showTrigger?: boolean
+  onSuccess?: () => void
 }
 
 export function DeleteTasksDialog({
@@ -43,21 +43,21 @@ export function DeleteTasksDialog({
   onSuccess,
   ...props
 }: DeleteTasksDialogProps) {
-  const [isDeletePending, startDeleteTransition] = React.useTransition();
-  const isDesktop = useMediaQuery("(min-width: 640px)");
+  const [isDeletePending, startDeleteTransition] = React.useTransition()
+  const isDesktop = useMediaQuery("(min-width: 640px)")
 
   function onDelete() {
     startDeleteTransition(async () => {
-      const { error } = await deleteTasks(tasks.map((task) => task.id));
+      const { error } = await deleteTasks(tasks.map((task) => task.id))
       if (error) {
-        toast.error(error.message);
-        return;
+        toast.error(error.message)
+        return
       }
 
-      props.onOpenChange?.(false);
-      toast.success("Tasks deleted");
-      onSuccess?.();
-    });
+      props.onOpenChange?.(false)
+      toast.success("Tasks deleted")
+      onSuccess?.()
+    })
   }
 
   if (isDesktop) {
@@ -101,7 +101,7 @@ export function DeleteTasksDialog({
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    );
+    )
   }
 
   return (
@@ -144,5 +144,5 @@ export function DeleteTasksDialog({
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  );
+  )
 }

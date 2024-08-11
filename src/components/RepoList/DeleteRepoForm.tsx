@@ -1,5 +1,5 @@
-import { handleDelete } from "./actions";
-import { Button } from "../ui/button";
+import { handleDelete } from "./actions"
+import { Button } from "../ui/button"
 
 export default function DeleteRepoForm({ repoId }: { repoId: string }) {
   return (
@@ -9,5 +9,5 @@ export default function DeleteRepoForm({ repoId }: { repoId: string }) {
         Delete
       </Button>
     </form>
-  );
+  )
 }

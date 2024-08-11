@@ -4,16 +4,16 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-} from "@/components/ui/card";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "../ui/button";
-import { FavouriteRepoForm } from "./FavouriteRepoForm";
-import { RepoWithTasks } from "./RepoCards";
+} from "@/components/ui/card"
+import Image from "next/image"
+import Link from "next/link"
+import { Button } from "../ui/button"
+import { FavouriteRepoForm } from "./FavouriteRepoForm"
+import { RepoWithTasks } from "./RepoCards"
 
 type Props = {
-  repo: RepoWithTasks[number];
-};
+  repo: RepoWithTasks[number]
+}
 
 export const RepoCard = ({ repo }: Props) => {
   return (
@@ -59,5 +59,5 @@ export const RepoCard = ({ repo }: Props) => {
         </Link>
       </CardFooter>
     </Card>
-  );
-};
+  )
+}

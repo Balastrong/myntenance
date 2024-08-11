@@ -1,21 +1,20 @@
-import { createClient } from "@/lib/supabase/server";
-import { QueryData } from "@supabase/supabase-js";
-import { RepoCard } from "./RepoCard";
-import { RepoCardGrid } from "./RepoCardGrid";
+import { createClient } from "@/lib/supabase/server"
+import { QueryData } from "@supabase/supabase-js"
+import { RepoCard } from "./RepoCard"
+import { RepoCardGrid } from "./RepoCardGrid"
 
-const getProjects = () =>
-  createClient().from("projects").select("*, tasks (*)");
-export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>;
+const getProjects = () => createClient().from("projects").select("*, tasks (*)")
+export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>
 
 export default async function RepoCards() {
-  const { data, error } = await getProjects();
+  const { data, error } = await getProjects()
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {error.message}</div>
   }
 
-  const favouriteRepositories = data.filter(({ isFavourite }) => isFavourite);
-  const repositories = data.filter(({ isFavourite }) => !isFavourite);
+  const favouriteRepositories = data.filter(({ isFavourite }) => isFavourite)
+  const repositories = data.filter(({ isFavourite }) => !isFavourite)
 
   return (
     <div className="flex flex-col gap-2">
@@ -34,5 +33,5 @@ export default async function RepoCards() {
         </RepoCardGrid>
       )}
     </div>
-  );
+  )
 }

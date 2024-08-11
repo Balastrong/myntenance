@@ -1,6 +1,6 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Drawer,
   DrawerClose,
@@ -20,37 +20,37 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { Task, TaskInsert } from "@/lib/supabase/types";
-import { createTask } from "@/services/tasks/api";
-import { PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
-import * as React from "react";
-import { toast } from "sonner";
-import { TaskForm } from "./TaskForm";
+} from "@/components/ui/drawer"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { Task, TaskInsert } from "@/lib/supabase/types"
+import { createTask } from "@/services/tasks/api"
+import { PlusIcon, ReloadIcon } from "@radix-ui/react-icons"
+import * as React from "react"
+import { toast } from "sonner"
+import { TaskForm } from "./TaskForm"
 
 type Props = {
-  projectId: string;
-};
+  projectId: string
+}
 export function CreateTaskDialog({ projectId }: Props) {
-  const [open, setOpen] = React.useState(false);
-  const isDesktop = useMediaQuery("(min-width: 640px)");
+  const [open, setOpen] = React.useState(false)
+  const isDesktop = useMediaQuery("(min-width: 640px)")
 
-  const [isCreatePending, startCreateTransition] = React.useTransition();
+  const [isCreatePending, startCreateTransition] = React.useTransition()
 
   const onSubmit = (taskInsert: TaskInsert) => {
     startCreateTransition(async () => {
-      const { error } = await createTask(taskInsert);
+      const { error } = await createTask(taskInsert)
 
       if (error) {
-        toast.error(error.message);
-        return;
+        toast.error(error.message)
+        return
       }
 
-      setOpen(false);
-      toast.success("Task created");
-    });
-  };
+      setOpen(false)
+      toast.success("Task created")
+    })
+  }
 
   if (isDesktop)
     return (
@@ -91,7 +91,7 @@ export function CreateTaskDialog({ projectId }: Props) {
           </TaskForm>
         </DialogContent>
       </Dialog>
-    );
+    )
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -130,5 +130,5 @@ export function CreateTaskDialog({ projectId }: Props) {
         </TaskForm>
       </DrawerContent>
     </Drawer>
-  );
+  )
 }

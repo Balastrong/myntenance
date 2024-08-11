@@ -1,5 +1,5 @@
-import RepoCards from "@/components/RepoList/RepoCards";
-import { RepoSelector } from "@/components/RepoSelector";
+import RepoCards from "@/components/RepoList/RepoCards"
+import { RepoSelector } from "@/components/RepoSelector"
 
 export default async function Dashboard() {
   return (
@@ -8,5 +8,5 @@ export default async function Dashboard() {
       <RepoSelector />
       <RepoCards />
     </main>
-  );
+  )
 }

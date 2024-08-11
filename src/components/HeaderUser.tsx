@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { login, logout } from "@/app/auth/actions";
-import { type User } from "@supabase/supabase-js";
-import { LogOut, Settings, User as UserIcon } from "lucide-react";
-import { SignInButton } from "./SignInButton";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { login, logout } from "@/app/auth/actions"
+import { type User } from "@supabase/supabase-js"
+import { LogOut, Settings, User as UserIcon } from "lucide-react"
+import { SignInButton } from "./SignInButton"
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,11 +12,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "./ui/dropdown-menu"
 
 type Props = {
-  user: User | null;
-};
+  user: User | null
+}
 
 export default function HeaderUser({ user }: Props) {
   return (
@@ -53,5 +53,5 @@ export default function HeaderUser({ user }: Props) {
         </form>
       )}
     </div>
-  );
+  )
 }
