@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import { QueryData } from "@supabase/supabase-js"
 import { RepoCard } from "./RepoCard"
 import { RepoCardGrid } from "./RepoCardGrid"
+import { FolderGit2 } from "lucide-react"
 
 const getProjects = () => createClient().from("projects").select("*, tasks (*)")
 export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>
@@ -11,6 +12,16 @@ export default async function RepoCards() {
 
   if (error) {
     return <div>Error: {error.message}</div>
+  }
+
+  if(data?.length === 0) {
+    return(
+      <div className="flex flex-col items-center justify-center h-full text-center">
+        <FolderGit2 className="w-16 h-16 text-muted-foreground mb-4" />
+        <h2 className="text-xl font-medium">No projects available</h2>
+        <p className="text-muted-foreground">Please add your first project</p>
+      </div>
+    )
   }
 
   const favouriteRepositories = data.filter(({ isFavourite }) => isFavourite)

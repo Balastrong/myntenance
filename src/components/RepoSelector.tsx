@@ -34,35 +34,32 @@ export function RepoSelector() {
   }, [state.error, state.message])
 
   return (
-    <div>
-      <h2>Select a repository</h2>
-      <form
-        action={async (formData: FormData) => {
-          setSearchValue("")
-          setSelectedValue("")
-          formAction()
-        }}
-      >
-        <div className="flex gap-2">
-          <div className="w-80">
-            <AutoComplete
-              selectedValue={selectedValue}
-              onSelectedValueChange={setSelectedValue}
-              searchValue={searchValue}
-              onSearchValueChange={setSearchValue}
-              items={items.map((item) => ({
-                value: item.name,
-                label: item.name,
-              }))}
-              placeholder="Search repositories..."
-              isLoading={isLoading}
-            />
-          </div>
-
-          <SelectButton isValueSelected={!!selectedValue} />
+    <form
+      action={async (formData: FormData) => {
+        setSearchValue("")
+        setSelectedValue("")
+        formAction()
+      }}
+    >
+      <div className="flex gap-2">
+        <div className="w-80">
+          <AutoComplete
+            selectedValue={selectedValue}
+            onSelectedValueChange={setSelectedValue}
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            items={items.map((item) => ({
+              value: item.name,
+              label: item.name,
+            }))}
+            placeholder="Search repositories..."
+            isLoading={isLoading}
+          />
         </div>
-      </form>
-    </div>
+
+        <SelectButton isValueSelected={!!selectedValue} />
+      </div>
+    </form>
   )
 }
 
