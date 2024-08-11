@@ -10,12 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.0.0
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4.0.3
         with:
-          node-version: 20.15.1
+          node-version-file: .nvmrc
       - run: npm ci
+
       - name: Checking format
         run: npm run format:check
       - name: Run lint
