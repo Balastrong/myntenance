@@ -1,9 +1,8 @@
 "use server";
 
 import { GetTasksParams } from "@/components/TasksList/Tasks";
-import { createClient } from "@/lib/supabase/client";
-import { Task, TaskInsert, TaskUpdate } from "@/lib/supabase/types";
-import { Database, Enums } from "@/lib/supabase/types.gen";
+import { createClient } from "@/lib/supabase/server";
+import { TaskInsert, TaskUpdate } from "@/lib/supabase/types";
 import { revalidateTag, unstable_cache } from "next/cache";
 
 export const getOwnTasks = async (filters: {

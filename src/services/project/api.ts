@@ -1,6 +1,6 @@
-import { SupabaseClient } from "@supabase/supabase-js";
+import { DatabaseClient } from "@/lib/supabase/types";
 
-export const getProject = async (projectId: string, client: SupabaseClient) => {
+export const getProject = async (projectId: string, client: DatabaseClient) => {
   const { data: project } = await client
     .from("projects")
     .select("*")

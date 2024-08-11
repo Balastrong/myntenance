@@ -1,15 +1,14 @@
 "use server";
 
-import { Database } from "@/lib/supabase/types.gen";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { DatabaseClient } from "@/lib/supabase/types";
 import { unstable_cache } from "next/cache";
 
 export const getSiteMeta = unstable_cache(
-  async (supabase: SupabaseClient<Database>) => {
+  async (supabase: DatabaseClient) => {
     const { data } = await supabase.auth.admin.listUsers();
     const { count: projects } = await supabase
       .from("projects")
-      .select("*", { count: "estimated" });
+      .select("*", { count: "exact" });
 
     return {
       users: data.users.length,
