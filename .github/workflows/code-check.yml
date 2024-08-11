@@ -1,0 +1,26 @@
+name: Check code style
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4.0.0
+      - name: Setup Node
+        uses: actions/setup-node@v4.0.3
+        with:
+          node-version-file: .nvmrc
+      - run: pnpm i --frozen-lockfile
+
+      - name: Checking format
+        run: pnpm run format:check
+      - name: Run lint
+        run: pnpm run lint

@@ -1,31 +1,31 @@
-"use client";
+"use client"
 
-import { useGitHubIssues } from "@/hooks/useGitHubIssues";
-import { useState } from "react";
-import { AutoComplete } from "./Autocomplete";
-import { Button } from "./ui/button";
+import { useGitHubIssues } from "@/hooks/useGitHubIssues"
+import { useState } from "react"
+import { AutoComplete } from "./Autocomplete"
+import { Button } from "./ui/button"
 
 type Props = {
-  baseQuery?: string;
-  onSubmit: (issueNumber: number) => void;
-};
+  baseQuery?: string
+  onSubmit: (issueNumber: number) => void
+}
 
 export function IssueSelector({ baseQuery, onSubmit }: Props) {
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedValue, setSelectedValue] = useState("");
+  const [searchValue, setSearchValue] = useState("")
+  const [selectedValue, setSelectedValue] = useState("")
   const { data, isLoading } = useGitHubIssues(
     selectedValue ? "" : searchValue,
     baseQuery,
-  );
-  const items = data?.items || [];
+  )
+  const items = data?.items || []
 
   return (
     <div>
       <form
         action={() => {
-          onSubmit(Number(selectedValue));
-          setSearchValue("");
-          setSelectedValue("");
+          onSubmit(Number(selectedValue))
+          setSearchValue("")
+          setSelectedValue("")
         }}
       >
         <div className="flex gap-2">
@@ -46,5 +46,5 @@ export function IssueSelector({ baseQuery, onSubmit }: Props) {
         </div>
       </form>
     </div>
-  );
+  )
 }

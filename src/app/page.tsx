@@ -1,21 +1,21 @@
-import Hero from "@/components/Hero";
-import { HeroParticles } from "@/components/HeroParticles";
-import BlurFade from "@/components/magicui/blur-fade";
-import TrustedBy from "@/components/TrustedBy";
-import { getMyntenanceRepository } from "@/lib/github/api";
-import { getServerOctokit } from "@/lib/github/server";
-import { createClient } from "@/lib/supabase/server";
-import { getSiteMeta } from "@/services/meta";
+import Hero from "@/components/Hero"
+import { HeroParticles } from "@/components/HeroParticles"
+import BlurFade from "@/components/magicui/blur-fade"
+import TrustedBy from "@/components/TrustedBy"
+import { getMyntenanceRepository } from "@/lib/github/api"
+import { getServerOctokit } from "@/lib/github/server"
+import { createClient } from "@/lib/supabase/server"
+import { getSiteMeta } from "@/services/meta"
 
 export default async function Home() {
   const {
     data: { user },
-  } = await createClient().auth.getUser();
+  } = await createClient().auth.getUser()
 
   const { stargazers_count, forks_count } =
-    await getMyntenanceRepository(getServerOctokit());
+    await getMyntenanceRepository(getServerOctokit())
 
-  const { projects, users } = await getSiteMeta(createClient());
+  const { projects, users } = await getSiteMeta(createClient())
 
   return (
     <>
@@ -32,5 +32,5 @@ export default async function Home() {
         </BlurFade>
       </main>
     </>
-  );
+  )
 }

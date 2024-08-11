@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Sheet,
@@ -8,38 +8,38 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { Task, TaskUpdate } from "@/lib/supabase/types";
-import { updateTask } from "@/services/tasks/api";
-import * as React from "react";
-import { toast } from "sonner";
-import { TaskForm } from "./TaskForm";
-import { Button } from "../ui/button";
+} from "@/components/ui/sheet"
+import { Task, TaskUpdate } from "@/lib/supabase/types"
+import { updateTask } from "@/services/tasks/api"
+import * as React from "react"
+import { toast } from "sonner"
+import { TaskForm } from "./TaskForm"
+import { Button } from "../ui/button"
 
 interface UpdateTaskSheetProps
   extends React.ComponentPropsWithRef<typeof Sheet> {
-  task: Task;
+  task: Task
 }
 
 export function UpdateTaskSheet({ task, ...props }: UpdateTaskSheetProps) {
-  const [isUpdatePending, startUpdateTransition] = React.useTransition();
+  const [isUpdatePending, startUpdateTransition] = React.useTransition()
 
   const onSubmit = (taskUpdate: TaskUpdate) => {
     startUpdateTransition(async () => {
       const { error } = await updateTask({
         id: task.id,
         taskUpdate,
-      });
+      })
 
       if (error) {
-        toast.error(error.message);
-        return;
+        toast.error(error.message)
+        return
       }
 
-      props.onOpenChange?.(false);
-      toast.success("Task updated");
-    });
-  };
+      props.onOpenChange?.(false)
+      toast.success("Task updated")
+    })
+  }
 
   return (
     <Sheet {...props}>
@@ -66,5 +66,5 @@ export function UpdateTaskSheet({ task, ...props }: UpdateTaskSheetProps) {
         </TaskForm>
       </SheetContent>
     </Sheet>
-  );
+  )
 }

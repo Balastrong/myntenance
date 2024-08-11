@@ -1,37 +1,37 @@
-import { Notes } from "@/components/Repo/Notes";
-import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm";
-import { FavouriteRepoForm } from "@/components/RepoList/FavouriteRepoForm";
-import Tasks from "@/components/TasksList/Tasks";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { getRepositoryDetails } from "@/lib/github/api";
-import { getServerOctokit } from "@/lib/github/server";
-import { createClient } from "@/lib/supabase/server";
-import { getProject } from "@/services/project/api";
-import { SearchParams } from "@/types";
-import Image from "next/image";
-import Link from "next/link";
+import { Notes } from "@/components/Repo/Notes"
+import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm"
+import { FavouriteRepoForm } from "@/components/RepoList/FavouriteRepoForm"
+import Tasks from "@/components/TasksList/Tasks"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { getRepositoryDetails } from "@/lib/github/api"
+import { getServerOctokit } from "@/lib/github/server"
+import { createClient } from "@/lib/supabase/server"
+import { getProject } from "@/services/project/api"
+import { SearchParams } from "@/types"
+import Image from "next/image"
+import Link from "next/link"
 
 export default async function Page({
   params: { projectId },
   searchParams,
 }: {
-  params: { projectId: string };
-  searchParams: SearchParams;
+  params: { projectId: string }
+  searchParams: SearchParams
 }) {
-  const project = await getProject(projectId, createClient());
+  const project = await getProject(projectId, createClient())
 
   if (!project) {
-    return <div>Repository not found</div>;
+    return <div>Repository not found</div>
   }
 
   const repository = await getRepositoryDetails(
     project.ownerLogin,
     project.name,
     getServerOctokit(),
-  );
+  )
 
   return (
     <div className="flex flex-col gap-4">
@@ -102,18 +102,18 @@ export default async function Page({
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
 
 const DetailItem = ({
   label,
   value,
 }: {
-  label: string;
-  value: string | undefined;
+  label: string
+  value: string | undefined
 }) => (
   <div className="flex items-center gap-1">
     <Label className="font-semibold">{label}:</Label>
     <small>{value}</small>
   </div>
-);
+)

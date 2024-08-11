@@ -1,17 +1,17 @@
-"use client";
-import { useTheme } from "next-themes";
-import { MagicCard } from "@/components/magicui/magic-card";
-import Marquee from "./magicui/marquee";
-import NumberTicker from "./magicui/number-ticker";
-import { FolderGit2, Forklift, GitFork, Star, User } from "lucide-react";
-import { Avatar, AvatarImage } from "./ui/avatar";
+"use client"
+import { useTheme } from "next-themes"
+import { MagicCard } from "@/components/magicui/magic-card"
+import Marquee from "./magicui/marquee"
+import NumberTicker from "./magicui/number-ticker"
+import { FolderGit2, Forklift, GitFork, Star, User } from "lucide-react"
+import { Avatar, AvatarImage } from "./ui/avatar"
 
 type Props = {
-  stargazers: number;
-  forks: number;
-  users: number;
-  projects: number;
-};
+  stargazers: number
+  forks: number
+  users: number
+  projects: number
+}
 
 export default function TrustedBy({
   stargazers,
@@ -69,11 +69,11 @@ export default function TrustedBy({
       <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-gradient-to-r from-white dark:from-background"></div>
       <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-gradient-to-l from-white dark:from-background"></div>
     </div>
-  );
+  )
 }
 
 const Card = ({ children }: { children: React.ReactNode }) => {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <MagicCard
@@ -84,24 +84,24 @@ const Card = ({ children }: { children: React.ReactNode }) => {
         {children}
       </div>
     </MagicCard>
-  );
-};
+  )
+}
 
 const CardNumber = ({
   children,
   value,
 }: {
-  children: React.ReactNode;
-  value: number;
+  children: React.ReactNode
+  value: number
 }) => {
   return (
     <div className="mb-auto flex items-center gap-1 text-xl font-semibold md:text-4xl">
       <NumberTicker value={value} />
       {children}
     </div>
-  );
-};
+  )
+}
 
 const CardLabel = ({ children }: { children: React.ReactNode }) => {
-  return <div className="text-base md:text-xl">{children}</div>;
-};
+  return <div className="text-base md:text-xl">{children}</div>
+}

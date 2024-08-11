@@ -1,14 +1,14 @@
-import { createClient } from "@/lib/supabase/server";
-import Link from "next/link";
-import HeaderUser from "./HeaderUser";
-import { ThemeToggle } from "./ThemeToggle";
-import { Button } from "./ui/button";
-import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { createClient } from "@/lib/supabase/server"
+import Link from "next/link"
+import HeaderUser from "./HeaderUser"
+import { ThemeToggle } from "./ThemeToggle"
+import { Button } from "./ui/button"
+import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons"
 
 export default async function Header() {
   const {
     data: { user },
-  } = await createClient().auth.getUser();
+  } = await createClient().auth.getUser()
 
   return (
     <header className="m-auto flex w-full max-w-[1200px] items-center justify-between gap-2 p-4">
@@ -40,5 +40,5 @@ export default async function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

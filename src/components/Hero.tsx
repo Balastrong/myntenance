@@ -1,15 +1,15 @@
-import { login } from "@/app/auth/actions";
-import { User } from "@supabase/supabase-js";
-import Link from "next/link";
-import BlurFade from "./magicui/blur-fade";
-import { BorderBeam } from "./magicui/border-beam";
-import SparklesText from "./magicui/sparkles-text";
-import { SignInButton } from "./SignInButton";
-import { Button } from "./ui/button";
+import { login } from "@/app/auth/actions"
+import { User } from "@supabase/supabase-js"
+import Link from "next/link"
+import BlurFade from "./magicui/blur-fade"
+import { BorderBeam } from "./magicui/border-beam"
+import SparklesText from "./magicui/sparkles-text"
+import { SignInButton } from "./SignInButton"
+import { Button } from "./ui/button"
 
 type Props = {
-  user: User | null;
-};
+  user: User | null
+}
 
 export default async function Hero({ user }: Props) {
   return (
@@ -50,5 +50,5 @@ export default async function Hero({ user }: Props) {
         )}
       </BlurFade>
     </div>
-  );
+  )
 }

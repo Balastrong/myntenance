@@ -1,20 +1,20 @@
-"use server";
-import { getServerOctokit } from "@/lib/github/server";
-import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+"use server"
+import { getServerOctokit } from "@/lib/github/server"
+import { createClient } from "@/lib/supabase/server"
+import { revalidatePath } from "next/cache"
 
 export async function storeRepository(fullName: string) {
-  "use server";
+  "use server"
 
   try {
-    const [owner, repo] = fullName.split("/");
+    const [owner, repo] = fullName.split("/")
 
     const {
       data: { user },
-    } = await createClient().auth.getUser();
+    } = await createClient().auth.getUser()
 
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("User not found")
     }
 
     const { data: existingRepo } = await createClient()
@@ -24,16 +24,16 @@ export async function storeRepository(fullName: string) {
       .eq("ownerLogin", owner)
       .eq("user", user.id)
       .limit(1)
-      .maybeSingle();
+      .maybeSingle()
 
     if (existingRepo) {
-      throw new Error("Repository already exists");
+      throw new Error("Repository already exists")
     }
 
     const { data } = await getServerOctokit().rest.repos.get({
       owner,
       repo,
-    });
+    })
 
     await createClient()
       .from("projects")
@@ -44,16 +44,16 @@ export async function storeRepository(fullName: string) {
         visibility: data.private ? "private" : "public",
         stars: data.stargazers_count,
         openIssues: data.open_issues_count,
-      });
+      })
 
-    revalidatePath("/", "layout");
-    return { message: "Repository stored", error: false };
+    revalidatePath("/", "layout")
+    return { message: "Repository stored", error: false }
   } catch (error) {
     const errorMessage =
       error instanceof Error
         ? error?.message
-        : (undefined ?? "An error occurred");
+        : (undefined ?? "An error occurred")
 
-    return { message: errorMessage, error: true };
+    return { message: errorMessage, error: true }
   }
 }

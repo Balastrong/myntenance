@@ -1,19 +1,19 @@
-"use client";
-import type { DataTableFilterField } from "@/types";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import type { Table } from "@tanstack/react-table";
+"use client"
+import type { DataTableFilterField } from "@/types"
+import { Cross2Icon } from "@radix-ui/react-icons"
+import type { Table } from "@tanstack/react-table"
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { DataTableFacetedFilter } from "@/components/ui/data-table/data-table-faceted-filter";
-import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options";
-import { useMemo } from "react";
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { DataTableFacetedFilter } from "@/components/ui/data-table/data-table-faceted-filter"
+import { DataTableViewOptions } from "@/components/ui/data-table/data-table-view-options"
+import { useMemo } from "react"
 
 interface DataTableToolbarProps<TData>
   extends React.HTMLAttributes<HTMLDivElement> {
-  table: Table<TData>;
-  filterFields?: DataTableFilterField<TData>[];
+  table: Table<TData>
+  filterFields?: DataTableFilterField<TData>[]
 }
 
 export function DataTableToolbar<TData>({
@@ -23,15 +23,15 @@ export function DataTableToolbar<TData>({
   className,
   ...props
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0;
+  const isFiltered = table.getState().columnFilters.length > 0
 
   // Memoize computation of searchableColumns and filterableColumns
   const { searchableColumns, filterableColumns } = useMemo(() => {
     return {
       searchableColumns: filterFields.filter((field) => !field.options),
       filterableColumns: filterFields.filter((field) => field.options),
-    };
-  }, [filterFields]);
+    }
+  }, [filterFields])
 
   return (
     <div
@@ -94,5 +94,5 @@ export function DataTableToolbar<TData>({
         <DataTableViewOptions table={table} />
       </div>
     </div>
-  );
+  )
 }

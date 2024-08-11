@@ -1,23 +1,23 @@
-import { getClientOctokit } from "@/lib/github/client";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { useDebouncedValue } from "./useDebouncedValue";
+import { getClientOctokit } from "@/lib/github/client"
+import { keepPreviousData, useQuery } from "@tanstack/react-query"
+import { useDebouncedValue } from "./useDebouncedValue"
 
 export const useGitHubRepositories = (query: string) => {
-  const { debouncedValue: debouncedQuery } = useDebouncedValue(query);
+  const { debouncedValue: debouncedQuery } = useDebouncedValue(query)
 
   return useQuery({
     queryKey: ["repo-search", debouncedQuery],
     enabled: debouncedQuery.length > 2,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const octokit = await getClientOctokit();
+      const octokit = await getClientOctokit()
 
       const {
         data: { items, total_count },
       } = await octokit.rest.search.repos({
         q: query,
         per_page: 8,
-      });
+      })
 
       return {
         items: items.map((f) => ({
@@ -25,7 +25,7 @@ export const useGitHubRepositories = (query: string) => {
           visi: f.visibility,
         })),
         total_count,
-      };
+      }
     },
-  });
-};
+  })
+}

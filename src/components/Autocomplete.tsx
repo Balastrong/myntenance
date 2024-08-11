@@ -1,28 +1,28 @@
-import { cn } from "@/lib/utils";
-import { Command as CommandPrimitive } from "cmdk";
-import { Check } from "lucide-react";
-import { useMemo, useState } from "react";
+import { cn } from "@/lib/utils"
+import { Command as CommandPrimitive } from "cmdk"
+import { Check } from "lucide-react"
+import { useMemo, useState } from "react"
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "./ui/command";
-import { Input } from "./ui/input";
-import { Popover, PopoverAnchor, PopoverContent } from "./ui/popover";
-import { Skeleton } from "./ui/skeleton";
+} from "./ui/command"
+import { Input } from "./ui/input"
+import { Popover, PopoverAnchor, PopoverContent } from "./ui/popover"
+import { Skeleton } from "./ui/skeleton"
 
 type Props<T extends string> = {
-  selectedValue: T;
-  onSelectedValueChange: (value: T) => void;
-  searchValue: string;
-  onSearchValueChange: (value: string) => void;
-  items: { value: T; label: string }[];
-  isLoading?: boolean;
-  emptyMessage?: string;
-  placeholder?: string;
-};
+  selectedValue: T
+  onSelectedValueChange: (value: T) => void
+  searchValue: string
+  onSearchValueChange: (value: string) => void
+  items: { value: T; label: string }[]
+  isLoading?: boolean
+  emptyMessage?: string
+  placeholder?: string
+}
 
 export function AutoComplete<T extends string>({
   selectedValue,
@@ -34,43 +34,43 @@ export function AutoComplete<T extends string>({
   emptyMessage = "No items.",
   placeholder = "Search...",
 }: Props<T>) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const labels = useMemo(
     () =>
       items.reduce(
         (acc, item) => {
-          acc[item.value] = item.label;
-          return acc;
+          acc[item.value] = item.label
+          return acc
         },
         {} as Record<string, string>,
       ),
     [items],
-  );
+  )
 
   const reset = () => {
-    onSelectedValueChange("" as T);
-    onSearchValueChange("");
-  };
+    onSelectedValueChange("" as T)
+    onSearchValueChange("")
+  }
 
   const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (
       !e.relatedTarget?.hasAttribute("cmdk-list") &&
       labels[selectedValue] !== searchValue
     ) {
-      reset();
+      reset()
     }
-  };
+  }
 
   const onSelectItem = (inputValue: string) => {
     if (inputValue === selectedValue) {
-      reset();
+      reset()
     } else {
-      onSelectedValueChange(inputValue as T);
-      onSearchValueChange(labels[inputValue] ?? "");
+      onSelectedValueChange(inputValue as T)
+      onSearchValueChange(labels[inputValue] ?? "")
     }
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <div className="flex w-full items-center">
@@ -97,7 +97,7 @@ export function AutoComplete<T extends string>({
                 e.target instanceof Element &&
                 e.target.hasAttribute("cmdk-input")
               ) {
-                e.preventDefault();
+                e.preventDefault()
               }
             }}
             className="w-[--radix-popover-trigger-width] p-0"
@@ -140,5 +140,5 @@ export function AutoComplete<T extends string>({
         </Command>
       </Popover>
     </div>
-  );
+  )
 }

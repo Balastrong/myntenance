@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { useTheme } from "next-themes";
-import Particles from "./magicui/particles";
+import { useTheme } from "next-themes"
+import Particles from "./magicui/particles"
 
 export function HeroParticles() {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
   return (
     <Particles
@@ -14,5 +14,5 @@ export function HeroParticles() {
       color={theme === "dark" ? "#ffffff" : "#000000"}
       refresh
     />
-  );
+  )
 }

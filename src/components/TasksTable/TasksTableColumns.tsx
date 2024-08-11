@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header";
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+import { DataTableColumnHeader } from "@/components/ui/data-table/data-table-column-header"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,17 +11,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Task } from "@/lib/supabase/types";
-import { formatDate, getStatusIcon } from "@/lib/utils";
-import { TaskStatus } from "@/types/schemas";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { type ColumnDef } from "@tanstack/react-table";
-import { CircleDot, GitPullRequestArrow } from "lucide-react";
-import Link from "next/link";
-import * as React from "react";
-import { UpdateTaskSheet } from "../TaskForm/UpdateTaskSheet";
-import { DeleteTasksDialog } from "./DeleteTaskDialog";
+} from "@/components/ui/dropdown-menu"
+import { Task } from "@/lib/supabase/types"
+import { formatDate, getStatusIcon } from "@/lib/utils"
+import { TaskStatus } from "@/types/schemas"
+import { DotsHorizontalIcon } from "@radix-ui/react-icons"
+import { type ColumnDef } from "@tanstack/react-table"
+import { CircleDot, GitPullRequestArrow } from "lucide-react"
+import Link from "next/link"
+import * as React from "react"
+import { UpdateTaskSheet } from "../TaskForm/UpdateTaskSheet"
+import { DeleteTasksDialog } from "./DeleteTaskDialog"
 
 export function getColumns(): ColumnDef<Task>[] {
   return [
@@ -63,7 +63,7 @@ export function getColumns(): ColumnDef<Task>[] {
         <DataTableColumnHeader column={column} title="Title" />
       ),
       cell: ({ row }) => {
-        const label = "";
+        const label = ""
 
         return (
           <div className="flex space-x-2">
@@ -72,7 +72,7 @@ export function getColumns(): ColumnDef<Task>[] {
               {row.getValue("title")}
             </span>
           </div>
-        );
+        )
       },
     },
     {
@@ -81,13 +81,13 @@ export function getColumns(): ColumnDef<Task>[] {
         <DataTableColumnHeader column={column} title="Status" />
       ),
       cell: ({ row }) => {
-        const status = row.getValue<TaskStatus>("status");
-        const Icon = getStatusIcon(status);
+        const status = row.getValue<TaskStatus>("status")
+        const Icon = getStatusIcon(status)
         return (
           <div className="flex w-20 items-center gap-2 capitalize">
             <Icon /> {status}
           </div>
-        );
+        )
       },
     },
     {
@@ -96,7 +96,7 @@ export function getColumns(): ColumnDef<Task>[] {
         <DataTableColumnHeader column={column} title="Issue" />
       ),
       cell: ({ row }) => {
-        const issueNumber = row.original.issueNumber;
+        const issueNumber = row.original.issueNumber
         return (
           issueNumber && (
             <span className="flex items-center gap-1">
@@ -104,7 +104,7 @@ export function getColumns(): ColumnDef<Task>[] {
               {issueNumber}
             </span>
           )
-        );
+        )
       },
     },
     {
@@ -113,7 +113,7 @@ export function getColumns(): ColumnDef<Task>[] {
         <DataTableColumnHeader column={column} title="PR" />
       ),
       cell: ({ row }) => {
-        const prNumber = row.original.prNumber;
+        const prNumber = row.original.prNumber
         return (
           prNumber && (
             <span className="flex items-center gap-1">
@@ -121,7 +121,7 @@ export function getColumns(): ColumnDef<Task>[] {
               {prNumber}
             </span>
           )
-        );
+        )
       },
     },
     {
@@ -135,9 +135,9 @@ export function getColumns(): ColumnDef<Task>[] {
       id: "actions",
       cell: function Cell({ row }) {
         const [showUpdateTaskSheet, setShowUpdateTaskSheet] =
-          React.useState(false);
+          React.useState(false)
         const [showDeleteTaskDialog, setShowDeleteTaskDialog] =
-          React.useState(false);
+          React.useState(false)
 
         return (
           <>
@@ -191,9 +191,9 @@ export function getColumns(): ColumnDef<Task>[] {
               </Link>
             </div>
           </>
-        );
+        )
       },
       size: 40,
     },
-  ];
+  ]
 }

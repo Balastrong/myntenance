@@ -1,34 +1,34 @@
-"use server";
+"use server"
 
-import { RemoveTaskIssue } from "@/components/RemoveTaskIssue";
-import { RemoveTaskPullRequest } from "@/components/RemoveTaskPullRequest";
-import { TaskNotes } from "@/components/Task/TaskNotes";
-import { TaskIssueSelector } from "@/components/TaskIssueSelector";
-import { TaskPullRequestSelector } from "@/components/TaskPullRequestSelector";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { RemoveTaskIssue } from "@/components/RemoveTaskIssue"
+import { RemoveTaskPullRequest } from "@/components/RemoveTaskPullRequest"
+import { TaskNotes } from "@/components/Task/TaskNotes"
+import { TaskIssueSelector } from "@/components/TaskIssueSelector"
+import { TaskPullRequestSelector } from "@/components/TaskPullRequestSelector"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { getServerOctokit } from "@/lib/github/server";
-import { Task } from "@/lib/supabase/types";
-import { cn } from "@/lib/utils";
+} from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+import { getServerOctokit } from "@/lib/github/server"
+import { Task } from "@/lib/supabase/types"
+import { cn } from "@/lib/utils"
 
 type Props = {
-  task: Task;
-  repositoryFullName: string;
-};
+  task: Task
+  repositoryFullName: string
+}
 
 export default async function TaskDetailComponent({
   task,
   repositoryFullName,
 }: Props) {
-  let issue = null;
+  let issue = null
   if (task.issueNumber) {
     issue = (
       await getServerOctokit().rest.issues.get({
@@ -36,10 +36,10 @@ export default async function TaskDetailComponent({
         repo: repositoryFullName.split("/")[1],
         issue_number: task.issueNumber,
       })
-    )?.data;
+    )?.data
   }
 
-  let pullRequest = null;
+  let pullRequest = null
   if (task.prNumber) {
     pullRequest = (
       await getServerOctokit().rest.issues.get({
@@ -47,7 +47,7 @@ export default async function TaskDetailComponent({
         repo: repositoryFullName.split("/")[1],
         issue_number: task.prNumber,
       })
-    )?.data;
+    )?.data
   }
 
   return (
@@ -205,5 +205,5 @@ export default async function TaskDetailComponent({
       <h3>Task Notes</h3>
       <TaskNotes taskId={task.id} taskNotes={task.notes ?? ""} />
     </div>
-  );
+  )
 }

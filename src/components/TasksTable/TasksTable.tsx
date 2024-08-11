@@ -1,27 +1,27 @@
-"use client";
-"use memo";
+"use client"
+"use memo"
 
-import { useDataTable } from "@/hooks/useDataTable";
-import { Task } from "@/lib/supabase/types";
-import { getOwnTasks } from "@/services/tasks/api";
-import { DataTableFilterField } from "@/types";
-import { use, useMemo } from "react";
-import { DataTable } from "../ui/data-table/data-table";
-import { DataTableToolbar } from "../ui/data-table/data-table-toolbar";
-import { getColumns } from "./TasksTableColumns";
-import { TasksTableToolbarActions } from "./TasksTableToolbarActions";
-import { getStatusIcon } from "@/lib/utils";
-import { TaskStatusSchema, TaskStatusValues } from "@/types/schemas";
+import { useDataTable } from "@/hooks/useDataTable"
+import { Task } from "@/lib/supabase/types"
+import { getOwnTasks } from "@/services/tasks/api"
+import { DataTableFilterField } from "@/types"
+import { use, useMemo } from "react"
+import { DataTable } from "../ui/data-table/data-table"
+import { DataTableToolbar } from "../ui/data-table/data-table-toolbar"
+import { getColumns } from "./TasksTableColumns"
+import { TasksTableToolbarActions } from "./TasksTableToolbarActions"
+import { getStatusIcon } from "@/lib/utils"
+import { TaskStatusSchema, TaskStatusValues } from "@/types/schemas"
 
 interface TasksTableProps {
-  projectId: string;
-  tasksPromise: ReturnType<typeof getOwnTasks>;
+  projectId: string
+  tasksPromise: ReturnType<typeof getOwnTasks>
 }
 
 export function TasksTable({ tasksPromise, projectId }: TasksTableProps) {
-  const { data, count } = use(tasksPromise);
+  const { data, count } = use(tasksPromise)
 
-  const columns = useMemo(() => getColumns(), []);
+  const columns = useMemo(() => getColumns(), [])
 
   const filterFields: DataTableFilterField<Task>[] = [
     {
@@ -38,7 +38,7 @@ export function TasksTable({ tasksPromise, projectId }: TasksTableProps) {
         icon: getStatusIcon(status),
       })),
     },
-  ];
+  ]
 
   const { table } = useDataTable({
     data: data ?? [],
@@ -50,7 +50,7 @@ export function TasksTable({ tasksPromise, projectId }: TasksTableProps) {
       columnPinning: { right: ["actions"] },
     },
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
-  });
+  })
 
   return (
     <DataTable table={table}>
@@ -58,5 +58,5 @@ export function TasksTable({ tasksPromise, projectId }: TasksTableProps) {
         <TasksTableToolbarActions table={table} projectId={projectId} />
       </DataTableToolbar>
     </DataTable>
-  );
+  )
 }

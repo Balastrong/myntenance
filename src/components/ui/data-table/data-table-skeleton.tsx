@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
   TableBody,
@@ -7,42 +7,42 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/components/ui/table"
 
 interface DataTableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * The number of columns in the table.
    * @type number
    */
-  columnCount: number;
+  columnCount: number
 
   /**
    * The number of rows in the table.
    * @default 10
    * @type number | undefined
    */
-  rowCount?: number;
+  rowCount?: number
 
   /**
    * The number of searchable columns in the table.
    * @default 0
    * @type number | undefined
    */
-  searchableColumnCount?: number;
+  searchableColumnCount?: number
 
   /**
    * The number of filterable columns in the table.
    * @default 0
    * @type number | undefined
    */
-  filterableColumnCount?: number;
+  filterableColumnCount?: number
 
   /**
    * The number of actions on the right of the action bar.
    * @default 1
    * @type number | undefined
    */
-  actionBarItems?: number;
+  actionBarItems?: number
 
   /**
    * The width of each cell in the table.
@@ -51,21 +51,21 @@ interface DataTableSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default ["auto"]
    * @type string[] | undefined
    */
-  cellWidths?: string[];
+  cellWidths?: string[]
 
   /**
    * Flag to show the pagination bar.
    * @default true
    * @type boolean | undefined
    */
-  withPagination?: boolean;
+  withPagination?: boolean
 
   /**
    * Flag to prevent the table cells from shrinking.
    * @default false
    * @type boolean | undefined
    */
-  shrinkZero?: boolean;
+  shrinkZero?: boolean
 }
 
 export function DataTableSkeleton({
@@ -161,5 +161,5 @@ export function DataTableSkeleton({
         </div>
       ) : null}
     </div>
-  );
+  )
 }
