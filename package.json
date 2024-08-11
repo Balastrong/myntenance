@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write .",
+    "format": "prettier --write ./src",
     "supabase-types-gen": "supabase gen types typescript --project-id bqlqcmtccbsiocjopvas > src/lib/supabase/types.gen.ts"
   },
   "dependencies": {
