@@ -39,20 +39,20 @@ export const getOwnTasks = async (filters: {
   return query
 }
 
-export const getTask = unstable_cache(
-  async ({ projectId, taskId }: { projectId: string; taskId: string }) => {
-    return createClient()
-      .from("tasks")
-      .select("*")
-      .eq("projectId", projectId)
-      .eq("id", taskId)
-      .single()
-  },
-  undefined,
-  {
-    tags: ["tasks"],
-  },
-)
+export const getTask = async ({
+  projectId,
+  taskId,
+}: {
+  projectId: string
+  taskId: string
+}) => {
+  return createClient()
+    .from("tasks")
+    .select("*")
+    .eq("projectId", projectId)
+    .eq("id", taskId)
+    .single()
+}
 
 export async function createTask(task: TaskInsert) {
   const { id, ...rest } = task
