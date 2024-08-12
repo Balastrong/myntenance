@@ -1,25 +1,21 @@
 "use client"
 
-import { QueryData } from "@supabase/supabase-js"
+import { getOwnProfile } from "@/services/profile/api"
+import { getOwnSettings, updateOwnSettings } from "@/services/settings/api"
+import { useForm } from "@tanstack/react-form"
+import { use, useTransition } from "react"
+import { toast } from "sonner"
 import { Button } from "./ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card"
-import { Input } from "./ui/input"
-import { getOwnSettings, updateOwnSettings } from "@/services/settings/api"
-import { use, useTransition } from "react"
-import { getOwnProfile } from "@/services/profile/api"
-import { useForm } from "@tanstack/react-form"
-import { Label } from "./ui/label"
-import { toast } from "sonner"
 import { Checkbox } from "./ui/checkbox"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
 
 type Props = {
   settingsPromise: ReturnType<typeof getOwnSettings>
   profilePromise: ReturnType<typeof getOwnProfile>
 }
-export async function ProfileSettings({
-  settingsPromise,
-  profilePromise,
-}: Props) {
+export function ProfileSettings({ settingsPromise, profilePromise }: Props) {
   const [isUpdatePending, startUpdateTransition] = useTransition()
 
   const { data: settings } = use(settingsPromise)
@@ -60,7 +56,7 @@ export async function ProfileSettings({
     >
       <Card>
         <CardHeader>Public Profile</CardHeader>
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="flex flex-col gap-4">
           <form.Field name="fullName">
             {(field) => (
               <div>
