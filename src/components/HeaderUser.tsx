@@ -20,6 +20,8 @@ type Props = {
 }
 
 export default function HeaderUser({ user }: Props) {
+  const slug = user?.user_metadata.user_name
+
   return (
     <div className="flex items-center gap-2">
       {user ? (
@@ -33,9 +35,11 @@ export default function HeaderUser({ user }: Props) {
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem disabled>
-              <UserIcon className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+            <DropdownMenuItem asChild>
+              <Link href={`/${slug}`}>
+                <UserIcon className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/settings">

@@ -12,3 +12,11 @@ export async function getOwnProfile() {
     .eq("user", userId!)
     .single()
 }
+
+export async function getUserProfileBySlug(slug: string) {
+  return await createClient()
+    .from("user_profiles")
+    .select("*")
+    .eq("slug", slug)
+    .single()
+}
