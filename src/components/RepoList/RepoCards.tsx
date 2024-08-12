@@ -14,10 +14,10 @@ export default async function RepoCards() {
     return <div>Error: {error.message}</div>
   }
 
-  if(data?.length === 0) {
-    return(
-      <div className="flex flex-col items-center justify-center h-full text-center">
-        <FolderGit2 className="w-16 h-16 text-muted-foreground mb-4" />
+  if (data?.length === 0) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center text-center">
+        <FolderGit2 className="mb-4 h-16 w-16 text-muted-foreground" />
         <h2 className="text-xl font-medium">No projects available</h2>
         <p className="text-muted-foreground">Please add your first project</p>
       </div>
