@@ -6,7 +6,7 @@ export async function getOwnProfile() {
   const supabase = createClient()
   const userId = await getCurrentUserId(supabase)
 
-  return createClient()
+  return await createClient()
     .from("user_profiles")
     .select("*")
     .eq("user", userId!)
