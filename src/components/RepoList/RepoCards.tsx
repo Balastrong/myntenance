@@ -3,8 +3,8 @@ import { QueryData } from "@supabase/supabase-js"
 import { RepoCard } from "./RepoCard"
 import { RepoCardGrid } from "./RepoCardGrid"
 import { FolderGit2 } from "lucide-react"
+import { getProjects } from "@/services/project/api"
 
-const getProjects = () => createClient().from("projects").select("*, tasks (*)")
 export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>
 
 export default async function RepoCards() {

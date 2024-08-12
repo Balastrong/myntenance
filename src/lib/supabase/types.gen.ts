@@ -106,6 +106,67 @@ export type Database = {
           },
         ]
       }
+      user_profiles: {
+        Row: {
+          bio: string | null
+          createdAt: string
+          fullName: string | null
+          slug: string
+          user: string
+        }
+        Insert: {
+          bio?: string | null
+          createdAt?: string
+          fullName?: string | null
+          slug: string
+          user: string
+        }
+        Update: {
+          bio?: string | null
+          createdAt?: string
+          fullName?: string | null
+          slug?: string
+          user?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_profile_user_fkey"
+            columns: ["user"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_settings: {
+        Row: {
+          createdAt: string
+          showPublicActivity: boolean
+          updatedAt: string
+          user: string
+        }
+        Insert: {
+          createdAt?: string
+          showPublicActivity?: boolean
+          updatedAt?: string
+          user: string
+        }
+        Update: {
+          createdAt?: string
+          showPublicActivity?: boolean
+          updatedAt?: string
+          user?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_settings_user_fkey"
+            columns: ["user"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
