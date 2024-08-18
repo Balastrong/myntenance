@@ -185,8 +185,11 @@ export function getColumns({
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Created At" />
       ),
-      cell: ({ cell }) =>
-        new Date(cell.getValue() as string).toLocaleDateString(),
+      cell: ({ cell }) => (
+        <span suppressHydrationWarning>
+          {new Date(cell.getValue() as string).toLocaleDateString()}
+        </span>
+      ),
     },
     {
       id: "actions",
