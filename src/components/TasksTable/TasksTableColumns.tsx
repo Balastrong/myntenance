@@ -58,11 +58,11 @@ export function getColumns({
       enableHiding: false,
     },
     {
-      accessorKey: "id",
+      accessorKey: "taskId",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title="Task" />
+        <DataTableColumnHeader column={column} title="ID" />
       ),
-      cell: ({ row }) => <div className="w-20">{row.getValue("id")}</div>,
+      cell: ({ row }) => <div className="w-20">{row.getValue("taskId")}</div>,
       enableHiding: false,
     },
     {

@@ -69,6 +69,7 @@ export type Database = {
           prNumber: number | null
           projectId: string
           status: Database["public"]["Enums"]["taskStatus"]
+          taskId: number | null
           title: string
           updatedAt: string
         }
@@ -81,6 +82,7 @@ export type Database = {
           prNumber?: number | null
           projectId: string
           status?: Database["public"]["Enums"]["taskStatus"]
+          taskId?: number | null
           title: string
           updatedAt?: string
         }
@@ -93,6 +95,7 @@ export type Database = {
           prNumber?: number | null
           projectId?: string
           status?: Database["public"]["Enums"]["taskStatus"]
+          taskId?: number | null
           title?: string
           updatedAt?: string
         }
@@ -172,7 +175,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_max_task_id: {
+        Args: {
+          input_project_id: string
+        }
+        Returns: number
+      }
     }
     Enums: {
       taskStatus: "todo" | "doing" | "done" | "rejected"
