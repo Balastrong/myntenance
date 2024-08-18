@@ -10,16 +10,19 @@ import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card"
 import { Skeleton } from "./ui/skeleton"
+import { CircleX, CircleXIcon, X } from "lucide-react"
 
 type Props = {
   children: React.ReactNode
   issueNumber: number
   repositoryFullName: string
+  onUnassign?: () => void
 }
 export function IssuePreview({
   issueNumber,
   children,
   repositoryFullName,
+  onUnassign,
 }: Props) {
   const [hasBeenOpened, setHasBeenOpened] = useState(false)
 
@@ -83,11 +86,23 @@ export function IssuePreview({
                 <p className="text-sm">
                   #{issue.number}: {issue.title}
                 </p>
-                <Link target="_blank" href={issue.html_url}>
-                  <Button size={"xs"} variant={"link"} className="p-0">
-                    <GitHubLogoIcon className="mr-2" /> View -&gt;
-                  </Button>
-                </Link>
+                <div className="flex flex-row gap-2">
+                  <Link target="_blank" href={issue.html_url}>
+                    <Button size={"xs"} variant={"link"} className="p-0">
+                      <GitHubLogoIcon className="mr-1 size-4" /> View
+                    </Button>
+                  </Link>
+                  {onUnassign && (
+                    <Button
+                      size={"xs"}
+                      variant={"destructive-link"}
+                      onClick={onUnassign}
+                    >
+                      <CircleX className="mr-1 size-4" />
+                      Unassign
+                    </Button>
+                  )}
+                </div>
               </>
             )}
           </div>

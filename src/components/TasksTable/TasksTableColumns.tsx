@@ -24,6 +24,7 @@ import { IssuePreview } from "../IssuePreview"
 import { UpdateTaskSheet } from "../TaskForm/UpdateTaskSheet"
 import { DeleteTasksDialog } from "./DeleteTaskDialog"
 import { QuickAssignDialog } from "./QuickAssignDialog"
+import { assignTaskIssue, assignTaskPullRequest } from "@/services/tasks/api"
 
 export function getColumns({
   repositoryFullName,
@@ -32,6 +33,7 @@ export function getColumns({
 }): ColumnDef<Task>[] {
   return [
     {
+      size: 32,
       id: "select",
       header: ({ table }) => (
         <Checkbox
@@ -107,6 +109,12 @@ export function getColumns({
           <IssuePreview
             issueNumber={issueNumber}
             repositoryFullName={repositoryFullName}
+            onUnassign={() =>
+              assignTaskIssue({
+                id: row.original.id,
+                issueNumber: null,
+              })
+            }
           >
             <span className="flex items-center gap-1">
               <CircleDot className="size-4" />
@@ -142,6 +150,12 @@ export function getColumns({
           <IssuePreview
             issueNumber={prNumber}
             repositoryFullName={repositoryFullName}
+            onUnassign={() =>
+              assignTaskPullRequest({
+                id: row.original.id,
+                prNumber: null,
+              })
+            }
           >
             <span className="flex items-center gap-1">
               <GitPullRequestArrow className="size-4" />
@@ -171,7 +185,8 @@ export function getColumns({
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Created At" />
       ),
-      cell: ({ cell }) => formatDate(cell.getValue() as Date),
+      cell: ({ cell }) =>
+        new Date(cell.getValue() as string).toLocaleDateString(),
     },
     {
       id: "actions",
