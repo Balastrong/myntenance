@@ -1,9 +1,8 @@
-import { Octokit } from "octokit"
-import { createClient } from "../supabase/client"
 import { getCookie } from "cookies-next"
+import { Octokit } from "octokit"
 import { GITHUB_ACCESS_TOKEN_COOKIE } from "../supabase/cookies"
 
-export const getClientOctokit = async () => {
+export const getClientOctokit = () => {
   const token = getCookie(GITHUB_ACCESS_TOKEN_COOKIE)
 
   if (!token) {

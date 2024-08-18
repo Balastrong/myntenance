@@ -10,7 +10,7 @@ export const useGitHubIssues = (query: string, baseQuery?: string) => {
     enabled: debouncedQuery.length > 0,
     placeholderData: keepPreviousData,
     queryFn: async () => {
-      const octokit = await getClientOctokit()
+      const octokit = getClientOctokit()
 
       const {
         data: { items },

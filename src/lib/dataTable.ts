@@ -23,6 +23,6 @@ export function getCommonPinningStyles<TData>({
     position: isPinned ? "sticky" : "relative",
     background: isPinned ? "hsl(var(--background))" : undefined,
     width: column.getSize(),
-    zIndex: isPinned ? 1 : 0,
+    zIndex: isPinned ? 1 : "inherit",
   }
 }

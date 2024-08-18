@@ -20,6 +20,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { CircleDot, CirclePlus, GitPullRequestArrow } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
+import { IssuePreview } from "../IssuePreview"
 import { UpdateTaskSheet } from "../TaskForm/UpdateTaskSheet"
 import { DeleteTasksDialog } from "./DeleteTaskDialog"
 import { QuickAssignDialog } from "./QuickAssignDialog"
@@ -103,10 +104,15 @@ export function getColumns({
       cell: ({ row }) => {
         const issueNumber = row.original.issueNumber
         return issueNumber ? (
-          <span className="flex items-center gap-1">
-            <CircleDot className="size-4" />
-            {issueNumber}
-          </span>
+          <IssuePreview
+            issueNumber={issueNumber}
+            repositoryFullName={repositoryFullName}
+          >
+            <span className="flex items-center gap-1">
+              <CircleDot className="size-4" />
+              {issueNumber}
+            </span>
+          </IssuePreview>
         ) : (
           <QuickAssignDialog
             taskId={row.original.id}
@@ -133,10 +139,15 @@ export function getColumns({
       cell: ({ row }) => {
         const prNumber = row.original.prNumber
         return prNumber ? (
-          <span className="flex items-center gap-1">
-            <GitPullRequestArrow className="size-4" />
-            {prNumber}
-          </span>
+          <IssuePreview
+            issueNumber={prNumber}
+            repositoryFullName={repositoryFullName}
+          >
+            <span className="flex items-center gap-1">
+              <GitPullRequestArrow className="size-4" />
+              {prNumber}
+            </span>
+          </IssuePreview>
         ) : (
           <QuickAssignDialog
             taskId={row.original.id}

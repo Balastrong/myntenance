@@ -1,12 +1,10 @@
-import { IssueSelector } from "../IssueSelector"
 import { TaskIssueSelector } from "../TaskIssueSelector"
 import { TaskPullRequestSelector } from "../TaskPullRequestSelector"
-import { Button } from "../ui/button"
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "../ui/dialog"
 
@@ -26,10 +24,12 @@ export function QuickAssignDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-96">
         {mode === "issue" ? (
           <>
-            <DialogHeader>Quick Assign Issue</DialogHeader>
+            <DialogHeader>
+              <DialogTitle>Quick Assign Issue</DialogTitle>
+            </DialogHeader>
             <TaskIssueSelector
               taskId={taskId}
               repositoryFullName={repositoryFullName}
@@ -37,7 +37,9 @@ export function QuickAssignDialog({
           </>
         ) : (
           <>
-            <DialogHeader>Quick Assign Pull Request</DialogHeader>
+            <DialogHeader>
+              <DialogTitle>Quick Assign Pull Request</DialogTitle>
+            </DialogHeader>
             <TaskPullRequestSelector
               taskId={taskId}
               repositoryFullName={repositoryFullName}

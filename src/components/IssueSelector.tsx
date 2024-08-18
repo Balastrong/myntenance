@@ -39,7 +39,7 @@ export function IssueSelector({ baseQuery, onSubmit }: Props) {
               value: item.number + "",
               label: `#${item.number}: ${item.title}`,
             }))}
-            placeholder="Search issues..."
+            placeholder="Search..."
             isLoading={isLoading}
           />
 
@@ -52,9 +52,10 @@ export function IssueSelector({ baseQuery, onSubmit }: Props) {
 
 function SubmitButton({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus()
+
   return (
     <Button type="submit" disabled={disabled || pending}>
-      Submit
+      Select
     </Button>
   )
 }
