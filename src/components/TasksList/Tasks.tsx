@@ -18,9 +18,11 @@ export type GetTasksParams = z.infer<typeof getTasksParamsSchema>
 export default async function Tasks({
   projectId,
   searchParams,
+  repositoryFullName,
 }: {
   projectId: string
   searchParams: SearchParams
+  repositoryFullName: string
 }) {
   const taskParams = getTasksParamsSchema.parse(searchParams)
 
@@ -40,7 +42,11 @@ export default async function Tasks({
         />
       }
     >
-      <TasksTable tasksPromise={tasksPromise} projectId={projectId} />
+      <TasksTable
+        tasksPromise={tasksPromise}
+        projectId={projectId}
+        repositoryFullName={repositoryFullName}
+      />
     </React.Suspense>
   )
 }

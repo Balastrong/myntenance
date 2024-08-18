@@ -2,6 +2,7 @@
 
 import { useGitHubIssues } from "@/hooks/useGitHubIssues"
 import { useState } from "react"
+import { useFormStatus } from "react-dom"
 import { AutoComplete } from "./Autocomplete"
 import { Button } from "./ui/button"
 
@@ -38,13 +39,22 @@ export function IssueSelector({ baseQuery, onSubmit }: Props) {
               value: item.number + "",
               label: `#${item.number}: ${item.title}`,
             }))}
-            placeholder="Search repositories..."
+            placeholder="Search issues..."
             isLoading={isLoading}
           />
 
-          <Button disabled={!selectedValue}>Select</Button>
+          <SubmitButton disabled={!selectedValue} />
         </div>
       </form>
     </div>
+  )
+}
+
+function SubmitButton({ disabled }: { disabled: boolean }) {
+  const { pending } = useFormStatus()
+  return (
+    <Button type="submit" disabled={disabled || pending}>
+      Submit
+    </Button>
   )
 }

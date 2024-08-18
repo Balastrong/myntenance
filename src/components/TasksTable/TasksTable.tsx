@@ -16,12 +16,20 @@ import { TaskStatusSchema, TaskStatusValues } from "@/types/schemas"
 interface TasksTableProps {
   projectId: string
   tasksPromise: ReturnType<typeof getOwnTasks>
+  repositoryFullName: string
 }
 
-export function TasksTable({ tasksPromise, projectId }: TasksTableProps) {
+export function TasksTable({
+  tasksPromise,
+  projectId,
+  repositoryFullName,
+}: TasksTableProps) {
   const { data, count } = use(tasksPromise)
 
-  const columns = useMemo(() => getColumns(), [])
+  const columns = useMemo(
+    () => getColumns({ repositoryFullName }),
+    [repositoryFullName],
+  )
 
   const filterFields: DataTableFilterField<Task>[] = [
     {

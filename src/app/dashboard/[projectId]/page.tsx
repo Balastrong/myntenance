@@ -86,7 +86,11 @@ export default async function Page({
       <h3>Notes</h3>
       <Notes projectId={projectId} projectNotes={project.notes ?? ""} />
       <h3 className="text-lg">Tasks</h3>
-      <Tasks projectId={projectId} searchParams={searchParams} />
+      <Tasks
+        projectId={projectId}
+        searchParams={searchParams}
+        repositoryFullName={repository.full_name}
+      />
       <Card>
         <CardHeader>
           <CardTitle>Danger Zone</CardTitle>

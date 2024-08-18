@@ -17,13 +17,18 @@ import { formatDate, getStatusIcon } from "@/lib/utils"
 import { TaskStatus } from "@/types/schemas"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"
-import { CircleDot, GitPullRequestArrow } from "lucide-react"
+import { CircleDot, CirclePlus, GitPullRequestArrow } from "lucide-react"
 import Link from "next/link"
 import * as React from "react"
 import { UpdateTaskSheet } from "../TaskForm/UpdateTaskSheet"
 import { DeleteTasksDialog } from "./DeleteTaskDialog"
+import { QuickAssignDialog } from "./QuickAssignDialog"
 
-export function getColumns(): ColumnDef<Task>[] {
+export function getColumns({
+  repositoryFullName,
+}: {
+  repositoryFullName: string
+}): ColumnDef<Task>[] {
   return [
     {
       id: "select",
@@ -97,13 +102,26 @@ export function getColumns(): ColumnDef<Task>[] {
       ),
       cell: ({ row }) => {
         const issueNumber = row.original.issueNumber
-        return (
-          issueNumber && (
-            <span className="flex items-center gap-1">
-              <CircleDot className="size-4" />
-              {issueNumber}
-            </span>
-          )
+        return issueNumber ? (
+          <span className="flex items-center gap-1">
+            <CircleDot className="size-4" />
+            {issueNumber}
+          </span>
+        ) : (
+          <QuickAssignDialog
+            taskId={row.original.id}
+            repositoryFullName={repositoryFullName}
+            mode="issue"
+          >
+            <Button
+              variant={"link"}
+              size={"xs"}
+              className="p-0 opacity-0 transition-opacity group-hover/table-row:opacity-100"
+            >
+              <CirclePlus className="mr-1 size-4" />
+              Add
+            </Button>
+          </QuickAssignDialog>
         )
       },
     },
@@ -114,13 +132,26 @@ export function getColumns(): ColumnDef<Task>[] {
       ),
       cell: ({ row }) => {
         const prNumber = row.original.prNumber
-        return (
-          prNumber && (
-            <span className="flex items-center gap-1">
-              <GitPullRequestArrow className="size-4" />
-              {prNumber}
-            </span>
-          )
+        return prNumber ? (
+          <span className="flex items-center gap-1">
+            <GitPullRequestArrow className="size-4" />
+            {prNumber}
+          </span>
+        ) : (
+          <QuickAssignDialog
+            taskId={row.original.id}
+            repositoryFullName={repositoryFullName}
+            mode="pr"
+          >
+            <Button
+              variant={"link"}
+              size={"xs"}
+              className="p-0 opacity-0 transition-opacity group-hover/table-row:opacity-100"
+            >
+              <CirclePlus className="mr-1 size-4" />
+              Add
+            </Button>
+          </QuickAssignDialog>
         )
       },
     },

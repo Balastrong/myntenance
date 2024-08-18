@@ -60,6 +60,7 @@ export function DataTable<TData>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  className="group/table-row"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
