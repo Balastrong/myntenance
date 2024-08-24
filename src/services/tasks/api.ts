@@ -3,7 +3,7 @@
 import { GetTasksParams } from "@/components/TasksList/Tasks"
 import { createClient } from "@/lib/supabase/server"
 import { TaskInsert, TaskUpdate } from "@/lib/supabase/types"
-import { revalidateTag, unstable_cache } from "next/cache"
+import { revalidateTag } from "next/cache"
 
 export const getOwnTasks = async (filters: {
   projectId: string
