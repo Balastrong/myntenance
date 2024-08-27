@@ -80,6 +80,16 @@ export function DataTableColumnHeader<TData, TValue>({
                 />
                 Desc
               </DropdownMenuItem>
+              <DropdownMenuItem
+                aria-label="Clear sorting"
+                onClick={() => column.clearSorting()} 
+              >
+                <CaretSortIcon
+                  className="mr-2 size-3.5 text-muted-foreground/70"
+                  aria-hidden="true"
+                />
+                Clear
+              </DropdownMenuItem>
             </>
           )}
           {column.getCanSort() && column.getCanHide() && (
