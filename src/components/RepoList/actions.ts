@@ -2,15 +2,22 @@
 
 import { createClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 
-export async function handleDelete(formData: FormData) {
-  "use server"
+export async function handleDelete(id: string) {
+  const { data, error } = await createClient()
+    .from("projects")
+    .delete()
+    .eq("id", id)
+    .select()
+    .single()
 
-  const id = formData.get("id")!
-  await createClient().from("projects").delete().eq("id", id)
   revalidatePath("/dashboard")
-  redirect("/dashboard")
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
 }
 
 export async function toggleFavourite(formData: FormData) {
