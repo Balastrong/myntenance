@@ -27,7 +27,7 @@ import * as React from "react"
 import { toast } from "sonner"
 import { Icons } from "../icons"
 import { handleDelete } from "./actions"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 
 interface DeleteRepoDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -53,7 +53,7 @@ export function DeleteRepoDialog({
         router.push("/dashboard")
         onSuccess?.()
         toast.success(
-          `Repository titled ${res.name} has been deleted successfully!`,
+          `Repository titled ${res.data?.name} has been deleted successfully!`,
         )
       } catch (error: unknown) {
         const message =
