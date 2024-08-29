@@ -17,6 +17,6 @@ export async function getUserProfileBySlug(slug: string) {
   return await createClient()
     .from("user_profiles")
     .select("*")
-    .eq("slug", slug)
+    .ilike("slug", slug)
     .single()
 }
