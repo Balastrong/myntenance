@@ -12,32 +12,15 @@ Curious about the story behind the project? Watch the presentation at [https://y
 
 ## Roadmap
 
-High level roadmap of the project, subejct to change and feedback.
+Have an idea being either a tiny update or an entire new feature? Issues are more than welcome, write it down [here](https://github.com/Balastrong/myntenance/issues/new)!
 
-- [x] Login with GitHub
-- [x] Select projects to track
-- [x] Store project on Supabase
-- [x] Projects list
-  - [x] Star favourite projects
-  - [ ] Filters/Sorting
-- [x] Deploy on Vercel
-- [ ] Project page
-  - [x] Project details
-  - [ ] Tasks List
-    - [x] Add/Edit/Remove
-    - [x] Check Completed
-    - [x] Hide completed
-    - [ ] Sort/Reorder (priority?)
-  - [ ] Realtime textarea?
-  - [x] Delete
-- [ ] Task page
-  - [x] Parallel modal
-  - [ ] Assign issues/prs
-  - [ ] Due date
+Some examples:
+
+- [ ] Add a due date to tasks
+- [ ] Send a notification when a task is due
 - [ ] Tags (projects, tasks)
-- [ ] Landing page
-- [ ] Onboarding (driver.js?)
-- [ ] Create GitHub Issue from the tool
+- [ ] Onboarding (with driver.js?)
+- [ ] Create a GitHub Issue from the tool
 - [ ] Analytics
 - [ ] Calendar
 
