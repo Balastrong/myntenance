@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getUserProfileBySlug } from "@/services/profile/api"
-import { useParams } from "next/navigation"
 
 export default async function UserPublicProfile({
   params: { userSlug },
