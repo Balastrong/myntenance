@@ -7,7 +7,7 @@ export async function storeRepository(fullName: string) {
   "use server"
 
   try {
-    const [owner, repo] = fullName.split("/")
+    const [repoOwner, repoName] = fullName.split("/")
 
     const {
       data: { user },
@@ -20,8 +20,8 @@ export async function storeRepository(fullName: string) {
     const { data: existingRepo } = await createClient()
       .from("projects")
       .select("*")
-      .eq("name", repo)
-      .eq("ownerLogin", owner)
+      .eq("name", repoName)
+      .eq("ownerLogin", repoOwner)
       .eq("user", user.id)
       .limit(1)
       .maybeSingle()
@@ -30,20 +30,21 @@ export async function storeRepository(fullName: string) {
       throw new Error("Repository already exists")
     }
 
-    const { data } = await getServerOctokit().rest.repos.get({
-      owner,
-      repo,
+    const { data: githubRepository } = await getServerOctokit().rest.repos.get({
+      owner: repoOwner,
+      repo: repoName,
     })
 
     await createClient()
       .from("projects")
       .insert({
-        name: data.name,
-        ownerLogin: data.owner.login,
-        ownerType: data.owner.type,
-        visibility: data.private ? "private" : "public",
-        stars: data.stargazers_count,
-        openIssues: data.open_issues_count,
+        name: githubRepository.name,
+        ownerLogin: githubRepository.owner.login,
+        ownerType: githubRepository.owner.type,
+        visibility: githubRepository.private ? "private" : "public",
+        stars: githubRepository.stargazers_count,
+        openIssues: githubRepository.open_issues_count,
+        showInPublicProfile: !githubRepository.private,
       })
 
     revalidatePath("/", "layout")

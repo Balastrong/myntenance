@@ -19,6 +19,7 @@ export type Database = {
           openIssues: number
           ownerLogin: string
           ownerType: string
+          showInPublicProfile: boolean | null
           stars: number
           user: string
           visibility: string
@@ -32,6 +33,7 @@ export type Database = {
           openIssues: number
           ownerLogin: string
           ownerType: string
+          showInPublicProfile?: boolean | null
           stars: number
           user?: string
           visibility: string
@@ -45,6 +47,7 @@ export type Database = {
           openIssues?: number
           ownerLogin?: string
           ownerType?: string
+          showInPublicProfile?: boolean | null
           stars?: number
           user?: string
           visibility?: string
