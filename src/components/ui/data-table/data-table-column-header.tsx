@@ -82,7 +82,7 @@ export function DataTableColumnHeader<TData, TValue>({
               </DropdownMenuItem>
               <DropdownMenuItem
                 aria-label="Clear sorting"
-                onClick={() => column.clearSorting()} 
+                onClick={() => column.clearSorting()}
               >
                 <CaretSortIcon
                   className="mr-2 size-3.5 text-muted-foreground/70"
