@@ -1,6 +1,6 @@
 # Myntenance
 
-> Your next side project won't fail this time 💡
+> Your next side project won't fail this time! 💡
 
 ## What is Myntenance?
 
