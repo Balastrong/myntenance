@@ -1,5 +1,5 @@
 import { Notes } from "@/components/Repo/Notes"
-import DeleteRepoForm from "@/components/RepoList/DeleteRepoForm"
+import DeleteRepoButton from "@/components/RepoList/DeleteRepoButton"
 import { FavouriteRepoForm } from "@/components/RepoList/FavouriteRepoForm"
 import Tasks from "@/components/TasksList/Tasks"
 import { Badge } from "@/components/ui/badge"
@@ -100,8 +100,10 @@ export default async function Page({
             <div>
               <h5 className="font-semibold">Delete Project</h5>
               Deleting the project will permanently remove all associated data!
+              <br />
+              This action will not affect your GitHub repository.
             </div>
-            <DeleteRepoForm repoId={projectId} />
+            <DeleteRepoButton repoId={projectId} />
           </div>
         </CardContent>
       </Card>

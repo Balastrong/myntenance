@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Task } from "@/lib/supabase/types"
-import { formatDate, getStatusIcon } from "@/lib/utils"
+import { getStatusIcon } from "@/lib/utils"
 import { TaskStatus } from "@/types/schemas"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { type ColumnDef } from "@tanstack/react-table"

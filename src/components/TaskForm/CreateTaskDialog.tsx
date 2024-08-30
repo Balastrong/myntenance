@@ -22,7 +22,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
-import { Task, TaskInsert } from "@/lib/supabase/types"
+import { TaskInsert } from "@/lib/supabase/types"
 import { createTask } from "@/services/tasks/api"
 import { PlusIcon, ReloadIcon } from "@radix-ui/react-icons"
 import * as React from "react"

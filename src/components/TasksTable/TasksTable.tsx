@@ -11,7 +11,7 @@ import { DataTableToolbar } from "../ui/data-table/data-table-toolbar"
 import { getColumns } from "./TasksTableColumns"
 import { TasksTableToolbarActions } from "./TasksTableToolbarActions"
 import { getStatusIcon } from "@/lib/utils"
-import { TaskStatusSchema, TaskStatusValues } from "@/types/schemas"
+import { TaskStatusValues } from "@/types/schemas"
 
 interface TasksTableProps {
   projectId: string
