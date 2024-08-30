@@ -3,7 +3,7 @@
 import { useDebouncedValue } from "@/hooks/useDebouncedValue"
 import { useEffect, useState } from "react"
 import { Textarea } from "../ui/textarea"
-import { updateProjectNotes } from "../RepoList/actions"
+import { updateProjectNotes } from "@/services/project/api"
 
 type Props = {
   projectId: string

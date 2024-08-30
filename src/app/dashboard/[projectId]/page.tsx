@@ -1,4 +1,5 @@
 import { Notes } from "@/components/Repo/Notes"
+import { RepoPublicDisplayToggle } from "@/components/Repo/RepoPublicDisplayToggle"
 import DeleteRepoButton from "@/components/RepoList/DeleteRepoButton"
 import { FavouriteRepoForm } from "@/components/RepoList/FavouriteRepoForm"
 import Tasks from "@/components/TasksList/Tasks"
@@ -51,8 +52,12 @@ export default async function Page({
           />
           <h1 className="text-xl font-semibold">{repository.full_name}</h1>
           <FavouriteRepoForm
-            repoId={projectId}
+            projectId={projectId}
             isFavorite={project.isFavourite}
+          />
+          <RepoPublicDisplayToggle
+            projectId={projectId}
+            showInPublicProfile={project.showInPublicProfile ?? false}
           />
           <Badge variant={"outline"}>
             {repository.private ? "Private" : "Public"}

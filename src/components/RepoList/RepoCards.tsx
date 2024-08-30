@@ -1,9 +1,8 @@
-import { createClient } from "@/lib/supabase/server"
+import { getProjects } from "@/services/project/api"
 import { QueryData } from "@supabase/supabase-js"
+import { FolderGit2 } from "lucide-react"
 import { RepoCard } from "./RepoCard"
 import { RepoCardGrid } from "./RepoCardGrid"
-import { FolderGit2 } from "lucide-react"
-import { getProjects } from "@/services/project/api"
 
 export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>
 
