@@ -38,7 +38,6 @@ export async function togglePublicProfileVisibility(
     .from("projects")
     .update({ showInPublicProfile })
     .eq("id", id)
-    .throwOnError()
 
   revalidatePath("/dashboard")
 }
@@ -57,4 +56,13 @@ export async function toggleFavourite(formData: FormData) {
 export async function updateProjectNotes(id: string, notes: string) {
   await createClient().from("projects").update({ notes }).eq("id", id)
   revalidatePath(`/dashboard/${id}`)
+}
+
+export async function getUserPublicProjects(userId: string) {
+  return await createClient()
+    .from("projects")
+    .select("*")
+    .eq("user", userId)
+    .eq("showInPublicProfile", true)
+    .order("createdAt")
 }
