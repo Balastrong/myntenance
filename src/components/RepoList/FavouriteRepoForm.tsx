@@ -1,13 +1,13 @@
 "use client"
 
+import { toggleFavourite } from "@/services/project/api"
 import { Star } from "lucide-react"
-import { Button } from "../ui/button"
-import { toggleFavourite } from "./actions"
 import { useOptimistic } from "react"
+import { Button } from "../ui/button"
 
-type Props = { repoId: string; isFavorite: boolean }
+type Props = { projectId: string; isFavorite: boolean }
 
-export function FavouriteRepoForm({ repoId, isFavorite }: Props) {
+export function FavouriteRepoForm({ projectId: repoId, isFavorite }: Props) {
   const [optimisticIsFavourite, optimisticToggleFavourite] =
     useOptimistic(isFavorite)
 

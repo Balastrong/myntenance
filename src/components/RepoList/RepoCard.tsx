@@ -43,7 +43,10 @@ export const RepoCard = ({ repo }: Props) => {
               </a>
             </div>
           </div>
-          <FavouriteRepoForm repoId={repo.id} isFavorite={repo.isFavourite} />
+          <FavouriteRepoForm
+            projectId={repo.id}
+            isFavorite={repo.isFavourite}
+          />
         </div>
         <CardDescription>
           Visibility: <span className="capitalize">{repo.visibility}</span>

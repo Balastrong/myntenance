@@ -22,12 +22,12 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { handleDelete } from "@/services/project/api"
 import { TrashIcon } from "@radix-ui/react-icons"
+import { useRouter } from "next/navigation"
 import * as React from "react"
 import { toast } from "sonner"
 import { Icons } from "../icons"
-import { handleDelete } from "./actions"
-import { redirect, useRouter } from "next/navigation"
 
 interface DeleteRepoDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
