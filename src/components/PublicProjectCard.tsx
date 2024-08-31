@@ -45,7 +45,7 @@ export async function PublicProjectCard({ userLogin, project }: Props) {
           {project.ownerLogin}/{project.name}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex w-full items-center justify-center">
         <ActivityCalendar data={data} />
       </CardContent>
     </Card>
