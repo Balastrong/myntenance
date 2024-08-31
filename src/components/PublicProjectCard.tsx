@@ -26,6 +26,7 @@ export async function PublicProjectCard({ userLogin, project }: Props) {
 
   return (
     <Card
+      className="w-full"
       style={{
         order: -totalCommits,
       }}

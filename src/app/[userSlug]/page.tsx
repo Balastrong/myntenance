@@ -33,7 +33,7 @@ export default async function UserPublicProfile({
       </div>
       <div className="flex flex-col items-center gap-4">
         <h2 className="text-2xl font-medium">Public Projects</h2>
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex w-full flex-col items-center gap-4">
           {(publicProjects ?? []).map((project) => (
             <PublicProjectCard
               key={project.id}
