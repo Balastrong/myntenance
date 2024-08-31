@@ -1,24 +1,26 @@
 "use client"
 
+import { useTheme } from "next-themes"
 import Calendar, {
   ThemeInput,
   type Props as ActivityCalendarProps, //Skeleton,
 } from "react-activity-calendar"
 
-const gitHubColors = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
-
 const minimalTheme: ThemeInput = {
-  light: gitHubColors,
-  dark: gitHubColors,
+  light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+  dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
 }
 
 type Props = {} & ActivityCalendarProps
 
 // TODO: Add a skeleton loader
 export function ActivityCalendar({ data }: Props) {
+  const { theme: colorScheme } = useTheme()
+
   return data.length > 0 ? (
     <Calendar
       data={data}
+      colorScheme={colorScheme === "dark" ? "dark" : "light"}
       theme={minimalTheme}
       blockSize={10}
       labels={{
