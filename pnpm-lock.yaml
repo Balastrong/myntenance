@@ -101,6 +101,9 @@ importers:
       react:
         specifier: ^18
         version: 18.3.1
+      react-activity-calendar:
+        specifier: ^2.5.1
+        version: 2.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-day-picker:
         specifier: 8.10.1
         version: 8.10.1(date-fns@3.6.0)(react@18.3.1)
@@ -1145,6 +1148,9 @@ packages:
   '@types/canvas-confetti@1.6.4':
     resolution: {integrity: sha512-fNyZ/Fdw/Y92X0vv7B+BD6ysHL4xVU5dJcgzgxLdGbn8O3PezZNIJpml44lKM0nsGur+o/6+NZbZeNTt00U1uA==}
 
+  '@types/chroma-js@2.4.4':
+    resolution: {integrity: sha512-/DTccpHTaKomqussrn+ciEvfW4k6NAHzNzs/sts1TCqg333qNxOhy8TNIoQCmbGG3Tl8KdEhkGAssb1n3mTXiQ==}
+
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
 
@@ -1386,6 +1392,9 @@ packages:
   chownr@3.0.0:
     resolution: {integrity: sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==}
     engines: {node: '>=18'}
+
+  chroma-js@2.6.0:
+    resolution: {integrity: sha512-BLHvCB9s8Z1EV4ethr6xnkl/P2YRFOGqfgvuMG/MyCbZPrTA+NeiByY6XvgF0zP4/2deU2CXnWyMa3zu1LqQ3A==}
 
   class-variance-authority@0.7.0:
     resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
@@ -2426,6 +2435,12 @@ packages:
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+
+  react-activity-calendar@2.5.1:
+    resolution: {integrity: sha512-O+5d8XHaxeaBnohCC5o69w3DO1VAwZuLK96bwwUmvtOMi/LBQ3SIHRMg0fBHZzo+5cofxqXkPEnikZkrZHAk1A==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
 
   react-day-picker@8.10.1:
     resolution: {integrity: sha512-TMx7fNbhLk15eqcMt+7Z7S2KF7mfTId/XJDjKE8f+IUcFn0l08/kI4FiYTL/0yuOLmEcbR4Fwe3GJf/NiiMnPA==}
@@ -3946,6 +3961,8 @@ snapshots:
 
   '@types/canvas-confetti@1.6.4': {}
 
+  '@types/chroma-js@2.4.4': {}
+
   '@types/cookie@0.6.0': {}
 
   '@types/json5@0.0.29': {}
@@ -4229,6 +4246,8 @@ snapshots:
       fsevents: 2.3.3
 
   chownr@3.0.0: {}
+
+  chroma-js@2.6.0: {}
 
   class-variance-authority@0.7.0:
     dependencies:
@@ -5364,6 +5383,14 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  react-activity-calendar@2.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@types/chroma-js': 2.4.4
+      chroma-js: 2.6.0
+      date-fns: 3.6.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-day-picker@8.10.1(date-fns@3.6.0)(react@18.3.1):
     dependencies:

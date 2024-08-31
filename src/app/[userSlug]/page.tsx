@@ -1,3 +1,4 @@
+import { PublicProjectCard } from "@/components/PublicProjectCard"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getUserProfileBySlug } from "@/services/profile/api"
 import { getUserPublicProjects } from "@/services/project/api"
@@ -25,13 +26,16 @@ export default async function UserPublicProfile({
       <div>Full name: {userData?.fullName}</div>
       <div>
         Public Projects:
-        <ul>
+        <div className="flex flex-col items-center gap-4">
           {(publicProjects ?? []).map((project) => (
-            <li key={project.id}>
-              {project.ownerLogin}/{project.name}
-            </li>
+            <PublicProjectCard
+              key={project.id}
+              userLogin={userSlug}
+              repoLogin={project.ownerLogin}
+              repoName={project.name}
+            />
           ))}
-        </ul>
+        </div>
       </div>
     </main>
   )
