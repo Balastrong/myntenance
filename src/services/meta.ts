@@ -5,14 +5,17 @@ import { unstable_cache } from "next/cache"
 
 export const getSiteMeta = unstable_cache(
   async (supabase: DatabaseClient) => {
-    const { data } = await supabase.auth.admin.listUsers()
+    const {
+      data: { users },
+    } = await supabase.auth.admin.listUsers()
+
     const { count: projects } = await supabase
       .from("projects")
       .select("*", { count: "exact" })
 
     return {
-      users: data.users.length,
-      projects: projects,
+      usersCount: users.length,
+      projectsCount: projects ?? 0,
     }
   },
   undefined,

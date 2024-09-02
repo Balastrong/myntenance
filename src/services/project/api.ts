@@ -1,13 +1,14 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/serverAdmin"
 import { DatabaseClient } from "@/lib/supabase/types"
 import { revalidatePath } from "next/cache"
 
 export const getOwnProjects = async () => {
-  const { data } = await createClient().auth.getSession()
+  const { data } = await createClient().auth.getUser()
 
-  const userId = data?.session?.user.id
+  const userId = data?.user?.id
 
   if (!userId) {
     return { data: [], error: new Error("User not logged in!") }
@@ -71,15 +72,17 @@ export async function updateProjectNotes(id: string, notes: string) {
 }
 
 export async function getUserPublicProjects(userSlug: string) {
-  const { data: profile } = await createClient()
+  const { data: profile } = await createAdminClient()
     .from("user_profiles")
     .select("user")
     .eq("slug", userSlug)
     .single()
 
+  console.log(userSlug, profile)
+
   if (!profile) return { data: [] }
 
-  return await createClient()
+  return await createAdminClient()
     .from("projects")
     .select("*")
     .eq("user", profile.user)

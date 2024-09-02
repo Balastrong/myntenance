@@ -5,6 +5,7 @@ import TrustedBy from "@/components/TrustedBy"
 import { getMyntenanceRepository } from "@/lib/github/api"
 import { getServerOctokit } from "@/lib/github/server"
 import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/serverAdmin"
 import { getSiteMeta } from "@/services/meta"
 
 export default async function Home() {
@@ -15,7 +16,7 @@ export default async function Home() {
   const { stargazers_count, forks_count } =
     await getMyntenanceRepository(getServerOctokit())
 
-  const { projects, users } = await getSiteMeta(createClient())
+  const { projectsCount, usersCount } = await getSiteMeta(createAdminClient())
 
   return (
     <>
@@ -26,8 +27,8 @@ export default async function Home() {
           <TrustedBy
             stargazers={stargazers_count}
             forks={forks_count}
-            projects={projects ?? 0}
-            users={users}
+            projects={projectsCount}
+            users={usersCount}
           />
         </BlurFade>
       </main>
