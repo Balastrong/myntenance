@@ -7,6 +7,7 @@ import { getServerOctokit } from "@/lib/github/server"
 import React from "react"
 import { PublicProjectCardSkeleton } from "@/components/PublicProjectCardSkeleton"
 import { Activity } from "react-activity-calendar"
+import NotFound from "./notFound"
 
 export default async function UserPublicProfile({
   params: { userSlug },
@@ -16,7 +17,7 @@ export default async function UserPublicProfile({
   const { data: userData } = await getUserProfileBySlug(userSlug)
 
   if (userData === null) {
-    return <div>User not found</div>
+    return <NotFound slug={userSlug} />
   }
 
   const { data: publicProjects } = await getUserPublicProjects(userSlug)
