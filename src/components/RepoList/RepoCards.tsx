@@ -1,13 +1,13 @@
-import { getProjects } from "@/services/project/api"
+import { getOwnProjects } from "@/services/project/api"
 import { QueryData } from "@supabase/supabase-js"
 import { FolderGit2 } from "lucide-react"
 import { RepoCard } from "./RepoCard"
 import { RepoCardGrid } from "./RepoCardGrid"
 
-export type RepoWithTasks = QueryData<ReturnType<typeof getProjects>>
+export type RepoWithTasks = QueryData<ReturnType<typeof getOwnProjects>>
 
 export default async function RepoCards() {
-  const { data, error } = await getProjects()
+  const { data, error } = await getOwnProjects()
 
   if (error) {
     return <div>Error: {error.message}</div>

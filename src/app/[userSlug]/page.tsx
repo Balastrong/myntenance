@@ -1,6 +1,13 @@
+import { PublicProjectCard } from "@/components/PublicProjectCard"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { getUserProfileBySlug } from "@/services/profile/api"
 import { getUserPublicProjects } from "@/services/project/api"
+import { getUserRepoStats } from "../api/github/actions"
+import { getServerOctokit } from "@/lib/github/server"
+import React from "react"
+import { PublicProjectCardSkeleton } from "@/components/PublicProjectCardSkeleton"
+import { Activity } from "react-activity-calendar"
+import NotFound from "./notFound"
 
 export default async function UserPublicProfile({
   params: { userSlug },
@@ -10,29 +17,102 @@ export default async function UserPublicProfile({
   const { data: userData } = await getUserProfileBySlug(userSlug)
 
   if (userData === null) {
-    return <div>User not found</div>
+    return <NotFound slug={userSlug} />
   }
 
-  const { data: publicProjects } = await getUserPublicProjects(userData.user)
+  const { data: publicProjects } = await getUserPublicProjects(userSlug)
+
+  const activityPromises = publicProjects?.map((proj) =>
+    getUserRepoStats(
+      getServerOctokit(),
+      userSlug,
+      proj.ownerLogin,
+      proj.name,
+    ).then(computeActivityCalendarData),
+  )
 
   return (
-    <main className="flex h-full flex-col gap-4">
-      <h2 className="text-xl font-medium">Profile: {userSlug}</h2>
-      <Avatar>
-        <AvatarImage src={`https://github.com/${userSlug}.png`} />
-        <AvatarFallback>{userSlug[0]}</AvatarFallback>
-      </Avatar>
-      <div>Full name: {userData?.fullName}</div>
-      <div>
-        Public Projects:
-        <ul>
-          {(publicProjects ?? []).map((project) => (
-            <li key={project.id}>
-              {project.ownerLogin}/{project.name}
-            </li>
+    <main className="flex w-full flex-col gap-4 px-2 lg:flex-row">
+      <div className="flex flex-row gap-4 lg:w-60 lg:flex-col">
+        <Avatar className="aspect-square size-28 lg:mx-auto lg:h-auto lg:w-full">
+          <AvatarImage src={`https://github.com/${userSlug}.png`} />
+          <AvatarFallback className="text-2xl">{userSlug[0]}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col gap-2 lg:gap-4">
+          <div>
+            <h2 className="text-2xl font-medium">{userData?.fullName}</h2>
+            <h3 className="text-xl">{userSlug}</h3>
+          </div>
+          <div>
+            <p>Projects: {publicProjects?.length ?? 0}</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col items-center gap-4 overflow-x-hidden">
+        <h2 className="text-2xl font-medium">Projects on Myntenance</h2>
+        <div className="flex w-full flex-col items-center gap-4">
+          {(publicProjects ?? []).map((_, i) => (
+            <React.Suspense key={i} fallback={<PublicProjectCardSkeleton />}>
+              <PublicProjectCard
+                key={i}
+                activityPromise={activityPromises![i]}
+                project={publicProjects![i]}
+              />
+            </React.Suspense>
           ))}
-        </ul>
+        </div>
       </div>
     </main>
   )
+}
+
+function computeActivityCalendarData({
+  data: commits,
+}: Awaited<ReturnType<typeof getUserRepoStats>>) {
+  let max = 0
+
+  const dataMap = new Map<string, Activity>()
+  const date = new Date()
+
+  for (let i = 0; i < 365; i++) {
+    date.setDate(date.getDate() - 1)
+    const dateString = date.toISOString().split("T")[0]
+    dataMap.set(dateString, {
+      date: dateString,
+      count: 0,
+      level: 0,
+    })
+  }
+
+  commits.forEach(({ commit }) => {
+    const date = commit.author?.date?.split("T")[0]
+    if (!date) return
+
+    const activity = dataMap.get(date)
+    if (!activity) return
+
+    const count = activity.count + 1
+    max = Math.max(max, count)
+    dataMap.set(date, {
+      ...activity,
+      count,
+    })
+  })
+
+  const data = Array.from(dataMap.values())
+    .map((data) => {
+      if (max === 0) {
+        return data
+      }
+
+      const level = Math.min(Math.floor((data.count / max) * 4), 4)
+
+      return {
+        ...data,
+        level: data.count > 0 ? Math.max(1, level) : 0,
+      }
+    })
+    .toReversed()
+
+  return { data, totalCommits: commits.length }
 }

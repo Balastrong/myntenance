@@ -1,11 +1,10 @@
 "use server"
 import { getServerOctokit } from "@/lib/github/server"
 import { createClient } from "@/lib/supabase/server"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, unstable_cache } from "next/cache"
+import { Octokit } from "octokit"
 
 export async function storeRepository(fullName: string) {
-  "use server"
-
   try {
     const [repoOwner, repoName] = fullName.split("/")
 
@@ -58,3 +57,23 @@ export async function storeRepository(fullName: string) {
     return { message: errorMessage, error: true }
   }
 }
+
+export const getUserRepoStats = unstable_cache(
+  (
+    octokit: Octokit,
+    userLogin: string,
+    repoOwner: string,
+    repoName: string,
+  ) => {
+    const today = new Date()
+    return octokit.rest.repos.listCommits({
+      owner: repoOwner,
+      repo: repoName,
+      author: userLogin,
+      per_page: 100,
+      since: new Date(today.setDate(today.getDate() - 365)).toISOString(),
+    })
+  },
+  undefined,
+  { revalidate: 600 },
+)

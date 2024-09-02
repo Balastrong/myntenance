@@ -44,6 +44,7 @@
     "next-themes": "^0.3.0",
     "octokit": "^4.0.2",
     "react": "^18",
+    "react-activity-calendar": "^2.5.1",
     "react-day-picker": "8.10.1",
     "react-dom": "^18",
     "sonner": "^1.5.0",
