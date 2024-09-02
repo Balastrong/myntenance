@@ -73,11 +73,11 @@ export default function TrustedBy({
 }
 
 const Card = ({ children }: { children: React.ReactNode }) => {
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
 
   return (
     <MagicCard
-      gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
+      gradientColor={resolvedTheme === "dark" ? "#262626" : "#D9D9D955"}
       className="flex min-w-[180px] cursor-pointer items-center justify-center shadow-xl md:min-w-[300px]"
     >
       <div className="flex h-full flex-col items-center justify-center gap-2 px-8 py-4 text-xl md:px-16">

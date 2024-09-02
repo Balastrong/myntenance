@@ -15,7 +15,7 @@ type Props = {} & ActivityCalendarProps
 
 // TODO: Add a skeleton loader
 export function ActivityCalendar({ data }: Props) {
-  const { theme: colorScheme } = useTheme()
+  const { resolvedTheme: colorScheme } = useTheme()
 
   return data.length > 0 ? (
     <Calendar
