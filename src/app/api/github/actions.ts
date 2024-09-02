@@ -65,11 +65,13 @@ export const getUserRepoStats = unstable_cache(
     repoOwner: string,
     repoName: string,
   ) => {
+    const today = new Date()
     return octokit.rest.repos.listCommits({
       owner: repoOwner,
       repo: repoName,
       author: userLogin,
       per_page: 100,
+      since: new Date(today.setDate(today.getDate() - 365)).toISOString(),
     })
   },
   undefined,
