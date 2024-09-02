@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes"
 import Calendar, {
   ThemeInput,
-  type Props as ActivityCalendarProps, //Skeleton,
+  type Props as ActivityCalendarProps,
 } from "react-activity-calendar"
 
 const minimalTheme: ThemeInput = {
@@ -11,21 +11,20 @@ const minimalTheme: ThemeInput = {
   dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
 }
 
-type Props = {} & ActivityCalendarProps
+type Props = ActivityCalendarProps
 
-// TODO: Add a skeleton loader
-export function ActivityCalendar({ data }: Props) {
+export function ActivityCalendar(props: Props) {
   const { resolvedTheme: colorScheme } = useTheme()
 
-  return data.length > 0 ? (
+  return props.data.length > 0 ? (
     <Calendar
-      data={data}
       colorScheme={colorScheme === "dark" ? "dark" : "light"}
       theme={minimalTheme}
       blockSize={10}
       labels={{
-        totalCount: `{{count}} commits in the last ${data.length} days`,
+        totalCount: `{{count}} commits in the last ${props.data.length} days`,
       }}
+      {...props}
     />
   ) : null
 }

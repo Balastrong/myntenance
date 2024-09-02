@@ -75,13 +75,13 @@ function computeActivityCalendarData({
   const date = new Date()
 
   for (let i = 0; i < 365; i++) {
-    date.setDate(date.getDate() - 1)
     const dateString = date.toISOString().split("T")[0]
     dataMap.set(dateString, {
       date: dateString,
       count: 0,
       level: 0,
     })
+    date.setDate(date.getDate() - 1)
   }
 
   commits.forEach(({ commit }) => {
