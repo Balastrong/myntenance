@@ -4,8 +4,20 @@ import { createClient } from "@/lib/supabase/server"
 import { DatabaseClient } from "@/lib/supabase/types"
 import { revalidatePath } from "next/cache"
 
-export const getProjects = () =>
-  createClient().from("projects").select("*, tasks (*)")
+export const getOwnProjects = async () => {
+  const { data } = await createClient().auth.getSession()
+
+  const userId = data?.session?.user.id
+
+  if (!userId) {
+    return { data: [], error: new Error("User not logged in!") }
+  }
+
+  return await createClient()
+    .from("projects")
+    .select("*, tasks (*)")
+    .eq("user", userId)
+}
 
 export const getProject = async (projectId: string, client: DatabaseClient) => {
   const { data: project } = await client
