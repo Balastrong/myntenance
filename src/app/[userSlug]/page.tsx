@@ -19,9 +19,9 @@ export default async function UserPublicProfile({
   return (
     <main className="flex w-full flex-col gap-4 px-2 lg:flex-row">
       <div className="flex flex-row gap-4 lg:w-60 lg:flex-col">
-        <Avatar className="h-28 w-28 lg:mx-auto lg:h-auto lg:w-full">
+        <Avatar className="aspect-square size-28 lg:mx-auto lg:h-auto lg:w-full">
           <AvatarImage src={`https://github.com/${userSlug}.png`} />
-          <AvatarFallback>{userSlug[0]}</AvatarFallback>
+          <AvatarFallback className="text-2xl">{userSlug[0]}</AvatarFallback>
         </Avatar>
         <div className="flex flex-col gap-2 lg:gap-4">
           <div>
@@ -34,7 +34,7 @@ export default async function UserPublicProfile({
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center gap-4 overflow-x-hidden">
-        <h2 className="text-2xl font-medium">Public Projects</h2>
+        <h2 className="text-2xl font-medium">Projects on Myntenance</h2>
         <div className="flex w-full flex-col items-center gap-4">
           {(publicProjects ?? []).map((project) => (
             <PublicProjectCard

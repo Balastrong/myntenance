@@ -42,7 +42,12 @@ export async function PublicProjectCard({ userLogin, project }: Props) {
               project.ownerType === "User" ? "rounded-full" : "rounded-md"
             }`}
           />
-          {project.ownerLogin}/{project.name}
+          <a
+            href={`https://github.com/${project.ownerLogin}/${project.name}`}
+            target="_blank"
+          >
+            {project.ownerLogin}/{project.name}
+          </a>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex w-full items-center justify-center">
