@@ -20,7 +20,7 @@ export default async function UserPublicProfile({
     return <NotFound slug={userSlug} />
   }
 
-  const { data: publicProjects } = await getUserPublicProjects(userSlug)
+  const { data: publicProjects } = await getUserPublicProjects(userData.user)
 
   const activityPromises = publicProjects?.map((proj) =>
     getUserRepoStats(

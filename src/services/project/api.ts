@@ -71,20 +71,10 @@ export async function updateProjectNotes(id: string, notes: string) {
   revalidatePath(`/dashboard/${id}`)
 }
 
-export async function getUserPublicProjects(userSlug: string) {
-  const { data: profile } = await createAdminClient()
-    .from("user_profiles")
-    .select("user")
-    .eq("slug", userSlug)
-    .single()
-
-  console.log(userSlug, profile)
-
-  if (!profile) return { data: [] }
-
+export async function getUserPublicProjects(userId: string) {
   return await createAdminClient()
     .from("projects")
     .select("*")
-    .eq("user", profile.user)
+    .eq("user", userId)
     .eq("showInPublicProfile", true)
 }
