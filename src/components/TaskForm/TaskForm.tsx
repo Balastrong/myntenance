@@ -14,6 +14,7 @@ import { ReactNode } from "react"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { getStatusIcon } from "@/lib/utils"
+import { DatePicker } from "../ui/date-picker"
 
 type Props = {
   task: TaskInsert
@@ -32,16 +33,17 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
     defaultValues: {
       title: task.title ?? "",
       status: (task.status ?? "") as TaskStatus | "",
+      deadline: task.deadline ? new Date(task.deadline) : ("" as const),
     },
     onSubmit: ({ value }) =>
       onSubmit({
         title: value.title,
         projectId: task.projectId,
         status: value.status !== "" ? value.status : undefined,
+        deadline:
+          value.deadline !== "" ? value.deadline.toDateString() : undefined,
       }),
   })
-
-  const formErrors = form.useStore((formState) => formState.errors)
 
   return (
     <form
@@ -49,13 +51,8 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
         e.preventDefault()
         form.handleSubmit()
       }}
+      className="flex flex-col gap-4"
     >
-      {formErrors.map((error) => (
-        <p key={error as string} className="my-0.5 text-xs text-destructive">
-          {error}
-        </p>
-      ))}
-
       <form.Field
         name="title"
         validators={{
@@ -65,7 +62,7 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
       >
         {(field) => {
           return (
-            <div>
+            <div className="flex flex-col gap-2">
               <Label htmlFor={"task-title"}>Title</Label>
               <Input
                 id={"task-title"}
@@ -94,7 +91,7 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
       >
         {(field) => {
           return (
-            <div>
+            <div className="flex flex-col gap-2">
               <Label htmlFor={"task-status"}>Status</Label>
               <Select
                 defaultValue={field.state.value}
@@ -119,6 +116,32 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
                   })}
                 </SelectContent>
               </Select>
+              {field.state.meta.errors.map((error) => (
+                <p
+                  key={error as string}
+                  className="my-0.5 text-xs text-destructive"
+                >
+                  {error}
+                </p>
+              ))}
+            </div>
+          )
+        }}
+      </form.Field>
+      <form.Field name="deadline">
+        {(field) => {
+          return (
+            <div className="flex flex-col gap-2">
+              <Label htmlFor={"task-deadline"}>Deadline</Label>
+              <DatePicker
+                id={"task-deadline"}
+                date={
+                  field.state.value !== ""
+                    ? new Date(field.state.value)
+                    : undefined
+                }
+                onDateChange={(e) => field.handleChange(e ?? "")}
+              />
               {field.state.meta.errors.map((error) => (
                 <p
                   key={error as string}

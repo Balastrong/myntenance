@@ -181,6 +181,23 @@ export function getColumns({
       },
     },
     {
+      accessorKey: "deadline",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Deadline" />
+      ),
+      cell: ({ cell }) => {
+        const deadline = cell.getValue() as string | undefined
+        return (
+          <span
+            suppressHydrationWarning
+            title={deadline ? new Date(deadline).toLocaleTimeString() : ""}
+          >
+            {deadline ? new Date(deadline).toLocaleDateString() : "-"}
+          </span>
+        )
+      },
+    },
+    {
       accessorKey: "createdAt",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title="Created At" />
@@ -194,6 +211,7 @@ export function getColumns({
         </span>
       ),
     },
+
     {
       id: "actions",
       cell: function Cell({ row }) {

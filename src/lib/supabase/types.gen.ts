@@ -65,6 +65,7 @@ export type Database = {
       tasks: {
         Row: {
           createdAt: string
+          deadline: string | null
           id: number
           isCompleted: boolean
           issueNumber: number | null
@@ -78,6 +79,7 @@ export type Database = {
         }
         Insert: {
           createdAt?: string
+          deadline?: string | null
           id?: number
           isCompleted?: boolean
           issueNumber?: number | null
@@ -91,6 +93,7 @@ export type Database = {
         }
         Update: {
           createdAt?: string
+          deadline?: string | null
           id?: number
           isCompleted?: boolean
           issueNumber?: number | null
