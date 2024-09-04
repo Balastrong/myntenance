@@ -32,12 +32,14 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
     defaultValues: {
       title: task.title ?? "",
       status: (task.status ?? "") as TaskStatus | "",
+      deadline: task.deadline ?? "",
     },
     onSubmit: ({ value }) =>
       onSubmit({
         title: value.title,
         projectId: task.projectId,
         status: value.status !== "" ? value.status : undefined,
+        deadline: value.deadline !== "" ? value.deadline : undefined,
       }),
   })
 
@@ -119,6 +121,29 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
                   })}
                 </SelectContent>
               </Select>
+              {field.state.meta.errors.map((error) => (
+                <p
+                  key={error as string}
+                  className="my-0.5 text-xs text-destructive"
+                >
+                  {error}
+                </p>
+              ))}
+            </div>
+          )
+        }}
+      </form.Field>
+      <form.Field name="deadline">
+        {(field) => {
+          return (
+            <div>
+              <Label htmlFor={"task-deadline"}>Deadline</Label>
+              <Input
+                id={"task-deadline"}
+                type="date"
+                value={field.state.value}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
               {field.state.meta.errors.map((error) => (
                 <p
                   key={error as string}
