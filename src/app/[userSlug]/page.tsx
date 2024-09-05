@@ -69,7 +69,7 @@ export default async function UserPublicProfile({
 function computeActivityCalendarData({
   data: commits,
 }: Awaited<ReturnType<typeof getUserRepoStats>>) {
-  let max = 0
+  let maxDailyCommits = 0
 
   const dataMap = new Map<string, Activity>()
   const date = new Date()
@@ -92,7 +92,7 @@ function computeActivityCalendarData({
     if (!activity) return
 
     const count = activity.count + 1
-    max = Math.max(max, count)
+    maxDailyCommits = Math.max(maxDailyCommits, count)
     dataMap.set(date, {
       ...activity,
       count,
@@ -101,11 +101,11 @@ function computeActivityCalendarData({
 
   const data = Array.from(dataMap.values())
     .map((data) => {
-      if (max === 0) {
+      if (maxDailyCommits === 0) {
         return data
       }
 
-      const level = Math.min(Math.floor((data.count / max) * 4), 4)
+      const level = Math.min(Math.floor((data.count / maxDailyCommits) * 4), 4)
 
       return {
         ...data,
@@ -114,5 +114,8 @@ function computeActivityCalendarData({
     })
     .toReversed()
 
-  return { data, totalCommits: commits.length }
+  const totalCommits = commits.length
+  const lastCommit = commits[0]?.commit.author?.date
+
+  return { data, totalCommits, lastCommit }
 }
