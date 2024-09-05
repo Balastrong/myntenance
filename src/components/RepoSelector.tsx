@@ -31,7 +31,7 @@ export function RepoSelector() {
     } else {
       toast.success(state.message)
     }
-  }, [state.error, state.message])
+  }, [state])
 
   return (
     <form
