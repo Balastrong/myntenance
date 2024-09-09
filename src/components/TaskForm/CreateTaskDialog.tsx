@@ -34,6 +34,7 @@ type Props = {
 }
 export function CreateTaskDialog({ projectId }: Props) {
   const [open, setOpen] = React.useState(false)
+  const [autoCreate, setAutoCreate] = React.useState(false) // New state for Auto-Create
   const isDesktop = useMediaQuery("(min-width: 640px)")
 
   const [isCreatePending, startCreateTransition] = React.useTransition()
@@ -47,10 +48,26 @@ export function CreateTaskDialog({ projectId }: Props) {
         return
       }
 
-      setOpen(false)
       toast.success("Task created")
+
+      // If Auto-Create is not checked, close the dialog
+      if (!autoCreate) {
+        setOpen(false)
+      }
     })
   }
+
+  const Checkbox = () => (
+    <div className="flex items-center gap-2">
+      <input
+        type="checkbox"
+        id="autoCreate"
+        checked={autoCreate}
+        onChange={(e) => setAutoCreate(e.target.checked)}
+      />
+      <label htmlFor="autoCreate">Auto-Create</label>
+    </div>
+  )
 
   if (isDesktop)
     return (
@@ -71,6 +88,8 @@ export function CreateTaskDialog({ projectId }: Props) {
           <TaskForm task={{ projectId, title: "" }} onSubmit={onSubmit}>
             {({ canSubmit, isSubmitting }) => (
               <DialogFooter className="gap-2 pt-4 sm:space-x-0">
+                {/* Checkbox for Auto-Create */}
+                <Checkbox />
                 <DialogClose asChild>
                   <Button type="button" variant="outline">
                     Cancel
@@ -112,6 +131,8 @@ export function CreateTaskDialog({ projectId }: Props) {
         <TaskForm task={{ projectId, title: "" }} onSubmit={onSubmit}>
           {({ canSubmit, isSubmitting }) => (
             <DrawerFooter className="gap-2 sm:space-x-0">
+              {/* Checkbox for Auto-Create */}
+              <Checkbox />
               <DrawerClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DrawerClose>
