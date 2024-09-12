@@ -35,7 +35,7 @@ export function TasksTable({
     {
       label: "Title",
       value: "title",
-      placeholder: "Filter titles...",
+      placeholder: "Search tasks...",
     },
     {
       label: "Status",

@@ -22,6 +22,11 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        white: "hsl(var(--white))",
+        black: "hsl(var(--black))",
+        backgroundElevation1: "hsl(var(--backgroundElevation1))",
+        backgroundElevation2: "hsl(var(--backgroundElevation2))",
+        backgroundElevation3: "hsl(var(--backgroundElevation3))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -35,6 +40,14 @@ const config = {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        confirm: {
+          DEFAULT: "hsl(var(--confirm))",
+          foreground: "hsl(var(--confirm-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

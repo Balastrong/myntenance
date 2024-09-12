@@ -29,7 +29,7 @@ export function DataTable<TData>({
     >
       {children}
       <div className="overflow-hidden rounded-md border">
-        <Table>
+        <Table className="bg-backgroundElevation1">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
