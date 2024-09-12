@@ -10,7 +10,7 @@ import {
 import { Task, TaskInsert } from "@/lib/supabase/types"
 import { TaskStatus, TaskStatusValues } from "@/types/schemas"
 import { useForm } from "@tanstack/react-form"
-import { ReactNode } from "react"
+import { ReactNode, useImperativeHandle, forwardRef } from "react"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { getStatusIcon } from "@/lib/utils"
@@ -28,7 +28,7 @@ type Props = {
   }) => ReactNode
 }
 
-export const TaskForm = ({ task, onSubmit, children }: Props) => {
+export const TaskForm = forwardRef(({ task, onSubmit, children }: Props, ref) => {
   const form = useForm({
     defaultValues: {
       title: task.title ?? "",
@@ -45,6 +45,12 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
       }),
   })
 
+  useImperativeHandle(ref, () => ({
+    resetForm() {
+      form.reset()
+    }
+  }))
+
   return (
     <form
       onSubmit={(e) => {
@@ -60,27 +66,25 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
             value.length < 1 ? "Title is required" : undefined,
         }}
       >
-        {(field) => {
-          return (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor={"task-title"}>Title</Label>
-              <Input
-                id={"task-title"}
-                type="text"
-                value={field.state.value}
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              {field.state.meta.errors.map((error) => (
-                <p
-                  key={error as string}
-                  className="my-0.5 text-xs text-destructive"
-                >
-                  {error}
-                </p>
-              ))}
-            </div>
-          )
-        }}
+        {(field) => (
+          <div className="flex flex-col gap-2">
+            <Label htmlFor={"task-title"}>Title</Label>
+            <Input
+              id={"task-title"}
+              type="text"
+              value={field.state.value}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+            {field.state.meta.errors.map((error) => (
+              <p
+                key={error as string}
+                className="my-0.5 text-xs text-destructive"
+              >
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
       </form.Field>
       <form.Field
         name="status"
@@ -89,70 +93,66 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
             value === "" ? "Status is required" : undefined,
         }}
       >
-        {(field) => {
-          return (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor={"task-status"}>Status</Label>
-              <Select
-                defaultValue={field.state.value}
-                onValueChange={(status: TaskStatus) =>
-                  field.handleChange(status)
-                }
+        {(field) => (
+          <div className="flex flex-col gap-2">
+            <Label htmlFor={"task-status"}>Status</Label>
+            <Select
+              defaultValue={field.state.value}
+              onValueChange={(status: TaskStatus) =>
+                field.handleChange(status)
+              }
+            >
+              <SelectTrigger>
+                <SelectValue id="task-status" />
+              </SelectTrigger>
+              <SelectContent>
+                {TaskStatusValues.map((status) => {
+                  const Icon = getStatusIcon(status)
+                  return (
+                    <SelectItem key={status} value={status}>
+                      <div className="flex items-center gap-2 capitalize">
+                        <Icon />
+                        {status}
+                      </div>
+                    </SelectItem>
+                  )
+                })}
+              </SelectContent>
+            </Select>
+            {field.state.meta.errors.map((error) => (
+              <p
+                key={error as string}
+                className="my-0.5 text-xs text-destructive"
               >
-                <SelectTrigger>
-                  <SelectValue id="task-status" />
-                </SelectTrigger>
-                <SelectContent>
-                  {TaskStatusValues.map((status) => {
-                    const Icon = getStatusIcon(status)
-                    return (
-                      <SelectItem key={status} value={status}>
-                        <div className="flex items-center gap-2 capitalize">
-                          <Icon />
-                          {status}
-                        </div>
-                      </SelectItem>
-                    )
-                  })}
-                </SelectContent>
-              </Select>
-              {field.state.meta.errors.map((error) => (
-                <p
-                  key={error as string}
-                  className="my-0.5 text-xs text-destructive"
-                >
-                  {error}
-                </p>
-              ))}
-            </div>
-          )
-        }}
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
       </form.Field>
       <form.Field name="deadline">
-        {(field) => {
-          return (
-            <div className="flex flex-col gap-2">
-              <Label htmlFor={"task-deadline"}>Deadline</Label>
-              <DatePicker
-                id={"task-deadline"}
-                date={
-                  field.state.value !== ""
-                    ? new Date(field.state.value)
-                    : undefined
-                }
-                onDateChange={(e) => field.handleChange(e ?? "")}
-              />
-              {field.state.meta.errors.map((error) => (
-                <p
-                  key={error as string}
-                  className="my-0.5 text-xs text-destructive"
-                >
-                  {error}
-                </p>
-              ))}
-            </div>
-          )
-        }}
+        {(field) => (
+          <div className="flex flex-col gap-2">
+            <Label htmlFor={"task-deadline"}>Deadline</Label>
+            <DatePicker
+              id={"task-deadline"}
+              date={
+                field.state.value !== ""
+                  ? new Date(field.state.value)
+                  : undefined
+              }
+              onDateChange={(e) => field.handleChange(e ?? "")}
+            />
+            {field.state.meta.errors.map((error) => (
+              <p
+                key={error as string}
+                className="my-0.5 text-xs text-destructive"
+              >
+                {error}
+              </p>
+            ))}
+          </div>
+        )}
       </form.Field>
 
       <form.Subscribe
@@ -162,4 +162,6 @@ export const TaskForm = ({ task, onSubmit, children }: Props) => {
       </form.Subscribe>
     </form>
   )
-}
+})
+
+TaskForm.displayName = "TaskForm"
