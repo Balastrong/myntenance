@@ -2,6 +2,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { ProfileUpdate, SettingsUpdate } from "@/lib/supabase/types"
 import { getCurrentUserId } from "@/lib/supabase/utils"
+import { revalidatePath } from "next/cache"
 
 export async function getOwnSettings() {
   const supabase = createClient()
@@ -37,4 +38,22 @@ export async function updateOwnSettings(
   console.log(profileError)
 
   return { error: profileError }
+}
+
+// TODO Set right parameters for the delete
+export async function deleteOwnAccount() {
+  const supabase = createClient()
+  const userId = await getCurrentUserId(supabase)
+  const result = await supabase
+    .from("user_profiles")
+    .delete()
+    .eq("id", userId!)
+    .select()
+    .single()
+    .throwOnError()
+
+  await supabase.auth.signOut()
+  revalidatePath("/")
+
+  return result
 }
