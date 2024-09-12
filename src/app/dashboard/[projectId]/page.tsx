@@ -46,7 +46,7 @@ export default async function Page({
             height={100}
             src={`https://github.com/${repository.owner.login}.png?size=80`}
             alt={repository.owner.login}
-            className={`mr-2 size-8 bg-gray-300 ${
+            className={`ml-2 size-8 bg-gray-300 ${
               repository.owner.type === "User" ? "rounded-full" : "rounded-md"
             }`}
           />
@@ -59,7 +59,7 @@ export default async function Page({
             projectId={projectId}
             showInPublicProfile={project.showInPublicProfile ?? false}
           />
-          <Badge variant={"outline"}>
+          <Badge variant={"outline"} className="bg-backgroundElevation1">
             {repository.private ? "Private" : "Public"}
           </Badge>
         </div>
