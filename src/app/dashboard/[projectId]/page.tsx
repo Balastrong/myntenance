@@ -67,7 +67,7 @@ export default async function Page({
           <DetailItem
             label="Last Commit"
             value={
-              repository.lastCommit.commit.author?.date
+              repository.lastCommit && repository.lastCommit.commit.author?.date
                 ? new Date(
                     repository.lastCommit.commit.author.date,
                   ).toLocaleDateString()
