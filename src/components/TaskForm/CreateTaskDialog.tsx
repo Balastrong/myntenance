@@ -81,11 +81,9 @@ export function CreateTaskDialog({ projectId }: Props) {
               <Checkbox
                 checked={createAnother}
                 onCheckedChange={handleCheckboxChange}
-                className="border border-gray-500" 
+                className="border border-gray-500"
               />
-              <span className="text-sm font-medium">
-                Create Another Task
-              </span>
+              <span className="text-sm font-medium">Create Another Task</span>
             </div>
             <DialogClose asChild>
               <Button type="button" variant="outline">
@@ -129,9 +127,7 @@ export function CreateTaskDialog({ projectId }: Props) {
                 onCheckedChange={handleCheckboxChange}
                 className="border border-gray-500"
               />
-              <span className="text-sm font-medium">
-                Create Another Task
-              </span>
+              <span className="text-sm font-medium">Create Another Task</span>
             </div>
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
