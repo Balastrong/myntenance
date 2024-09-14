@@ -151,7 +151,7 @@ export function CreateTaskDialog({ projectId }: Props) {
   return isDesktop ? (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="confirm" size="sm">
           <PlusIcon className="mr-2 size-4" aria-hidden="true" />
           New task
         </Button>
@@ -161,7 +161,7 @@ export function CreateTaskDialog({ projectId }: Props) {
   ) : (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" size="sm">
+        <Button variant="confirm" size="sm">
           <PlusIcon className="mr-2 size-4" aria-hidden="true" />
           New task
         </Button>

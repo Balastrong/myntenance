@@ -65,7 +65,7 @@ export function DeleteTasksDialog({
       <Dialog {...props}>
         {showTrigger ? (
           <DialogTrigger asChild>
-            <Button variant="outline" size="sm">
+            <Button variant="destructive" size="sm">
               <TrashIcon className="mr-2 size-4" aria-hidden="true" />
               Delete ({tasks.length})
             </Button>

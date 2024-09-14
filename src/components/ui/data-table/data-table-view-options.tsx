@@ -27,7 +27,7 @@ export function DataTableViewOptions<TData>({
           aria-label="Toggle columns"
           variant="outline"
           size="sm"
-          className="ml-auto flex h-8"
+          className="ml-auto flex"
         >
           <MixerHorizontalIcon className="mr-2 size-4" />
           Columns

@@ -25,7 +25,9 @@ export function FavouriteRepoForm({ projectId: repoId, isFavorite }: Props) {
         value={optimisticIsFavourite ? "true" : "false"}
       />
       <Button size={"icon"} variant={"secondary"}>
-        <Star className={optimisticIsFavourite ? "text-yellow-400" : ""} />
+        <Star
+          className={optimisticIsFavourite ? "fill-warning text-warning" : ""}
+        />
       </Button>
     </form>
   )
