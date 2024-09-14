@@ -1,4 +1,5 @@
 import { isRedirectError } from "next/dist/client/components/redirect"
+import { RequestError } from "octokit"
 import { toast } from "sonner"
 import { z } from "zod"
 
@@ -22,4 +23,13 @@ export function getErrorMessage(err: unknown) {
 export function showErrorToast(err: unknown) {
   const errorMessage = getErrorMessage(err)
   return toast.error(errorMessage)
+}
+
+export function checkSpecificErrorGithubApi(error: RequestError) {
+  const message = error.message.split("-")[0].trim()
+  switch (message) {
+    case "Branch not found":
+    default:
+      return null
+  }
 }
