@@ -59,7 +59,7 @@ export default async function Page({
             projectId={projectId}
             showInPublicProfile={project.showInPublicProfile ?? false}
           />
-          <Badge variant={"outline"} className="bg-backgroundElevation1">
+          <Badge variant={"outline"} className="bg-background-elevation-1">
             {repository.private ? "Private" : "Public"}
           </Badge>
         </div>
