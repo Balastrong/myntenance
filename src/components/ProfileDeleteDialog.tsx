@@ -45,12 +45,12 @@ export function ProfileDeleteDialog({
   const isDesktop = useMediaQuery("(min-width: 640px)")
   const DRAWER_TITLE = "Are you absolutely sure?"
   const DRAWER_DESCRIPTION =
-    "This action cannot be undone. It will permanently delete your account from your Myntenance. This action will not affect your GitHub repository."
+    "This action cannot be undone. It will permanently delete your account from your Myntenance. This action will not affect any of your GitHub repositories."
 
   function onDelete() {
     startDeleteTransition(async () => {
       try {
-        const res = await deleteOwnAccount()
+        await deleteOwnAccount()
         router.push("/")
         onSuccess?.()
         toast.success(`Your account was successfully deleted!`)
