@@ -98,7 +98,7 @@ export const TaskForm = forwardRef(
             <div className="flex flex-col gap-2">
               <Label htmlFor={"task-status"}>Status</Label>
               <Select
-                defaultValue={field.state.value}
+                value={field.state.value}
                 onValueChange={(status: TaskStatus) =>
                   field.handleChange(status)
                 }
@@ -164,6 +164,9 @@ export const TaskForm = forwardRef(
         >
           {([canSubmit, isSubmitting]) => children({ canSubmit, isSubmitting })}
         </form.Subscribe>
+        <button type="button" onClick={() => form.reset()}>
+          Reset
+        </button>
       </form>
     )
   },

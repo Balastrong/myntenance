@@ -27,6 +27,7 @@ import { PlusIcon, ReloadIcon } from "@radix-ui/react-icons"
 import { toast } from "sonner"
 import { TaskForm } from "./TaskForm"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "../ui/label"
 
 type Props = {
   projectId: string
@@ -79,11 +80,11 @@ export function CreateTaskDialog({ projectId }: Props) {
           <DialogFooter className="gap-2 pt-4 sm:space-x-0">
             <div className="flex items-center space-x-2">
               <Checkbox
+                id="create-another-task"
                 checked={createAnother}
                 onCheckedChange={handleCheckboxChange}
-                className="border border-gray-500"
               />
-              <span className="text-sm font-medium">Create Another Task</span>
+              <Label htmlFor="create-another-task">Create Another Task</Label>
             </div>
             <DialogClose asChild>
               <Button type="button" variant="outline">
