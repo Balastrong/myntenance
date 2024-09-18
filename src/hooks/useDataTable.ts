@@ -181,7 +181,6 @@ export function useDataTable<TData>({
   const filterableColumnFilters = columnFilters.filter((filter) => {
     return filterableColumns.find((column) => column.value === filter.id)
   })
-
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -227,7 +226,9 @@ export function useDataTable<TData>({
     }
 
     // After cumulating all the changes, push new params
-    router.push(`${pathname}?${createQueryString(newParamsObject)}`)
+    router.push(`${pathname}?${createQueryString(newParamsObject)}`, {
+      scroll: false,
+    })
 
     table.setPageIndex(0)
 
