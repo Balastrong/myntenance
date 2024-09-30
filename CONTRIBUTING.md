@@ -1,16 +1,36 @@
 # How to Contribute
 
-Myntenance is a welcoming project and we're really happy to build it together.
+Myntenance is a welcoming project and we're really happy to build it together. All kind of contributions are welcome: suggestions and bug reports are as valuable as code contributions!
 
 You can find in this document the steps to run the project locally and get ready to contribute.
 
 Something is wrong or missing? Feel free to open an issue or a pull request.
 
-## Setup the local environment
+## Run the project locally
+
+Install the dependencies with [pnpm](https://pnpm.io/):
+
+```
+pnpm install
+```
 
 Duplicate the file `.env.example` and rename it to `.env.local` to set up the environment variables.
 
-Let's see how to enable login through GitHub OAuth App and setup a local supabase instance.
+Start the development server:
+
+```
+pnpm run dev
+```
+
+That's it! You can now access the project at [http://localhost:3000](http://localhost:3000).
+
+## Setup the local environment (Optional)
+
+For changes not affecting the database schema there's nothing to setup, you can connect to the production Supabase instance with the provided anon key in the `.env.example` file.
+
+However, you must follow the steps below if you need to make changes to the database schema or if you want to run e2e tests.
+
+We will enable login through GitHub OAuth App and setup a local supabase instance.
 
 ### Setup GitHub App (Authentication)
 
