@@ -45,7 +45,7 @@ UI components are from Shadcn and customized with Tailwind.
 
 1. Clone the repo
 2. Install dependencies with `pnpm`
-3. Create a `.env.local` file with the following variables:
+3. Create a `.env.local` file (or duplicate and rename `.env.example`) with the following variables:
 
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://bqlqcmtccbsiocjopvas.supabase.co
@@ -53,3 +53,5 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzd
 ```
 
 4. Run the development server with `pnpm dev`
+
+Learn more about the project and how to setup database and auth locally (optional) in the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
