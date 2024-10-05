@@ -50,9 +50,7 @@ export async function storeRepository(fullName: string) {
     return { message: "Repository stored", error: false }
   } catch (error) {
     const errorMessage =
-      error instanceof Error
-        ? error?.message
-        : (undefined ?? "An error occurred")
+      error instanceof Error ? error?.message : "An error occurred"
 
     return { message: errorMessage, error: true }
   }
@@ -64,6 +62,7 @@ export const getUserRepoStats = unstable_cache(
     userLogin: string,
     repoOwner: string,
     repoName: string,
+    days: number = 365,
   ) => {
     const today = new Date()
     return octokit.rest.repos.listCommits({
@@ -71,7 +70,7 @@ export const getUserRepoStats = unstable_cache(
       repo: repoName,
       author: userLogin,
       per_page: 100,
-      since: new Date(today.setDate(today.getDate() - 365)).toISOString(),
+      since: new Date(today.setDate(today.getDate() - days)).toISOString(),
     })
   },
   undefined,

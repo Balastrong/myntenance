@@ -23,7 +23,7 @@ export default function RootLayout({
         <Providers>
           <WorkInProgressBanner />
           <Header />
-          <main className="m-auto w-full max-w-[1200px] flex-1 p-4">
+          <main className="m-auto w-full max-w-screen-xl flex-1 p-4">
             {children}
           </main>
         </Providers>

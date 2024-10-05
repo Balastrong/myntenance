@@ -21,6 +21,7 @@ export function ActivityCalendar(props: Props) {
       colorScheme={colorScheme === "dark" ? "dark" : "light"}
       theme={minimalTheme}
       blockSize={10}
+      blockMargin={1.7}
       labels={{
         totalCount: `{{count}} commits in the last ${props.data.length} days`,
       }}

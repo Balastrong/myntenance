@@ -11,7 +11,7 @@ export default async function Header() {
   } = await createClient().auth.getUser()
 
   return (
-    <header className="m-auto flex w-full max-w-[1200px] items-center justify-between gap-2 p-4">
+    <header className="m-auto flex w-full max-w-screen-xl items-center justify-between gap-2 p-4">
       <Link href="/">
         <h1 className="text-2xl font-semibold">Myntenance</h1>
       </Link>

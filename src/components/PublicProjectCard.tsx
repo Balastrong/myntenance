@@ -17,11 +17,8 @@ type Props = {
   }>
 }
 
-export function PublicProjectCard({
-  project,
-  activityPromise: commitsPromise,
-}: Props) {
-  const { data, lastCommit } = use(commitsPromise)
+export function PublicProjectCard({ project, activityPromise }: Props) {
+  const { data, lastCommit } = use(activityPromise)
 
   const order = useMemo(
     () =>
@@ -32,12 +29,12 @@ export function PublicProjectCard({
   )
 
   return (
-    <Card className="w-full" style={{ order }}>
+    <Card className="w-full max-w-fit" style={{ order }}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Image
-            width={100}
-            height={100}
+            width={40}
+            height={40}
             src={`https://github.com/${project.ownerLogin}.png?size=80`}
             alt={project.ownerLogin}
             className={`size-10 bg-gray-300 ${
@@ -47,12 +44,15 @@ export function PublicProjectCard({
           <a
             href={`https://github.com/${project.ownerLogin}/${project.name}`}
             target="_blank"
+            className="text-nowrap"
           >
-            {project.ownerLogin}/{project.name}
+            <span>{project.ownerLogin}/</span>
+            <wbr />
+            <span>{project.name}</span>
           </a>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex w-full items-center justify-center">
+      <CardContent>
         <ActivityCalendar data={data} />
       </CardContent>
     </Card>
