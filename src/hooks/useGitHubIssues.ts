@@ -1,4 +1,4 @@
-import { keepPreviousData, useQuery } from "@tanstack/react-query"
+import { keepPreviousData, useQuery, useMutation } from "@tanstack/react-query"
 import { useDebouncedValue } from "./useDebouncedValue"
 import { getClientOctokit } from "@/lib/github/client"
 
@@ -21,5 +21,23 @@ export const useGitHubIssues = (query: string, baseQuery?: string) => {
 
       return { items }
     },
+  })
+}
+
+export const useCreateGitHubIssue = () => {
+  return useMutation(async ({ owner, repo, title, body }: { owner: string, repo: string, title: string, body: string }) => {
+    try {
+      const octokit = getClientOctokit()
+      const response = await octokit.rest.issues.create({
+        owner,
+        repo,
+        title,
+        body,
+      })
+      return { message: "Issue created successfully", issue: response.data, error: false }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An error occurred"
+      return { message: errorMessage, error: true }
+    }
   })
 }

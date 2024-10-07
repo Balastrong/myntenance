@@ -10,12 +10,23 @@ import Link from "next/link"
 import { Button } from "../ui/button"
 import { FavouriteRepoForm } from "./FavouriteRepoForm"
 import { RepoWithTasks } from "./RepoCards"
+import { createGitHubIssue } from "@/app/api/github/actions"
+import { toast } from "sonner"
 
 type Props = {
   repo: RepoWithTasks[number]
 }
 
 export const RepoCard = ({ repo }: Props) => {
+  const handleCreateIssue = async () => {
+    const response = await createGitHubIssue(repo.ownerLogin, repo.name, "Issue Title", "Issue Body")
+    if (response.error) {
+      toast.error(response.message)
+    } else {
+      toast.success(response.message)
+    }
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -57,6 +68,7 @@ export const RepoCard = ({ repo }: Props) => {
         {repo.tasks.filter(({ status }) => status === "todo").length}
       </CardContent>
       <CardFooter className="flex justify-end">
+        <Button onClick={handleCreateIssue}>Create GitHub Issue</Button>
         <Link href={`/dashboard/${repo.id}`}>
           <Button>View -&gt;</Button>
         </Link>
