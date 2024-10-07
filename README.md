@@ -1,6 +1,6 @@
 # Myntenance
 
-> Your next side project won't fail this time 💡
+> Your next side project won't fail this time �
 
 ## What is Myntenance?
 
@@ -30,6 +30,11 @@ Would be cool to also explore:
 - [ ] Chrome extension
 - [ ] Gitlab integrations
 - [ ] Team features
+
+### GitHub Integration Enhancements
+
+- [ ] Enable users to create GitHub issues directly from the Myntenance tool.
+- [ ] Add support for GitLab integrations to expand the tool's compatibility with other version control platforms.
 
 ## Contributing
 

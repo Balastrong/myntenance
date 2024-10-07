@@ -4,6 +4,9 @@ import { useDebouncedValue } from "@/hooks/useDebouncedValue"
 import { useEffect, useState } from "react"
 import { Textarea } from "../ui/textarea"
 import { updateProjectNotes } from "@/services/project/api"
+import { createGitHubIssue } from "@/app/api/github/actions"
+import { Button } from "../ui/button"
+import { toast } from "sonner"
 
 type Props = {
   projectId: string
@@ -19,5 +22,19 @@ export function Notes({ projectNotes, projectId }: Props) {
     }
   }, [debouncedTitle, projectId, projectNotes])
 
-  return <Textarea onChange={(e) => setTitle(e.target.value)} value={title} />
+  const handleCreateIssue = async () => {
+    const response = await createGitHubIssue("owner", "repo", "Issue Title", title)
+    if (response.error) {
+      toast.error(response.message)
+    } else {
+      toast.success(response.message)
+    }
+  }
+
+  return (
+    <div>
+      <Textarea onChange={(e) => setTitle(e.target.value)} value={title} />
+      <Button onClick={handleCreateIssue}>Create GitHub Issue</Button>
+    </div>
+  )
 }

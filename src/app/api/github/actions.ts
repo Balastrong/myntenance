@@ -76,3 +76,19 @@ export const getUserRepoStats = unstable_cache(
   undefined,
   { revalidate: 600 },
 )
+
+export async function createGitHubIssue(owner: string, repo: string, title: string, body: string) {
+  try {
+    const octokit = getServerOctokit()
+    const response = await octokit.rest.issues.create({
+      owner,
+      repo,
+      title,
+      body,
+    })
+    return { message: "Issue created successfully", issue: response.data, error: false }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "An error occurred"
+    return { message: errorMessage, error: true }
+  }
+}
