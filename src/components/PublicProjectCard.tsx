@@ -3,10 +3,11 @@
 import { getUserRepoStats } from "@/app/api/github/actions"
 import { Tables } from "@/lib/supabase/types.gen"
 import Image from "next/image"
-import { use, useMemo } from "react"
+import { use, useMemo, useState } from "react"
 import { Activity } from "react-activity-calendar"
 import { ActivityCalendar } from "./ActivityCalendar"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Button } from "./ui/button"
 
 type Props = {
   project: Tables<"projects">
@@ -19,13 +20,14 @@ type Props = {
 
 export function PublicProjectCard({ project, activityPromise }: Props) {
   const { data, lastCommit } = use(activityPromise)
+  const [isReverseOrder, setIsReverseOrder] = useState(false)
 
   const order = useMemo(
     () =>
       Math.floor(
         (new Date().getTime() - new Date(lastCommit ?? 0).getTime()) / 100_000,
-      ),
-    [lastCommit],
+      ) * (isReverseOrder ? -1 : 1),
+    [lastCommit, isReverseOrder],
   )
 
   return (
@@ -51,6 +53,13 @@ export function PublicProjectCard({ project, activityPromise }: Props) {
             <span>{project.name}</span>
           </a>
         </CardTitle>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setIsReverseOrder((prev) => !prev)}
+        >
+          Toggle Order
+        </Button>
       </CardHeader>
       <CardContent>
         <ActivityCalendar data={data} />
