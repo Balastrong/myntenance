@@ -4,7 +4,7 @@ import { getUserProfileBySlug } from "@/services/profile/api"
 import { getUserPublicProjects } from "@/services/project/api"
 import { getUserRepoStats } from "../api/github/actions"
 import { getServerOctokit } from "@/lib/github/server"
-import React from "react"
+import React, { useState } from "react"
 import { PublicProjectCardSkeleton } from "@/components/PublicProjectCardSkeleton"
 import { Activity } from "react-activity-calendar"
 import NotFound from "./notFound"
@@ -31,6 +31,20 @@ export default async function UserPublicProfile({
     ).then(computeActivityCalendarData),
   )
 
+  const [sortCriteria, setSortCriteria] = useState<"lastCommit" | "mostRecentCommit">("lastCommit")
+
+  const sortedProjects = [...(publicProjects ?? [])].sort((a, b) => {
+    if (sortCriteria === "lastCommit") {
+      return new Date(b.lastCommit ?? 0).getTime() - new Date(a.lastCommit ?? 0).getTime()
+    } else {
+      return new Date(a.lastCommit ?? 0).getTime() - new Date(b.lastCommit ?? 0).getTime()
+    }
+  })
+
+  const toggleSortCriteria = () => {
+    setSortCriteria((prevCriteria) => (prevCriteria === "lastCommit" ? "mostRecentCommit" : "lastCommit"))
+  }
+
   return (
     <div className="flex w-full flex-col gap-12 px-2 lg:flex-row">
       <div className="flex flex-row gap-4 lg:w-60 lg:flex-col">
@@ -49,14 +63,19 @@ export default async function UserPublicProfile({
         </div>
       </div>
       <div className="flex flex-1 flex-col items-center gap-4 overflow-hidden">
-        <h2 className="text-2xl font-medium">Projects on Myntenance</h2>
+        <div className="flex items-center justify-between w-full">
+          <h2 className="text-2xl font-medium">Projects on Myntenance</h2>
+          <button onClick={toggleSortCriteria} className="btn btn-primary">
+            Toggle Sort: {sortCriteria === "lastCommit" ? "Most Recent Commit" : "Last Commit"}
+          </button>
+        </div>
         <div className="flex w-full flex-col items-center gap-4">
-          {(publicProjects ?? []).map((_, i) => (
+          {sortedProjects.map((_, i) => (
             <React.Suspense key={i} fallback={<PublicProjectCardSkeleton />}>
               <PublicProjectCard
                 key={i}
                 activityPromise={activityPromises![i]}
-                project={publicProjects![i]}
+                project={sortedProjects[i]}
               />
             </React.Suspense>
           ))}
