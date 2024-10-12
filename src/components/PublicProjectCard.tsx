@@ -9,11 +9,15 @@ import { ActivityCalendar } from "./ActivityCalendar"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
 
-// Function to calculate the order value based on the last commit date and sorting order
-const calculateOrder = (lastCommit: string | undefined, isReverseOrder: boolean) => {
-  return Math.floor(
-    (new Date().getTime() - new Date(lastCommit ?? 0).getTime()) / 100_000,
-  ) * (isReverseOrder ? -1 : 1)
+const calculateOrder = (
+  lastCommit: string | undefined,
+  isReverseOrder: boolean,
+) => {
+  return (
+    Math.floor(
+      (new Date().getTime() - new Date(lastCommit ?? 0).getTime()) / 100_000,
+    ) * (isReverseOrder ? -1 : 1)
+  )
 }
 
 type Props = {
@@ -29,7 +33,6 @@ export function PublicProjectCard({ project, activityPromise }: Props) {
   const { data, lastCommit } = use(activityPromise)
   const [isReverseOrder, setIsReverseOrder] = useState(false)
 
-  // Calculate the order value using the calculateOrder function
   const order = useMemo(
     () => calculateOrder(lastCommit, isReverseOrder),
     [lastCommit, isReverseOrder],
