@@ -72,7 +72,7 @@ export async function updateProjectNotes(id: string, notes: string) {
 }
 
 export async function getUserPublicProjects(userId: string) {
-  return await createAdminClient()
+  return await createClient()
     .from("projects")
     .select("*")
     .eq("user", userId)
