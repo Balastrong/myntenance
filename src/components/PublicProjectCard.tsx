@@ -57,7 +57,7 @@ export function PublicProjectCard({ project, activityPromise }: Props) {
           {lastCommit && (
             <span className="flex items-center gap-1 text-xs font-medium">
               <History className="h-4 w-4" /> Last commit:{" "}
-              {new Date(lastCommit).toLocaleDateString("hi-IN")}
+              {new Date(lastCommit).toLocaleDateString()}
             </span>
           )}
         </CardTitle>
